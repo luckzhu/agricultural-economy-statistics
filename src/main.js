@@ -9,6 +9,7 @@ import store from "./store";
 import "./plugins/element.js";
 
 import "@/styles/variable.scss";
+import "./icons";
 
 Vue.config.productionTip = false;
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mian-box">
     <div>AgricultureIndust</div>
     <router-view />
   </div>
@@ -9,4 +9,8 @@
 export default {};
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.mian-box {
+  height: 87.04vh;
+}
+</style>

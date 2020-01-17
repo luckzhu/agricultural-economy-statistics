@@ -1,34 +1,110 @@
 <template>
-  <div class="the-header">头部</div>
+  <div class="the-header">
+    <el-col :span="5" class="the-header-left">
+      <svg-icon icon-name="toLeft"></svg-icon>
+      <p class="current-year">{{ currentYear }}年度</p>
+      <svg-icon icon-name="toRight"></svg-icon>
+    </el-col>
+    <el-col :span="14" class="menu-title xy-center-column">
+      <div class="menu">
+        <div class="top-menu xy-center">
+          <router-link v-for="(button,index) in topButtons" :to="`${button.path}`" :key="index">
+            <el-button type="primary" plain @click="onTopMenu(button.name)">{{button.name}}</el-button>
+          </router-link>
+        </div>
+      </div>
+      <p class="title">{{ title }}</p>
+    </el-col>
+    <el-col :span="5" class="xy-center">
+      <svg-icon icon-name="exit"></svg-icon>
+    </el-col>
+  </div>
 </template>
 
 <script>
-// import SvgIcon from "@/components/SvgIcon";
+import SvgIcon from "@/components/SvgIcon";
 export default {
   components: {
-    // SvgIcon
+    SvgIcon
   },
   data() {
     return {
-      year: "2018",
+      currentYear: "2018",
       title: "广东省农业产业化基本情况",
       topButtons: [
-        { name: "产业化", path: "/industrial" },
-        { name: "省龙专题", path: "/leading" },
-        { name: "地市风采", path: "/prefecture" }
+        { name: "农业产业化", path: "/agricultureIndust" },
+        { name: "省龙专题", path: "/provincialLeader" },
+        { name: "地市风采", path: "/localPresence" },
+        { name: "标杆企业", path: "/benchmarking" }
       ],
       menuList: {
-        产业化: "广东省农业产业化基本情况",
+        农业产业化: "广东省农业产业化基本情况",
         省龙专题: "省重点农业龙头企业发展特点",
-        地市风采: "广东省农业产业化地市风采"
+        地市风采: "广东省农业产业化地市风采",
+        标杆企业: "广东省农业标杆企业",
       }
     };
   },
-  methods: {}
+  methods: {
+    onTopMenu(name) {
+      this.title = this.menuList[name];
+    }
+  }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
+@import "@/styles/variable.scss";
+.the-header {
+  height: 100%;
+}
+.the-header-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.current-year {
+  margin: 0 20px;
+}
+.svg-icon,
+.current-year,
+.title {
+  font-size: $primary-font-size;
+  color: $primary-font-color;
+  font-weight: 600;
+  white-space: nowrap;
+}
+@media (max-width: 1600px) {
+  .svg-icon,
+  .current-year,
+  .title {
+    font-size: $primary-font-size-middle;
+  }
+}
+.menu-title {
+  justify-content: space-between;
+  .top-menu {
+    .el-button {
+      margin: 15px 20px 0 20px;
+      font-size: 1.04vw;
+    }
+    .el-button--primary.is-plain {
+      color: #00fbff;
+      background: #13345e;
+      border-color: #00fbff;
+      padding: 10 1.16vw;
+    }
+    .el-button--primary.is-plain:focus,
+    .el-button--primary.is-plain:hover {
+      color: #ffffff;
+      background: #0090b3;
+      border-color: #00fbff;
+    }
+  }
+  .title {
+    margin-top: 10px;
+  }
+}
 //测试css
 .el-col {
   height: 100%;
