@@ -15,7 +15,7 @@ import "@/styles/variable.scss";
 import "./icons";
 import "./utils/rem"; // rem 自适应
 
-import "./utils/halloween.js" //echart主题
+import "./utils/shine.js" //echart主题
 
 Vue.config.productionTip = false;
 

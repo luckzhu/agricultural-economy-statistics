@@ -37,8 +37,8 @@
 
 <script>
 import BorderBox1 from "@/components/BorderBox/borderBox1";
-import BarHorizontal from "./components/bar-horizontal";
-import chartInformation from "./components/chart-information";
+import BarHorizontal from "@/components/Echarts/bar-horizontal";
+import chartInformation from "@/components/Echarts/chart-information";
 
 export default {
   components: {
@@ -355,8 +355,5 @@ export default {
     right: 50px;
     bottom: 32px;
   }
-}
-.el-col {
-  // outline: 1px solid yellow;
 }
 </style>

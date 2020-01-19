@@ -148,7 +148,5 @@ export default {
     margin-bottom: 10px;
   }
 }
-.el-col {
-  // outline: 1px solid yellow;
-}
+
 </style>
