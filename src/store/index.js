@@ -1,11 +1,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import getters from "./getters";
+import charts from "./modules/charts";
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {}
+const store = new Vuex.Store({
+  modules: {
+    charts,
+  },
+  getters
 });
+
+export default store;

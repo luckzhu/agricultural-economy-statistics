@@ -2,7 +2,7 @@
   <div id="app">
     <!-- <full-screen-container> -->
     <el-container>
-      <el-header height="12.96vh">
+      <el-header height="140px">
         <the-header />
       </el-header>
       <el-main>
@@ -29,13 +29,20 @@ export default {
 @import "@/styles/variable.scss";
 @import "@/styles/reset.scss";
 
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
 #app {
   // font-family: MicrosoftYaHei, "Avenir", Helvetica, Arial, sans-serif;
   text-align: center;
   color: #fff;
   background-color: $primary-background-color;
+  line-height: 100%;
   .el-header {
-    // line-height: 12.96vh;
+    height: 140px !important;
     padding: 0;
   }
   .el-main {

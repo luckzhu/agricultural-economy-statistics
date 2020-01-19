@@ -74,25 +74,19 @@ export default {
   font-weight: 600;
   white-space: nowrap;
 }
-@media (max-width: 1600px) {
-  .svg-icon,
-  .current-year,
-  .title {
-    font-size: $primary-font-size-middle;
-  }
-}
+
 .menu-title {
   justify-content: space-between;
   .top-menu {
     .el-button {
       margin: 15px 20px 0 20px;
-      font-size: 1.04vw;
+      font-size: 22px;
     }
     .el-button--primary.is-plain {
       color: #00fbff;
       background: #13345e;
       border-color: #00fbff;
-      padding: 10 1.16vw;
+      padding: 10px 28px;
     }
     .el-button--primary.is-plain:focus,
     .el-button--primary.is-plain:hover {
@@ -102,7 +96,7 @@ export default {
     }
   }
   .title {
-    margin-top: 10px;
+    margin-top: 30px;
   }
 }
 //测试css
