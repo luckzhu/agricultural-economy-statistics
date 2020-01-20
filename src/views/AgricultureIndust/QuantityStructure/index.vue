@@ -49,7 +49,6 @@ export default {
             percent: 40,
             subText: "通过合同等契约方式向农户收购农副产品，并及时按约定结算，农户按合同要求进行生产"
           },
-
           {
             name: "合作方式",
             value: 2132,
@@ -139,14 +138,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.grid-wrapper {
-  height: 830px; //
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  .grid-content:not(:last-child) {
-    margin-bottom: 10px;
-  }
-}
-
 </style>
