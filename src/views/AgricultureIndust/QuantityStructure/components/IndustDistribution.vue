@@ -52,7 +52,7 @@ export default {
   text-align: left;
   .chart-title {
     font-size: 20px; /*px*/
-    color: #00f6fb;
+    color: $primary-font-color;
     font-weight: 600;
     padding-left: 28px;
   }
@@ -103,7 +103,7 @@ export default {
   line-height: 16px;
   letter-spacing: 1px;
   text-align: left;
-  color: #1bced4;
+  color: $light-font-color;
   position: absolute;
   left: 0;
   top: 100%;

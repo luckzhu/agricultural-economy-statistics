@@ -11,7 +11,8 @@ import router from "./router";
 import store from "./store";
 import "./plugins/element.js";
 
-import "@/styles/variable.scss";
+import '@/styles/index.scss' // global css
+
 import "./icons";
 import "./utils/rem"; // rem 自适应
 

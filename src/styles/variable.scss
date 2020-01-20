@@ -1,5 +1,15 @@
 $primary-background-color: #181d3d;
-$primary-font-color: #00fbff;
-$primary-font-size: 48px;
+$primary-font-color      : #00fbff;
+$light-font-color        : #1bced4;
+$primary-font-size       : 48px;
 $primary-font-size-middle: 36px;
-$menu-font-color: #00fafe;
+$menu-font-color         : #0090b3;
+
+:export {
+  primary-background-color: $primary-background-color;
+  primary-font-color      : $primary-font-color;
+  light-font-color        : $light-font-color;
+  primary-font-size       : $primary-font-size;
+  primary-font-size-middle: $primary-font-size-middle;
+  menu-font-color         : $menu-font-color;
+}

@@ -2,7 +2,9 @@
   <div>
     <el-row :gutter="10">
       <el-col :span="12" class="grid-wrapper">
-        <border-box1 class="grid-content"></border-box1>
+        <border-box1 class="grid-content">
+          <drive-benefits />
+        </border-box1>
         <border-box1 class="grid-content">
           <base-distribut id="cultivatedArea" :chartData="cultivatedAreaData" />
           <base-distribut id="animalHusbandry" :chartData="animalHusbandryData" />
@@ -29,13 +31,15 @@ import BorderBox1 from "@/components/BorderBox/borderBox1";
 import BarHorizontal from "@/components/Echarts/bar-horizontal";
 import chartInformation from "@/components/Echarts/chart-information";
 import BaseDistribut from "./components/BaseDistribut";
+import DriveBenefits from "./components/DriveBenefits";
 
 export default {
   components: {
     BorderBox1,
     BarHorizontal,
     chartInformation,
-    BaseDistribut
+    BaseDistribut,
+    DriveBenefits
   },
   data() {
     return {

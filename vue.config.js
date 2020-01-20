@@ -29,6 +29,9 @@ module.exports = {
     loaderOptions: {
       postcss: {
         plugins: [postcss]
+      },
+      sass: {
+        prependData: `@import "./src/styles/variable.scss";`
       }
     }
   },

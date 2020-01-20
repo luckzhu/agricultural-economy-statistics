@@ -51,7 +51,7 @@ export default {
     }
   }
   .describe {
-    color: #1bced4;
+    color: $light-font-color;
     font-size: 40px;
     font-weight: 600;
   }
@@ -71,7 +71,7 @@ export default {
     }
   }
   .describe {
-    color: #1bced4;
+    color: $light-font-color;
     font-size: 30px;
     font-weight: 600;
   }

@@ -135,20 +135,20 @@ export default {
     text-align: center;
   }
   .font-info1 {
-    font-size: 24px; /*px*/
+    font-size: 24px;
     font-weight: 700;
     color: #fff;
   }
   .font-info2 {
-    font-size: 20px; /*px*/
+    font-size: 20px;
     font-weight: 500;
-    color: #00fbff;
+    color: $primary-font-color;
   }
 
   .font-info3 {
-    font-size: 14px; /*px*/
+    font-size: 14px;
     font-weight: 500;
-    color: #1bced4;
+    color: $light-font-color;
   }
 }
 </style>

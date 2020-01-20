@@ -51,7 +51,7 @@ export default {
     }
   }
   .describe {
-    color: #1bced4;
+    color: $light-font-color;
     font-size: 20px;
     font-weight: 600;
     white-space: nowrap;

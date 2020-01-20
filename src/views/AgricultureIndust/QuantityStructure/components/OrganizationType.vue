@@ -1,13 +1,13 @@
 <template>
   <div>
-      <div class="organization-type" :id="id" />
-      <div class="chart-info-wrapper">
-        <div class="chart-info" v-for="(chart,index) in chartData.data" :key="index">
-          <p class="font-info1 info-width">{{chart.value}} 家</p>
-          <p class="font-info2 info-width">{{chart.name}}</p>
-          <p class="font-info3 info-width">{{chart.subText}}</p>
-        </div>
+    <div class="organization-type" :id="id" />
+    <div class="chart-info-wrapper">
+      <div class="chart-info" v-for="(chart,index) in chartData.data" :key="index">
+        <p class="font-info1 info-width">{{chart.value}} 家</p>
+        <p class="font-info2 info-width">{{chart.name}}</p>
+        <p class="font-info3 info-width">{{chart.subText}}</p>
       </div>
+    </div>
   </div>
 </template>
 
@@ -160,20 +160,20 @@ export default {
     text-align: center;
   }
   .font-info1 {
-    font-size: 24px; /*px*/
+    font-size: 24px;
     font-weight: 700;
     color: #fff;
   }
   .font-info2 {
-    font-size: 20px; /*px*/
+    font-size: 20px;
     font-weight: 500;
-    color: #00fbff;
+    color: $primary-font-color;
   }
 
   .font-info3 {
-    font-size: 14px; /*px*/
+    font-size: 14px;
     font-weight: 500;
-    color: #1bced4;
+    color: $light-font-color;
   }
 }
 </style>
