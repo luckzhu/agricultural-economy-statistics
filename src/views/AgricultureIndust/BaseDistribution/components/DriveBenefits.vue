@@ -10,6 +10,11 @@
       </div>
       <bar-benefit :id="item.title" :chartData="item" width="22.5rem" height="12.5rem" />
     </div>
+    <div class="benefit-order">
+      <p>订单合作关系中:</p>
+      <p>实现年订单总额610亿元</p>
+      <p>年履约订单成交额579亿元</p>
+    </div>
   </div>
 </template>
 
@@ -88,5 +93,18 @@ export default {
       font-size: 10px;
     }
   }
+}
+.benefit-order {
+  width: 440px;
+  height: 100%;
+  text-align: left;
+  border: 1px solid #41e3ff3f;
+  margin-bottom: 10px;
+  padding: 20px;
+  font-size: 28px;
+  align-items: flex-start;
+  background: $light-background-color;
+  border-radius: 20px;
+  line-height: 50px;
 }
 </style>

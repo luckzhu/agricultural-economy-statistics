@@ -71,7 +71,7 @@ export default {
 .item-bar {
   height: 30px;
   width: 100%;
-  background: #13345e;
+  background: $light-background-color;
   position: relative;
 }
 

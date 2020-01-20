@@ -164,11 +164,7 @@ export default {
             barWidth: 80,
             data: dataValue,
             color: "#FFF",
-            // itemStyle: {
-            //   normal: {
-            //     opacity: 0
-            //   }
-            // },
+            symbolClip: true,
             label: {
               normal: {
                 show: true,
