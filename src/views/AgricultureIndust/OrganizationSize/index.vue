@@ -339,15 +339,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.grid-wrapper {
-  height: 830px; //
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  .grid-content:not(:last-child) {
-    margin-bottom: 10px;
-  }
-}
 .grid-content {
   position: relative;
   .chart-information {

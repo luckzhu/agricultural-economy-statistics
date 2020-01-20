@@ -99,9 +99,8 @@ export default {
             name: tempChartData.title,
             type: "pie",
             //roseType:'radius',
-
             radius: "45%",
-            center: ["50%", "45%"],
+            center: ["50%", "50%"],
             data: data,
             label: {
               normal: {
@@ -110,13 +109,13 @@ export default {
                 textStyle: {
                   // color: "#13345e",
                   color: "#fff",
-                  fontSize: 14,
-                  fontWeight: 500
+                  fontSize: 12,
+                  fontWeight: 600
                 }
               }
             },
             itemStyle: {
-              borderColor: "#fff",
+              borderColor: "#bbb",
               borderWidth: 4,
               emphasis: {
                 shadowBlur: 10,
