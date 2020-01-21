@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      chart: null,
+      chart: null
     };
   },
   watch: {
@@ -54,11 +54,11 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(document.getElementById(this.id));
-      this.setOptions();
+      this.setOptions(this.chartData);
     },
     setOptions({ expectedData, actualData } = {}) {
       const colors = this.$store.getters.colors;
-      const data = this.chartData
+      const data = this.chartData;
       this.chart.setOption({
         title: {
           text: `· ${data.title}`,
@@ -69,97 +69,49 @@ export default {
             color: "#00F6FB"
           }
         },
-        color: colors,
-        tooltip: {
-          trigger: "item",
-          formatter: "{a} {b} :{d}%",
-          textStyle: {
-            fontSize: 14
-          }
-        },
         legend: {
-          orient: "vertical",
+          left: "center",
           top: "20%",
-          data: data.xAxis,
+          orient: "vertical",
           textStyle: {
             color: "#fff",
             fontSize: 12
           }
         },
-
+        color: colors,
+        tooltip: {},
+        dataset: {
+          source: data.source
+        },
+        xAxis: {
+          type: "category",
+          show: true,
+          axisLabel: {
+            color: "#fff",
+            fontSize: 10
+          },
+          data: data.xAxis
+        },
+        yAxis: {
+          type: "value",
+          show: false
+        },
         grid: {
-          top: "65%",
-          left: "30%",
-          right: "25%",
+          top: "68%",
+          left: "10%",
+          right: "10%",
           bottom: "5%",
           containLabel: true
         },
-        xAxis: {
-          type: "value",
-          splitLine: { show: false },
-          axisLabel: { show: false },
-          axisTick: { show: false },
-          axisLine: { show: false }
-        },
-        yAxis: {
-          type: "category",
-          inverse: true,
-          data: data.xAxis,
-          axisLine: { show: false },
-          axisTick: { show: false },
-          // nameGap: 30,
-          offset: 4,
-          axisLabel: {
-            show: true,
-            textStyle: {
-              color: "#fff",
-              fontSize: 12
-            }
-          }
-        },
         series: [
           {
-            name: "产值结构",
             type: "pie",
-            //roseType:'radius',
             radius: "40%",
             center: ["21%", "40%"],
-            data: data.production,
-            label: {
-              normal: {
-                position: "outside",
-                formatter: "{d}%",
-                textStyle: {
-                  color: "#fff",
-                  fontSize: 14,
-                  ntWeight: 600
-                }
-              }
+            encode: {
+              itemName: "type",
+              value: "数量结构"
             },
-            itemStyle: {
-              borderColor: "#fff",
-              borderWidth: 2,
-              emphasis: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: "rgba(0, 0, 0, 0.5)"
-              }
-            }
-            // markPoint: {
-            //   symbol: "circle",
-            //   symbolSize: 50,
-            //   label: {
-            //     show: true
-            //   }
-            // }
-          },
-          {
-            name: "数量结构",
-            type: "pie",
-            //roseType:'radius',
-            radius: "40%",
-            center: ["79%", "40%"],
-            data: data.count,
             label: {
               normal: {
                 position: "outside",
@@ -182,39 +134,62 @@ export default {
             }
           },
           {
-            name: "企业平均产值",
-
-            type: "bar",
-            //roseType:'radius',
-            tooltip: {
-              trigger: "item",
-              formatter: "{b}: {c}亿元/家",
-              textStyle: {
-                fontSize: 14
+            type: "pie",
+            radius: "40%",
+            center: ["79%", "40%"],
+            encode: {
+              itemName: "type",
+              value: "产值结构"
+            },
+            label: {
+              normal: {
+                position: "outside",
+                formatter: "{d}%",
+                textStyle: {
+                  color: "#fff",
+                  fontSize: 14,
+                  fontWeight: 600
+                }
               }
             },
             itemStyle: {
-              color: function(params) {
-                return colors[params.dataIndex];
+              borderColor: "#fff",
+              borderWidth: 2,
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)"
               }
-            },
-            data: data.average,
-            barMaxWidth: 12,
-            barGap: -40,
+            }
+          },
+          {
+            type: "bar",
+            // name:"平均产值（亿元/家）",
+            barWidth: 40,
             label: {
               normal: {
                 show: true,
+                position: "top",
+                formatter: "{c}",
                 textStyle: {
                   color: "#fff",
                   fontSize: 12
-                },
-                position: "right",
-                offset: [10, 0],
-                formatter: function(params) {
-                  return `${params.value} 亿元/家`;
                 }
               }
-            }
+            },
+            itemStyle: {
+              normal: {
+                color: function(params) {
+                  // build a color map as your need.
+                  let colorList = [...colors, ...colors, ...colors, ...colors];
+                  return colorList[params.dataIndex];
+                },
+
+                shadowBlur: 80,
+                shadowColor: "rgba(0, 0, 0, 0.5)"
+              }
+            },
+            data: data.average
           }
         ]
       });

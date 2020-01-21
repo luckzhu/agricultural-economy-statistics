@@ -6,22 +6,12 @@
       </el-col>
       <el-col :span="14" class="grid-wrapper">
         <border-box1 class="grid-content mix-chart-wrapper">
-          <bar-normal id="scale-bar" height="25.625rem" :chartData="scaleBarData" />
-          <pie-normal
-            id="scale-pie"
-            height="21.875rem"
-            width="21.875rem"
-            :chartData="scalePieData"
-          />
+          <bar-normal id="scale-bar" height="25.6rem" :chartData="scaleBarData" />
+          <pie-normal id="scale-pie" height="21.875rem" width="21.875rem" :chartData="scalePieData" />
         </border-box1>
         <border-box1 class="grid-content mix-chart-wrapper">
-          <bar-normal id="revenue-bar" height="25.625rem" :chartData="revenueBarData" />
-          <pie-normal
-            id="revenue-pie"
-            height="21.875rem"
-            width="21.875rem"
-            :chartData="revenuePieData"
-          />
+          <bar-normal id="revenue-bar" height="25.6rem" :chartData="revenueBarData" />
+          <pie-normal id="revenue-pie" height="21.875rem" width="21.875rem" :chartData="revenuePieData" />
         </border-box1>
       </el-col>
     </el-row>
