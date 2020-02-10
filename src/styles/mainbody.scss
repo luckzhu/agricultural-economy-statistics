@@ -32,11 +32,25 @@
 }
 
 .grid-wrapper {
-  height: 830px; //
-  display: flex;
-  flex-direction: column;
+  height         : 830px; //
+  display        : flex;
+  flex-direction : column;
   justify-content: space-between;
+
   .grid-content:not(:last-child) {
     margin-bottom: 10px;
+  }
+}
+
+.chart-title-wrapper {
+  padding    : 24px 0;
+  text-align : left;
+
+  .chart-title {
+    font-size: 20px;
+    color    : $primary-font-color;
+
+    font-weight : 600;
+    padding-left: 28px;
   }
 }
