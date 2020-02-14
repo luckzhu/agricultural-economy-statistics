@@ -2,10 +2,11 @@
   <div class="the-header">
     <el-col :span="5" class="the-header-left">
       <svg-icon icon-name="toLeft"></svg-icon>
-      <p class="current-year">{{ currentYear }}年度</p>
+      <p class="current-year" @click="onLogin">{{ currentYear }}年度</p>
       <svg-icon icon-name="toRight"></svg-icon>
     </el-col>
-    <el-col :span="14" class="menu-title xy-center-column">
+    <el-col :span="14" class="menu-title">
+      <p class="title">{{ title }}</p>
       <div class="menu">
         <div class="top-menu xy-center">
           <router-link v-for="(button,index) in topButtons" :to="`${button.path}`" :key="index">
@@ -13,7 +14,6 @@
           </router-link>
         </div>
       </div>
-      <p class="title">{{ title }}</p>
     </el-col>
     <el-col :span="5" class="xy-center">
       <svg-icon icon-name="exit"></svg-icon>
@@ -23,6 +23,11 @@
 
 <script>
 import SvgIcon from "@/components/SvgIcon";
+import qs from "qs";
+import { login, getInfo } from "@/api/user";
+
+import { getCalIndustrySurveyTable1, getGraph, addOrUpdateIndustrySurvey } from "@/api/industrySurvey";
+
 export default {
   components: {
     SvgIcon
@@ -41,13 +46,28 @@ export default {
         农业产业化: "广东省农业产业化基本情况",
         省龙专题: "省重点农业龙头企业发展特点",
         地市风采: "广东省农业产业化地市风采",
-        标杆企业: "广东省农业标杆企业",
+        标杆企业: "广东省农业标杆企业"
       }
     };
+  },
+  mounted() {
+    this.getChartsData();
   },
   methods: {
     onTopMenu(name) {
       this.title = this.menuList[name];
+    },
+    //为了请求数据
+    onLogin() {
+      login(qs.stringify({ name: "zxn", pwd: "123" })).then(() => {
+        getInfo(res => {});
+      });
+    },
+    //由于所有数据都放在了一个graph。请求graph,然后放到store
+    getChartsData() {
+      return getGraph({ year: 2018 }).then(res => {
+        console.log(res);
+      });
     }
   }
 };
@@ -76,11 +96,14 @@ export default {
 }
 
 .menu-title {
-  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   .top-menu {
     .el-button {
       margin: 15px 20px 0 20px;
       font-size: 22px;
+      font-weight: 500;
     }
     .el-button--primary.is-plain {
       color: #00fbff;
@@ -95,8 +118,8 @@ export default {
       border-color: #00fbff;
     }
   }
-  .title {
-    margin-top: 30px;
+  .menu {
+    transform: translateY(30px)
   }
 }
 //测试css

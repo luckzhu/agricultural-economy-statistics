@@ -14,6 +14,17 @@ function resolve(dir) {
 }
 
 module.exports = {
+  devServer: {
+    proxy: {
+      "/": {
+        // target: "http://192.168.2.2:8054",
+        target: "http://192.168.2.16:8053",
+        //  target: "http://192.168.2.23:8053",
+        changeOrigin: true,
+        ws: false
+      }
+    }
+  },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
