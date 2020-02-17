@@ -15,9 +15,9 @@ const routes = [
         component: () => import("@/views/AgricultureIndust/QuantityStructure/index.vue")
       },
       {
-        path: "organizationSize",
-        name: "OrganizationSize",
-        component: () => import("@/views/AgricultureIndust/OrganizationSize/index.vue")
+        path: "organSize",
+        name: "OrganSize",
+        component: () => import("@/views/AgricultureIndust/OrganSize/index.vue")
       },
       {
         path: "baseDistribution",

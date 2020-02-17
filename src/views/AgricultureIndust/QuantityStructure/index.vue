@@ -11,7 +11,7 @@
       </el-col>
       <el-col :span="12" class="grid-wrapper">
         <border-box1 class="grid-content">
-          <benefit-bind id="benefitBind" :chartData="benefitBindData" />
+          <benefit-bind />
         </border-box1>
         <border-box1 class="grid-content">
           <areal-distribution
@@ -42,37 +42,6 @@ export default {
   },
   data() {
     return {
-      benefitBindData: {
-        title: "农业产业化组织利益联结方式",
-        subTitle: "我省农业产业化组织数量以订单合同方式是3637家，占40%；合作方式（按利润返还）2132家，占23%；股份合作方式856家，占9%；其它方式2609家，占28%。",
-        unit: "亿元",
-        data: [
-          {
-            name: "订单合同方式",
-            value: 3637,
-            percent: 40,
-            subText: "通过合同等契约方式向农户收购农副产品，并及时按约定结算，农户按合同要求进行生产"
-          },
-          {
-            name: "合作方式",
-            value: 2132,
-            percent: 23,
-            subText: "将农副产品加工、运销等增值的一部分利润按一定方式返还农户,含二次分配"
-          },
-          {
-            name: "股份合作方式",
-            value: 856,
-            percent: 9,
-            subText: "年交易额2000万元以上的专业批发市场（不含龙头企业）"
-          },
-          {
-            name: "其他方式",
-            value: 2609,
-            percent: 28,
-            subText: "比如租地、吸收就业等"
-          }
-        ]
-      },
       industDistributionData: [
         [5355, "种植业", "以种植业产品为对象，实行一体化经营的组织"],
         [1375, "畜牧业", "以畜禽产品为对象，实行一体化经营的组织"],

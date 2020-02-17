@@ -153,7 +153,6 @@ export default {
           ]
         });
       });
-       console.log(this.chart)
       this.chart.setOption({
         title: {
           text: `· ${title}`,
@@ -173,15 +172,14 @@ export default {
     //转换数据格式，适应图表
     convertData({ option, data }) {
       let arr = [];
-      console.log(data);
       option.data.forEach(item => {
         let obj = {};
         obj.name = item.name;
         obj.value = data[item.valueField];
-        let percent = Number((data[item.percentField] * 100).toFixed(0));
+        let percent = Number(data[item.percentField].toFixed(0));
         obj.percent = percent;
         if (percent < 1) {
-          obj.percent = Number((data[item.percentField] * 100).toFixed(1));
+          obj.percent = Number(data[item.percentField].toFixed(1));
         }
         obj.subText = item.subText;
         arr.push(obj);
@@ -189,7 +187,6 @@ export default {
       this.chartData.title = option.title;
       this.chartData.unit = option.unit;
       this.chartData.data = arr;
-      console.log(this.chartData);
     }
   }
 };

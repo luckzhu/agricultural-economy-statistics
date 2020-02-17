@@ -18,30 +18,63 @@ import "echarts-liquidfill";
 export default {
   name: "BenefitBind",
   mixins: [resize],
-  props: {
-    chartData: {
-      type: Object,
-      default: () => {}
-    },
-    id: {
-      type: String,
-      default: "chart"
-    }
-  },
   data() {
     return {
-      chart: null
+      chart: null,
+      option: {
+        title: "农业产业化组织利益联结方式",
+        unit: "亿元",
+        data: [
+          {
+            name: "订单合同方式",
+            valueField: "orderSum",
+            percentField: "orderSumRate",
+            subText: "通过合同等契约方式向农户收购农副产品，并及时按约定结算，农户按合同要求进行生产"
+          },
+          {
+            name: "合作方式",
+            valueField: "coopMode",
+            percentField: "coopModeRate",
+            subText: "将农副产品加工、运销等增值的一部分利润按一定方式返还农户"
+          },
+          {
+            name: "股份合作方式",
+            valueField: "stockMode",
+            percentField: "stockModeRate",
+            subText: "年交易额2000万元以上的专业批发市场（不含龙头企业）"
+          },
+          {
+            name: "其他方式",
+            valueField: "ortherMode",
+            percentField: "ortherModeRate",
+            subText: "比如租地、吸收就业等"
+          }
+        ]
+      },
+      id: "benefitBind",
+      chartData: {
+        title: "",
+        unit: "",
+        data: []
+      }
     };
   },
+  computed: {
+    graphData() {
+      return this.$store.getters.graphData;
+    }
+  },
   watch: {
-    chartData: {
+    graphData: {
       deep: true,
       handler(val) {
-        this.setOptions(val);
+        this.convertData({ option: this.option, data: val });
+        this.setOptions(this.chartData);
       }
     }
   },
   mounted() {
+    this.convertData({ option: this.option, data: this.graphData });
     this.$nextTick(() => {
       this.initChart();
     });
@@ -58,9 +91,8 @@ export default {
       this.chart = echarts.init(document.getElementById(this.id));
       this.setOptions(this.chartData);
     },
-    setOptions({ expectedData, actualData } = {}) {
-      let tempChartData = JSON.parse(JSON.stringify(this.chartData));
-      const { data, title, subTitle, unit } = tempChartData;
+    setOptions(chartData = {}) {
+      const { data, title, subTitle, unit } = chartData;
       const colors = this.$store.getters.colors;
       let series = [];
       data.forEach((item, i) => {
@@ -111,6 +143,26 @@ export default {
         },
         series: series
       });
+    },
+    //转换数据格式，适应图表
+    convertData({ option, data }) {
+      let arr = [];
+      option.data.forEach(item => {
+        let obj = {};
+        obj.name = item.name;
+        obj.value = data[item.valueField];
+        let percent = Number(data[item.percentField].toFixed(0));
+        obj.percent = percent;
+        if (percent < 1) {
+          obj.percent = Number(data[item.percentField].toFixed(1));
+        }
+        obj.subText = item.subText;
+        arr.push(obj);
+      });
+      this.chartData.title = option.title;
+      this.chartData.unit = option.unit;
+      this.chartData.data = arr;
+      console.log(this.chartData);
     }
   }
 };
