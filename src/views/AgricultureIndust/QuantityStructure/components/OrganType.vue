@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="organization-type" :id="id" />
+    <div class="organ-type" :id="id" />
     <div class="chart-info-wrapper">
       <div class="chart-info" v-for="(chart,index) in chartData.data" :key="index">
         <p class="font-info1 info-width">{{chart.value}} 家</p>
@@ -15,32 +15,65 @@
 import echarts from "echarts";
 import resize from "@/components/Echarts/mixins/resize";
 export default {
-  name: "OrganizationType",
+  name: "OrganType",
   mixins: [resize],
-  props: {
-    chartData: {
-      type: Object,
-      default: () => {}
-    },
-    id: {
-      type: String,
-      default: "chart"
-    }
-  },
   data() {
     return {
-      chart: null
+      chart: null,
+      option: {
+        title: "农业产业化组织类型",
+        unit: "亿元",
+        data: [
+          {
+            name: "龙头企业带动型",
+            valueField: "ltOrgan",
+            percentField: "ltOrganRate",
+            subText: "县以上农业产业化主管部门认定的龙头企业"
+          },
+          {
+            name: "合作组织带动型",
+            valueField: "coopOragn",
+            percentField: "coopOragnRate",
+            subText: "县以上农业产业化主管部门认定的农民专业合作示范社"
+          },
+          {
+            name: "专业市场带动型",
+            valueField: "marketSum",
+            percentField: "marketSumRate",
+            subText: "年交易额2000万元以上的专业批发市场（不含龙头企业）"
+          },
+          {
+            name: "其他类型",
+            valueField: "otherOrgan",
+            percentField: "otherOrganRate",
+            subText: "比如协会、联盟等"
+          }
+        ]
+      },
+      id: "organType",
+      chartData: {
+        title: "",
+        unit: "",
+        data: []
+      }
     };
   },
+  computed: {
+    graphData() {
+      return this.$store.getters.graphData;
+    }
+  },
   watch: {
-    chartData: {
+    graphData: {
       deep: true,
       handler(val) {
-        this.setOptions(val);
+        this.convertData({ option: this.option, data: val });
+        this.setOptions(this.chartData);
       }
     }
   },
   mounted() {
+    this.convertData({ option: this.option, data: this.graphData });
     this.$nextTick(() => {
       this.initChart();
     });
@@ -57,9 +90,8 @@ export default {
       this.chart = echarts.init(document.getElementById(this.id));
       this.setOptions(this.chartData);
     },
-    setOptions({ expectedData, actualData } = {}) {
-      let tempChartData = JSON.parse(JSON.stringify(this.chartData));
-      const { data, title, subTitle, unit } = tempChartData;
+    setOptions(chartData = {}) {
+      const { data, title, subTitle, unit } = chartData;
       const colors = this.$store.getters.colors;
       let series = [];
       data.forEach((item, i) => {
@@ -121,6 +153,7 @@ export default {
           ]
         });
       });
+       console.log(this.chart)
       this.chart.setOption({
         title: {
           text: `· ${title}`,
@@ -136,13 +169,34 @@ export default {
         },
         series: series
       });
+    },
+    //转换数据格式，适应图表
+    convertData({ option, data }) {
+      let arr = [];
+      console.log(data);
+      option.data.forEach(item => {
+        let obj = {};
+        obj.name = item.name;
+        obj.value = data[item.valueField];
+        let percent = Number((data[item.percentField] * 100).toFixed(0));
+        obj.percent = percent;
+        if (percent < 1) {
+          obj.percent = Number((data[item.percentField] * 100).toFixed(1));
+        }
+        obj.subText = item.subText;
+        arr.push(obj);
+      });
+      this.chartData.title = option.title;
+      this.chartData.unit = option.unit;
+      this.chartData.data = arr;
+      console.log(this.chartData);
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.organization-type {
+.organ-type {
   height: 280px;
   width: 100%;
 }

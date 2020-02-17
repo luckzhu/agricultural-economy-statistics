@@ -3,7 +3,7 @@
     <el-row :gutter="10">
       <el-col :span="12" class="grid-wrapper">
         <border-box1 class="grid-content">
-          <organization-type :chartData="organizationTypeData" />
+          <organ-type />
         </border-box1>
         <border-box1 class="grid-content">
           <indust-distribution :chartData="industDistributionData" />
@@ -14,7 +14,11 @@
           <benefit-bind id="benefitBind" :chartData="benefitBindData" />
         </border-box1>
         <border-box1 class="grid-content">
-          <areal-distribution id="ArealDistribution" height="25.625rem" :chartData="arealDistributionData" />
+          <areal-distribution
+            id="ArealDistribution"
+            height="25.625rem"
+            :chartData="arealDistributionData"
+          />
         </border-box1>
       </el-col>
     </el-row>
@@ -23,7 +27,7 @@
 
 <script>
 import BorderBox1 from "@/components/BorderBox/borderBox1";
-import OrganizationType from "./components/OrganizationType";
+import OrganType from "./components/OrganType";
 import BenefitBind from "./components/BenefitBind";
 import IndustDistribution from "./components/IndustDistribution";
 import ArealDistribution from "./components/ArealDistribution";
@@ -31,7 +35,7 @@ import ArealDistribution from "./components/ArealDistribution";
 export default {
   components: {
     BorderBox1,
-    OrganizationType,
+    OrganType,
     BenefitBind,
     IndustDistribution,
     ArealDistribution
@@ -69,38 +73,6 @@ export default {
           }
         ]
       },
-      organizationTypeData: {
-        title: "农业产业化组织类型",
-        subTitle: "我省农业产业化组织共有9234家，其中龙头企业带动型4260家，占46%；合作组织带动型4185家，占45%；专业市场带动型35家，占0.4%；其它类型754家，占8%。",
-        unit: "亿元",
-        data: [
-          {
-            name: "龙头企业带动型",
-            value: 3805,
-            percent: 42,
-            subText: "县以上农业产业化主管部门认定的龙头企业"
-          },
-
-          {
-            name: "合作组织带动型",
-            value: 4373,
-            percent: 49,
-            subText: "县以上农业产业化主管部门认定的农民专业合作示范社"
-          },
-          {
-            name: "专业市场带动型",
-            value: 36,
-            percent: 0.4,
-            subText: "年交易额2000万元以上的专业批发市场（不含龙头企业）"
-          },
-          {
-            name: "其他类型",
-            value: 758,
-            percent: 8.4,
-            subText: "比如协会、联盟等"
-          }
-        ]
-      },
       industDistributionData: [
         [5355, "种植业", "以种植业产品为对象，实行一体化经营的组织"],
         [1375, "畜牧业", "以畜禽产品为对象，实行一体化经营的组织"],
@@ -133,7 +105,7 @@ export default {
         ]
       }
     };
-  }
+  },
 };
 </script>
 

@@ -66,7 +66,7 @@ export default {
     //由于所有数据都放在了一个graph。请求graph,然后放到store
     getChartsData() {
       return getGraph({ year: 2018 }).then(res => {
-        console.log(res);
+        this.$store.dispatch("charts/setChartsData", res.data.info);
       });
     }
   }
@@ -119,7 +119,7 @@ export default {
     }
   }
   .menu {
-    transform: translateY(30px)
+    transform: translateY(30px);
   }
 }
 //测试css
