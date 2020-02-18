@@ -140,7 +140,7 @@ export default {
               name: "",
               itemStyle: {
                 normal: {
-                  // color: "#ccc",
+                  color: "#ccc",
                   label: {
                     show: false
                   },
@@ -170,7 +170,8 @@ export default {
           show: true,
           feature: {
             saveAsImage: {
-              type: "png"
+              type: "png",
+              pixelRatio: "5"
             }
           }
         },

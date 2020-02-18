@@ -75,7 +75,6 @@ export default {
   },
   mounted() {
     if (this.graphData) {
-      
     }
     this.$nextTick(() => {
       this.convertData({ option: this.option, data: this.graphData });
@@ -91,7 +90,7 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(document.getElementById(this.id));
+      this.chart = echarts.init(document.getElementById(this.id), "infographic");
       this.setOptions(this.chartData);
     },
     setOptions(chartData = {}) {
@@ -117,14 +116,14 @@ export default {
               textStyle: {
                 fontSize: 36,
                 fontWeight: "bold",
-                color: "#fff",
+                color: colors[i],
                 // color:'#7fe416',
                 insideColor: "#fff"
               }
             }
           },
           backgroundStyle: {
-            color: "rgba(4,24,74,0.1)",
+            color: "rgba(4,24,74,0.01)",
             borderWidth: 0.8,
             borderColor: colors[i]
           }
@@ -133,15 +132,19 @@ export default {
       this.chart.setOption({
         title: {
           text: `· ${title}`,
-          // subtext: subTitle,
           x: "20px",
           y: "20px",
           textStyle: {
-            color: "#00F6FB"
-          },
-
-          subtextStyle: {
-            fontSize: 16
+            // color: "#00F6FB"
+          }
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            saveAsImage: {
+              type: "png",
+              pixelRatio: "5"
+            }
           }
         },
         series: series
@@ -149,7 +152,7 @@ export default {
     },
     //转换数据格式，适应图表
     convertData({ option, data }) {
-      if(!data) return 
+      if (!data) return;
       let arr = [];
       option.data.forEach(item => {
         let obj = {};
@@ -192,7 +195,7 @@ export default {
   .font-info1 {
     font-size: 24px;
     font-weight: 700;
-    color: #fff;
+    color: $primary-font-color;
   }
   .font-info2 {
     font-size: 20px;

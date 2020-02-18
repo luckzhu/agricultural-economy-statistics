@@ -11,7 +11,7 @@
           :style="{width:`${bar.percent}%`,backgroundColor:colors[index],height:'100%'}"
           class="item-bar-color"
         >
-          <span class="item-bar-describe">{{`${bar.value}家（${bar.percent} %）`}}</span>
+          <span class="item-bar-describe">{{`${bar.value}家（${bar.percent}%）`}}</span>
           <p class="item-info">{{bar.describe}}</p>
         </div>
       </div>
@@ -99,7 +99,7 @@ export default {
   padding: 24px 0;
   text-align: left;
   .chart-title {
-    font-size: 20px; /*px*/
+    font-size: 18px; /*px*/
     color: $primary-font-color;
     font-weight: 600;
     padding-left: 28px;
@@ -121,19 +121,21 @@ export default {
   width: 100%;
   background: $light-background-color;
   position: relative;
+  border-radius: 4px;
 }
 
 .font-barTitle {
   width: 80px;
   font-size: 20px; /*px*/
   font-weight: 700;
-  color: #fff;
+  color: $primary-title-color;
   text-align: left;
   letter-spacing: 0;
   white-space: nowrap;
 }
 .item-bar-color {
   position: relative;
+  border-radius: 4px;
 }
 .item-bar-describe {
   position: absolute;

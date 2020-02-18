@@ -14,7 +14,7 @@
           <benefit-bind />
         </border-box1>
         <border-box1 class="grid-content">
-          <areal-distribution
+          <areal-dist
             id="ArealDistribution"
             height="25.625rem"
             :chartData="arealDistributionData"
@@ -30,7 +30,7 @@ import BorderBox1 from "@/components/BorderBox/borderBox1";
 import OrganType from "./components/OrganType";
 import BenefitBind from "./components/BenefitBind";
 import IndustDist from "./components/IndustDist";
-import ArealDistribution from "./components/ArealDistribution";
+import ArealDist from "./components/ArealDist";
 
 export default {
   components: {
@@ -38,7 +38,7 @@ export default {
     OrganType,
     BenefitBind,
     IndustDist,
-    ArealDistribution
+    ArealDist
   },
   data() {
     return {

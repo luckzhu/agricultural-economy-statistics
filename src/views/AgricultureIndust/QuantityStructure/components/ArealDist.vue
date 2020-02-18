@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(document.getElementById(this.id));
+      this.chart = echarts.init(document.getElementById(this.id), "infographic");
       this.setOptions(this.chartData);
     },
     setOptions({ expectedData, actualData } = {}) {
@@ -78,14 +78,19 @@ export default {
       this.chart.setOption({
         title: {
           text: `· ${title}`,
-          // subtext: subTitle,
           x: "20px",
           y: "20px",
           textStyle: {
-            color: "#00F6FB"
-          },
-          subtextStyle: {
-            fontSize: 16
+            // color: "#00F6FB"
+          }
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            saveAsImage: {
+              type: "png",
+              pixelRatio: "5"
+            }
           }
         },
         tooltip: {
@@ -93,20 +98,26 @@ export default {
         },
         color: colors,
         legend: {
-          top: "100",
+          orient: "vertical",
+          top: "70",
+          left: "200",
           textStyle: {
-            color: "#fff",
-            fontSize: 16
+            // color: "#fff",
+            fontSize: 14
           },
-          itemGap: 20,
-          itemWidth: 20,
-          itemHeight: 14
+          data: [
+            { name: "龙头企业带动型", icon: "roundRect" },
+            { name: "合作组织带动型", icon: "roundRect" },
+            "\n", //legend强制换行
+            { name: "专业场带动型", icon: "roundRect" },
+            { name: "其他类型", icon: "roundRect" }
+          ]
         },
         grid: {
           left: "2%",
           right: "2%",
-          top: "12%",
-          bottom: "8%"
+          top: "14%",
+          bottom: "10%"
         },
         nameTextStyle: {
           color: "#fff"

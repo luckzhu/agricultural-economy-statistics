@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <!-- <full-screen-container> -->
+    <full-screen-container>
     <router-view />
-    <!-- </full-screen-container> -->
+    </full-screen-container>
   </div>
 </template>
 
 <script>
-// import FullScreenContainer from "@/components/FullScreenContainer";
+import FullScreenContainer from "@/components/FullScreenContainer";
 
 export default {
   name: "App",
   components: {
-    // FullScreenContainer,
+    FullScreenContainer,
   }
 };
 </script>

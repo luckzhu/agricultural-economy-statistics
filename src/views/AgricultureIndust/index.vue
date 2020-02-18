@@ -23,7 +23,7 @@ export default {
       topButtons: [
         {
           name: "数量结构",
-          path: "/quantityStructure"
+          path: "/quantityStructure",
         },
         {
           name: "组织规模",

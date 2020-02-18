@@ -8,7 +8,7 @@
     <el-col :span="14" class="menu-title">
       <p class="title">{{ title }}</p>
       <div class="menu">
-        <div class="top-menu xy-center">
+        <div class="top-menu xy-center button-group">
           <router-link v-for="(button,index) in topButtons" :to="`${button.path}`" :key="index">
             <el-button type="primary" plain @click="onTopMenu(button.name)">{{button.name}}</el-button>
           </router-link>
@@ -33,7 +33,24 @@ export default {
       currentYear: "2018",
       title: "广东省农业产业化基本情况",
       topButtons: [
-        { name: "农业产业化", path: "/agricultureIndust" },
+        {
+          name: "农业产业化",
+          path: "/agricultureIndust",
+          children: [
+            {
+              name: "数量结构",
+              path: "/quantityStructure"
+            },
+            {
+              name: "组织规模",
+              path: "/organSize"
+            },
+            {
+              name: "基地分布",
+              path: "/baseDistribution"
+            }
+          ]
+        },
         { name: "省龙专题", path: "/provincialLeader" },
         { name: "地市风采", path: "/localPresence" },
         { name: "标杆企业", path: "/benchmarking" }
@@ -49,7 +66,7 @@ export default {
   methods: {
     onTopMenu(name) {
       this.title = this.menuList[name];
-    },
+    }
   }
 };
 </script>
@@ -88,16 +105,16 @@ export default {
       font-weight: 500;
     }
     .el-button--primary.is-plain {
-      color: $primary-title-color;
-      background: $light-background-color;
-      border-color: $primary-title-color;
+      color: #27727b;
+      background: #ddd;
+      border-color: #fff;
       padding: 10px 28px;
     }
     .el-button--primary.is-plain:focus,
     .el-button--primary.is-plain:hover {
-      color: $primary-font-color;
-      background: $menu-font-color;
-      border-color: $primary-title-color;
+      color: #fff;
+      background: #27727b;
+      border-color: #27727b;
     }
   }
   .menu {
