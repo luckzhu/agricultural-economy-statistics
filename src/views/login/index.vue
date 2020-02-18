@@ -14,7 +14,7 @@
 
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <svg-icon icon-name="user" />
         </span>
         <el-input
           ref="username"
@@ -29,7 +29,7 @@
 
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password" />
+          <svg-icon icon-name="password" />
         </span>
         <el-input
           :key="passwordType"
@@ -43,28 +43,37 @@
           @keyup.enter.native="handleLogin"
         />
         <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+          <svg-icon :icon-name="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
-
+      <el-form-item label="页面风格:" class="styleCheck">
+        <el-radio-group v-model="loginForm.style">
+          <el-radio label="浅底"></el-radio>
+          <el-radio label="深底"></el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-button
         :loading="loading"
         type="primary"
         style="width:100%;margin-bottom:30px;"
         @click.native.prevent="handleLogin"
-      >登&nbsp;&nbsp;&nbsp;录</el-button>
+      >登 录</el-button>
     </el-form>
   </div>
 </template>
 
 <script>
+import qs from "qs";
+import { getCalIndustrySurveyTable1, getGraph, addOrUpdateIndustrySurvey } from "@/api/industrySurvey";
+
 export default {
   name: "Login",
   data() {
     return {
       loginForm: {
         username: "zxn",
-        password: "123"
+        password: "123",
+        style: "深底"
       },
       loginRules: {
         username: [{ required: true, trigger: "blur", message: "请输入用户名" }],
@@ -95,16 +104,14 @@ export default {
       });
     },
     handleLogin() {
-      var $this = this;
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true;
           this.$store
             .dispatch("user/login", this.loginForm)
             .then(res => {
-            
-                this.$router.push({ path: "/userinfo" });
-            
+              this.getChartsData();
+              this.$router.push({ path: "/" });
             })
             .catch(() => {
               this.loading = false;
@@ -113,6 +120,11 @@ export default {
           console.log("error submit!!");
           return false;
         }
+      });
+    },
+    getChartsData() {
+      return getGraph({ year: 2018 }).then(res => {
+        this.$store.dispatch("charts/setChartsData", res.data.info);
       });
     }
   }
@@ -164,6 +176,17 @@ $cursor: #fff;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
+  }
+
+  .styleCheck {
+    border: 0px;
+    background: transparent;
+    border-radius: 0;
+    
+    .el-form-item__label {
+      color: #fff;
+      width: 120px;
+    }
   }
 }
 </style>

@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(document.getElementById(this.id));
+      this.chart = echarts.init(document.getElementById(this.id), "infographic");
       this.setOptions(this.chartData);
     },
     setOptions(chartData = {}) {
@@ -121,13 +121,13 @@ export default {
                   baseline: "middle", //垂直对齐方式
                   fontSize: 36,
                   fontWeight: "bold",
-                  color: "#fff",
+                  // color: "#fff",
                   align: "center" //水平对齐方式
                 }
               },
               itemStyle: {
                 normal: {
-                  color: colors[i],
+                  // color: colors[i],
                   labelLine: {
                     //标示线
                     show: false
@@ -140,7 +140,7 @@ export default {
               name: "",
               itemStyle: {
                 normal: {
-                  color: "#ccc",
+                  // color: "#ccc",
                   label: {
                     show: false
                   },
@@ -159,9 +159,9 @@ export default {
           // subtext: subTitle,
           x: "20px",
           y: "20px",
-          textStyle: {
-            color: "#00F6FB"
-          },
+          // textStyle: {
+          //   color: "#00F6FB"
+          // },
           subtextStyle: {
             fontSize: 16
           }
@@ -170,7 +170,7 @@ export default {
           show: true,
           feature: {
             saveAsImage: {
-              type:"png"
+              type: "png"
             }
           }
         },
@@ -222,7 +222,7 @@ export default {
   .font-info1 {
     font-size: 24px;
     font-weight: 700;
-    color: #fff;
+    color: $primary-font-color;
   }
   .font-info2 {
     font-size: 20px;

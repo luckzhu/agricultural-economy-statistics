@@ -2,7 +2,7 @@
   <div class="the-header">
     <el-col :span="5" class="the-header-left">
       <svg-icon icon-name="toLeft"></svg-icon>
-      <p class="current-year" @click="onLogin">{{ currentYear }}年度</p>
+      <p class="current-year">{{ currentYear }}年度</p>
       <svg-icon icon-name="toRight"></svg-icon>
     </el-col>
     <el-col :span="14" class="menu-title">
@@ -23,10 +23,6 @@
 
 <script>
 import SvgIcon from "@/components/SvgIcon";
-import qs from "qs";
-import { login, getInfo } from "@/api/user";
-
-import { getCalIndustrySurveyTable1, getGraph, addOrUpdateIndustrySurvey } from "@/api/industrySurvey";
 
 export default {
   components: {
@@ -50,34 +46,27 @@ export default {
       }
     };
   },
-  mounted() {
-    this.getChartsData();
-  },
   methods: {
     onTopMenu(name) {
       this.title = this.menuList[name];
     },
-    //为了请求数据
-    onLogin() {
-      login(qs.stringify({ name: "zxn", pwd: "123" })).then(() => {
-        getInfo(res => {});
-        this.getChartsData();
-      });
-    },
-    //由于所有数据都放在了一个graph。请求graph,然后放到store
-    getChartsData() {
-      return getGraph({ year: 2018 }).then(res => {
-        this.$store.dispatch("charts/setChartsData", res.data.info);
-      });
-    }
   }
 };
 </script>
 
 <style lang="scss" >
-@import "@/styles/variable.scss";
+// @import "@/styles/variable.scss";
 .the-header {
   height: 100%;
+
+  .svg-icon,
+  .current-year,
+  .title {
+    font-size: $primary-font-size;
+    color: $primary-font-color;
+    font-weight: 600;
+    white-space: nowrap;
+  }
 }
 .the-header-left {
   display: flex;
@@ -86,14 +75,6 @@ export default {
 }
 .current-year {
   margin: 0 20px;
-}
-.svg-icon,
-.current-year,
-.title {
-  font-size: $primary-font-size;
-  color: $primary-font-color;
-  font-weight: 600;
-  white-space: nowrap;
 }
 
 .menu-title {
@@ -107,16 +88,16 @@ export default {
       font-weight: 500;
     }
     .el-button--primary.is-plain {
-      color: #00fbff;
-      background: #13345e;
-      border-color: #00fbff;
+      color: $primary-title-color;
+      background: $light-background-color;
+      border-color: $primary-title-color;
       padding: 10px 28px;
     }
     .el-button--primary.is-plain:focus,
     .el-button--primary.is-plain:hover {
-      color: #ffffff;
-      background: #0090b3;
-      border-color: #00fbff;
+      color: $primary-font-color;
+      background: $menu-font-color;
+      border-color: $primary-title-color;
     }
   }
   .menu {

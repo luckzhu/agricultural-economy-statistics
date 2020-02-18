@@ -16,7 +16,7 @@ import '@/styles/index.scss' // global css
 import "./icons";
 import "./utils/rem"; // rem 自适应
 
-import "./utils/shine.js" //echart主题
+import "./utils/EchartsStyle/infographic" //echart主题
 
 Vue.config.productionTip = false;
 

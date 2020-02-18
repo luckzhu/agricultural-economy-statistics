@@ -18,7 +18,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/styles/variable.scss";
 @import "@/styles/reset.scss";
 
 html,

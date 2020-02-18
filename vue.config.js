@@ -42,7 +42,7 @@ module.exports = {
         plugins: [postcss]
       },
       sass: {
-        prependData: `@import "./src/styles/variable.scss";`
+        prependData: `@import "./src/styles/variable-light.scss";`
       }
     }
   },

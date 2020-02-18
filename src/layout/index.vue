@@ -24,6 +24,7 @@ export default {
 <style lang="scss" scoped>
 .layout {
   // font-family: MicrosoftYaHei, "Avenir", Helvetica, Arial, sans-serif;
+  height: 100%;
   text-align: center;
   color: #fff;
   background-color: $primary-background-color;

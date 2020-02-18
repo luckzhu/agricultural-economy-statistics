@@ -3,8 +3,10 @@
     <svg class="svg-container" :width="width" :height="height">
       <defs>
         <linearGradient :id="gradientId" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#11eefd" />
-          <stop offset="100%" stop-color="#0078d2" />
+          <stop offset="0%" :stop-color="stopColor.start" />
+          <stop offset="100%" :stop-color="stopColor.end" />
+          <!-- <stop offset="0%" stop-color="#333" />
+          <stop offset="100%" stop-color="#444" />-->
         </linearGradient>
 
         <mask :id="maskId">
@@ -73,7 +75,14 @@
         </mask>
       </defs>
 
-      <rect x="0" y="0" :width="width" :height="height" :fill="`url(#${gradientId})`" :mask="`url(#${maskId})`" />
+      <rect
+        x="0"
+        y="0"
+        :width="width"
+        :height="height"
+        :fill="`url(#${gradientId})`"
+        :mask="`url(#${maskId})`"
+      />
     </svg>
 
     <div class="border-box-content">
@@ -83,21 +92,26 @@
 </template>
 
 <script>
-import autoResize from '@/mixin/autoResize.js'
+import autoResize from "@/mixin/autoResize.js";
 
 export default {
-  name: 'BorderBox1',
+  name: "BorderBox1",
   mixins: [autoResize],
-  data () {
-    const timestamp = Date.now()
+  computed:{
+    stopColor(){
+      return this.$store.getters.borderBoxColor
+    }
+  },
+  data() {
+    const timestamp = Date.now();
     return {
-      ref: 'border-box1',
+      ref: "border-box1",
 
       gradientId: `border-box-1-gradient-${timestamp}`,
       maskId: `border-box-1-mask-${timestamp}`
-    }
+    };
   }
-}
+};
 </script>
 
 <style lang="scss">
