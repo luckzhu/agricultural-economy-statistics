@@ -27,7 +27,7 @@ export default {
         },
         {
           name: "组织规模",
-          path: "/organizationSize"
+          path: "/organSize"
         },
         {
           name: "基地分布",

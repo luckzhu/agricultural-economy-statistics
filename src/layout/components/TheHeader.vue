@@ -61,6 +61,7 @@ export default {
     onLogin() {
       login(qs.stringify({ name: "zxn", pwd: "123" })).then(() => {
         getInfo(res => {});
+        this.getChartsData();
       });
     },
     //由于所有数据都放在了一个graph。请求graph,然后放到store

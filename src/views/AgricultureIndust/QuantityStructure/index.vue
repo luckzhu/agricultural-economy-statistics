@@ -6,7 +6,7 @@
           <organ-type />
         </border-box1>
         <border-box1 class="grid-content">
-          <indust-distribution :chartData="industDistributionData" />
+          <indust-dist />
         </border-box1>
       </el-col>
       <el-col :span="12" class="grid-wrapper">
@@ -29,7 +29,7 @@
 import BorderBox1 from "@/components/BorderBox/borderBox1";
 import OrganType from "./components/OrganType";
 import BenefitBind from "./components/BenefitBind";
-import IndustDistribution from "./components/IndustDistribution";
+import IndustDist from "./components/IndustDist";
 import ArealDistribution from "./components/ArealDistribution";
 
 export default {
@@ -37,18 +37,11 @@ export default {
     BorderBox1,
     OrganType,
     BenefitBind,
-    IndustDistribution,
+    IndustDist,
     ArealDistribution
   },
   data() {
     return {
-      industDistributionData: [
-        [5355, "种植业", "以种植业产品为对象，实行一体化经营的组织"],
-        [1375, "畜牧业", "以畜禽产品为对象，实行一体化经营的组织"],
-        [786, "水产业", "以淡水或海水养殖或捕捞产品为对象，实行一体化经营的组织"],
-        [227, "林业", "以木材、竹材、林产品为对象，实行一体化经营的组织"],
-        [1491, "其他", "在种植业、畜牧业、水产业、林业以外的产业化组织"]
-      ],
       arealDistributionData: {
         title: "农业产业化组织区域分布",
         subTitle: "我省山区地区数量最多，3889 家，占 42%；其次是珠三角地区 2695 家，占 29%；东翼地区 1635 家，占 18%；西翼地区 1015 家，占 11%。",
@@ -74,7 +67,7 @@ export default {
         ]
       }
     };
-  },
+  }
 };
 </script>
 

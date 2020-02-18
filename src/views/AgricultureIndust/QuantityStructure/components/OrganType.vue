@@ -73,8 +73,8 @@ export default {
     }
   },
   mounted() {
-    this.convertData({ option: this.option, data: this.graphData });
     this.$nextTick(() => {
+      this.convertData({ option: this.option, data: this.graphData });
       this.initChart();
     });
   },
@@ -166,11 +166,20 @@ export default {
             fontSize: 16
           }
         },
+        toolbox: {
+          show: true,
+          feature: {
+            saveAsImage: {
+              type:"png"
+            }
+          }
+        },
         series: series
       });
     },
     //转换数据格式，适应图表
     convertData({ option, data }) {
+      if (!data) return;
       let arr = [];
       option.data.forEach(item => {
         let obj = {};

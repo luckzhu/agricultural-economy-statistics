@@ -74,8 +74,11 @@ export default {
     }
   },
   mounted() {
-    this.convertData({ option: this.option, data: this.graphData });
+    if (this.graphData) {
+      
+    }
     this.$nextTick(() => {
+      this.convertData({ option: this.option, data: this.graphData });
       this.initChart();
     });
   },
@@ -146,6 +149,7 @@ export default {
     },
     //转换数据格式，适应图表
     convertData({ option, data }) {
+      if(!data) return 
       let arr = [];
       option.data.forEach(item => {
         let obj = {};
@@ -162,7 +166,6 @@ export default {
       this.chartData.title = option.title;
       this.chartData.unit = option.unit;
       this.chartData.data = arr;
-      console.log(this.chartData);
     }
   }
 };
