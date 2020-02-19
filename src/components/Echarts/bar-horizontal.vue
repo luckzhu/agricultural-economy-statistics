@@ -1,5 +1,5 @@
 <template>
-  <div :id="id" :class="className" :style="{height:height,width:width}" />
+  <div :id="id" :style="{height:height,width:width}" />
 </template>
 
 <script>
@@ -10,11 +10,7 @@ export default {
   mixins: [resize],
   props: {
     chartData: {
-      type: Object
-    },
-    className: {
-      type: String,
-      default: "chart"
+      type: Array
     },
     id: {
       type: String,
@@ -31,6 +27,8 @@ export default {
   },
   data() {
     return {
+      title: "农业产业化组织固定资产",
+      unit: "亿元",
       chart: null
     };
   },
@@ -59,21 +57,19 @@ export default {
       this.chart = echarts.init(document.getElementById(this.id), "infographic");
       this.setOptions(this.chartData);
     },
-    setOptions({ expectedData, actualData } = {}) {
-      let tempChartData = JSON.parse(JSON.stringify(this.chartData));
-      const { title, subTitle, unit } = tempChartData;
+    setOptions(chartData = {}) {
+      const { title, unit } = this;
       const colors = this.$store.getters.colors;
-
-      let { data } = tempChartData;
-      data = data.sort(function(a, b) {
-        return b.value - a.value;
-      });
-
+      
+      // chartData = chartData.sort(function(a, b) {
+      //   return b.value - a.value;
+      // });
+      console.log(chartData)
       var yData = [];
       var barData = [];
-      for (var i = 0; i < data.length; i++) {
-        barData.push(data[i]);
-        yData.push(i + "," + data[i].name);
+      for (var i = 0; i < chartData.length; i++) {
+        barData.push(chartData[i]);
+        yData.push(i + "," + (chartData[i].cityName).replace(/市.*/, ""));
       }
 
       this.chart.setOption({

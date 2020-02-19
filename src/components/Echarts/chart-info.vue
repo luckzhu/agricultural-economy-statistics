@@ -1,11 +1,11 @@
 <template>
-  <div class="chart-information" :class="{'double':chartInformation.length >=2}">
-    <div class="chart-info-part" v-for="(info,index) in chartInformation" :key="index">
+  <div class="chart-information" :class="{'double':chartInfo.length >=2}">
+    <div class="chart-info-part" v-for="(info,index) in chartInfo" :key="index">
       <p class="value">
         {{info.value}}
         <span class="unit">{{info.unit}}</span>
       </p>
-      <span class="describe">{{info.describe}}</span>
+      <span class="describe">{{info.name}}</span>
     </div>
   </div>
 </template>
@@ -13,7 +13,7 @@
 <script>
 export default {
   props: {
-    chartInformation: {
+    chartInfo: {
       type: Array,
       default() {
         return [

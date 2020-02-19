@@ -13,7 +13,7 @@
       <el-col :span="12" class="grid-wrapper">
         <border-box1 class="grid-content">
           <div class="grid-content">
-            <chart-information :chartInformation="employeeData.info" />
+            <chart-info :chartInfo="employeeData.info" />
             <bar-horizontal id="salesRevenue" height="25.625rem" :chartData="employeeData" />
           </div>
         </border-box1>
@@ -29,7 +29,7 @@
 <script>
 import BorderBox1 from "@/components/BorderBox/borderBox1";
 import BarHorizontal from "@/components/Echarts/bar-horizontal";
-import chartInformation from "@/components/Echarts/chart-information";
+import chartInfo from "@/components/Echarts/chart-info";
 import BaseDistribut from "./components/BaseDistribut";
 import DriveBenefits from "./components/DriveBenefits";
 
@@ -37,7 +37,7 @@ export default {
   components: {
     BorderBox1,
     BarHorizontal,
-    chartInformation,
+    chartInfo,
     BaseDistribut,
     DriveBenefits
   },

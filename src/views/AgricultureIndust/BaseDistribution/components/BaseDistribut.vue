@@ -1,18 +1,18 @@
 <template>
   <div class="base-distribut">
-    <chart-information :chartInformation="chartData.info" />
+    <chart-info :chartInfo="chartData.info" />
     <bar-pictorial :id="id" height="12.5rem" :chartData="chartData" />
   </div>
 </template>
 
 <script>
 import BarPictorial from "@/components/Echarts/bar-pictorial";
-import chartInformation from "./base-chart-information";
+import chartInfo from "./base-chart-info";
 
 export default {
   components: {
     BarPictorial,
-    chartInformation
+    chartInfo
   },
   props: {
     id: {
