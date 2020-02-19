@@ -1,5 +1,5 @@
 <template>
-  <div :id="id" :class="className" :style="{height:height,width:width}" />
+  <div :id="id" :style="{height:height,width:width}" />
 </template>
 
 <script>
@@ -10,11 +10,7 @@ export default {
   mixins: [resize],
   props: {
     chartData: {
-      type: Object
-    },
-    className: {
-      type: String,
-      default: "chart"
+      type: Array
     },
     id: {
       type: String,
@@ -31,7 +27,9 @@ export default {
   },
   data() {
     return {
-      chart: null
+      chart: null,
+      title: "农业产业化组织区域分布",
+      unit: "家"
     };
   },
   watch: {
@@ -59,20 +57,57 @@ export default {
       this.chart = echarts.init(document.getElementById(this.id), "infographic");
       this.setOptions(this.chartData);
     },
-    setOptions({ expectedData, actualData } = {}) {
-      let tempChartData = JSON.parse(JSON.stringify(this.chartData));
-      const { data, title, subTitle, unit, dataName } = tempChartData;
-      const colors = this.$store.getters.colors;
+    setOptions(chartData = {}) {
+      const { title, unit } = this;
+      console.log(chartData);
+      // const colors = this.$store.getters.colors;
       let series = [];
-      data.forEach(item => {
+      let dataName = [];
+      let sum = [];
+      let option = [
+        {
+          name: "龙头企业带动型",
+          field: "ltOrgan",
+          xAxis: "cityName",
+          value: []
+        },
+        {
+          name: "合作组织带动型",
+          field: "coopOragn",
+          xAxis: "cityName",
+          value: []
+        },
+        {
+          name: "专业市场带动型",
+          field: "marketSum",
+          xAxis: "cityName",
+          value: []
+        },
+        {
+          name: "其他类型",
+          field: "otherOrgan",
+          xAxis: "cityName",
+          value: []
+        }
+      ];
+      option.forEach(item => {
+        chartData.forEach(ele => {
+          item.value.push(ele[item.field]);
+          let xAxis = ele[item.xAxis].replace(/市.*/, "");
+          if (!dataName.includes(xAxis)) {
+            dataName.push(xAxis);
+          }
+          if (!sum.includes(ele.sum)) {
+            sum.push(ele.sum);
+          }
+        });
+      });
+      option.forEach(item => {
         series.push({
           data: item.value,
           name: item.name,
           stack: "one",
-          type: "bar",
-          label: {
-            // show: true
-          }
+          type: "bar"
         });
       });
       this.chart.setOption({
@@ -96,7 +131,6 @@ export default {
         tooltip: {
           trigger: "shadow"
         },
-        color: colors,
         legend: {
           orient: "vertical",
           top: "70",
@@ -109,28 +143,36 @@ export default {
             { name: "龙头企业带动型", icon: "roundRect" },
             { name: "合作组织带动型", icon: "roundRect" },
             "\n", //legend强制换行
-            { name: "专业场带动型", icon: "roundRect" },
+            { name: "专业市场带动型", icon: "roundRect" },
             { name: "其他类型", icon: "roundRect" }
           ]
         },
         grid: {
           left: "2%",
           right: "2%",
-          top: "14%",
-          bottom: "10%"
+          top: "15%",
+          bottom: "9%"
         },
-        nameTextStyle: {
-          color: "#fff"
-        },
-        axisLabel: {
-          color: "#fff"
+        // nameTextStyle: {
+        //   color: "#fff"
+        // },
+        // axisLabel: {
+        //   color: "#fff"
+        // },
+        label: {
+          show: true,
+          position: "top",
+          formatter: params => {
+            if (params.componentIndex === 3) {
+              return sum[params.dataIndex];
+            }
+            return "";
+          }
         },
         barCategoryGap: "50%",
         xAxis: [
           {
             type: "category",
-            // axisLine: { show: false },
-            // axisTick: { show: false },
             data: dataName
           }
         ],

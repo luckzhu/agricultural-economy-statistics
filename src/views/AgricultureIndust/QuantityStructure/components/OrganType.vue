@@ -2,10 +2,10 @@
   <div>
     <div class="organ-type" :id="id" />
     <div class="chart-info-wrapper">
-      <div class="chart-info" v-for="(chart,index) in chartData.data" :key="index">
+      <div class="chart-info" v-for="(chart,index) in chartData" :key="index">
         <p class="font-info1 info-width">{{chart.value}} 家</p>
-        <p class="font-info2 info-width">{{chart.name}}</p>
-        <p class="font-info3 info-width">{{chart.subText}}</p>
+        <p class="font-info2 info-width">{{chart.category}}</p>
+        <p class="font-info3 info-width">{{chart.describe}}</p>
       </div>
     </div>
   </div>
@@ -17,64 +17,39 @@ import resize from "@/components/Echarts/mixins/resize";
 export default {
   name: "OrganType",
   mixins: [resize],
+  props: {
+    chartData: {
+      type: Array,
+      default: () => {
+        return [
+          {
+            category: "龙头企业带动型",
+            value: 3555,
+            percent: 40,
+            describe: "县以上农业产业化主管部门认定的龙头企业"
+          }
+        ];
+      }
+    }
+  },
   data() {
     return {
       chart: null,
-      option: {
-        title: "农业产业化组织类型",
-        unit: "亿元",
-        data: [
-          {
-            name: "龙头企业带动型",
-            valueField: "ltOrgan",
-            percentField: "ltOrganRate",
-            subText: "县以上农业产业化主管部门认定的龙头企业"
-          },
-          {
-            name: "合作组织带动型",
-            valueField: "coopOragn",
-            percentField: "coopOragnRate",
-            subText: "县以上农业产业化主管部门认定的农民专业合作示范社"
-          },
-          {
-            name: "专业市场带动型",
-            valueField: "marketSum",
-            percentField: "marketSumRate",
-            subText: "年交易额2000万元以上的专业批发市场（不含龙头企业）"
-          },
-          {
-            name: "其他类型",
-            valueField: "otherOrgan",
-            percentField: "otherOrganRate",
-            subText: "比如协会、联盟等"
-          }
-        ]
-      },
-      id: "organType",
-      chartData: {
-        title: "",
-        unit: "",
-        data: []
-      }
+      unit: "亿元",
+      title: "农业产业化组织类型",
+      id: "organType"
     };
   },
-  computed: {
-    graphData() {
-      return this.$store.getters.graphData;
-    }
-  },
   watch: {
-    graphData: {
+    chartData: {
       deep: true,
       handler(val) {
-        this.convertData({ option: this.option, data: val });
-        this.setOptions(this.chartData);
+        this.setOptions(val);
       }
     }
   },
   mounted() {
     this.$nextTick(() => {
-      this.convertData({ option: this.option, data: this.graphData });
       this.initChart();
     });
   },
@@ -91,10 +66,11 @@ export default {
       this.setOptions(this.chartData);
     },
     setOptions(chartData = {}) {
-      const { data, title, subTitle, unit } = chartData;
+      const { title, unit } = this;
       const colors = this.$store.getters.colors;
       let series = [];
-      data.forEach((item, i) => {
+      
+      chartData.forEach((item, i) => {
         series.push({
           type: "pie",
           radius: ["40%", "55%"],
@@ -127,7 +103,7 @@ export default {
               },
               itemStyle: {
                 normal: {
-                  // color: colors[i],
+                  color: colors[i],
                   labelLine: {
                     //标示线
                     show: false
@@ -156,15 +132,11 @@ export default {
       this.chart.setOption({
         title: {
           text: `· ${title}`,
-          // subtext: subTitle,
           x: "20px",
-          y: "20px",
+          y: "20px"
           // textStyle: {
           //   color: "#00F6FB"
           // },
-          subtextStyle: {
-            fontSize: 16
-          }
         },
         toolbox: {
           show: true,
@@ -178,26 +150,6 @@ export default {
         series: series
       });
     },
-    //转换数据格式，适应图表
-    convertData({ option, data }) {
-      if (!data) return;
-      let arr = [];
-      option.data.forEach(item => {
-        let obj = {};
-        obj.name = item.name;
-        obj.value = data[item.valueField];
-        let percent = Number(data[item.percentField].toFixed(0));
-        obj.percent = percent;
-        if (percent < 1) {
-          obj.percent = Number(data[item.percentField].toFixed(1));
-        }
-        obj.subText = item.subText;
-        arr.push(obj);
-      });
-      this.chartData.title = option.title;
-      this.chartData.unit = option.unit;
-      this.chartData.data = arr;
-    }
   }
 };
 </script>

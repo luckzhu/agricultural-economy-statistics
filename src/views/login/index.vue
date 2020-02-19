@@ -110,7 +110,7 @@ export default {
           this.$store
             .dispatch("user/login", this.loginForm)
             .then(res => {
-              this.getChartsData();
+              // this.getChartsData();
               this.$router.push({ path: "/" });
             })
             .catch(() => {

@@ -16,6 +16,9 @@ import '@/styles/index.scss' // global css
 import "./icons";
 import "./utils/rem"; // rem 自适应
 
+import _ from "lodash";
+Vue.prototype._ = _;
+
 import "./utils/EchartsStyle/infographic" //echart主题
 
 Vue.config.productionTip = false;

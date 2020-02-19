@@ -2,10 +2,10 @@
   <div>
     <div class="liquid-fill" :id="id" />
     <div class="chart-info-wrapper">
-      <div class="chart-info" v-for="(chart,index) in chartData.data" :key="index">
+      <div class="chart-info" v-for="(chart,index) in chartData" :key="index">
         <p class="font-info1 info-width">{{chart.value}} 家</p>
-        <p class="font-info2 info-width">{{chart.name}}</p>
-        <p class="font-info3 info-width">{{chart.subText}}</p>
+        <p class="font-info2 info-width">{{chart.category}}</p>
+        <p class="font-info3 info-width">{{chart.describe}}</p>
       </div>
     </div>
   </div>
@@ -18,45 +18,27 @@ import "echarts-liquidfill";
 export default {
   name: "BenefitBind",
   mixins: [resize],
+  props: {
+    chartData: {
+      type: Array,
+      default: () => {
+        return [
+          {
+            category: "订单合同方式",
+            value: 3555,
+            percent: 40,
+            describe: "通过合同等契约方式向农户收购农副产品，并及时按约定结算，农户按合同要求进行生产"
+          }
+        ];
+      }
+    }
+  },
   data() {
     return {
       chart: null,
-      option: {
-        title: "农业产业化组织利益联结方式",
-        unit: "亿元",
-        data: [
-          {
-            name: "订单合同方式",
-            valueField: "orderSum",
-            percentField: "orderSumRate",
-            subText: "通过合同等契约方式向农户收购农副产品，并及时按约定结算，农户按合同要求进行生产"
-          },
-          {
-            name: "合作方式",
-            valueField: "coopMode",
-            percentField: "coopModeRate",
-            subText: "将农副产品加工、运销等增值的一部分利润按一定方式返还农户"
-          },
-          {
-            name: "股份合作方式",
-            valueField: "stockMode",
-            percentField: "stockModeRate",
-            subText: "年交易额2000万元以上的专业批发市场（不含龙头企业）"
-          },
-          {
-            name: "其他方式",
-            valueField: "ortherMode",
-            percentField: "ortherModeRate",
-            subText: "比如租地、吸收就业等"
-          }
-        ]
-      },
-      id: "benefitBind",
-      chartData: {
-        title: "",
-        unit: "",
-        data: []
-      }
+      title: "农业产业化组织利益联结方式",
+      unit: "亿元",
+      id: "benefitBind"
     };
   },
   computed: {
@@ -65,19 +47,15 @@ export default {
     }
   },
   watch: {
-    graphData: {
+    chartData: {
       deep: true,
       handler(val) {
-        this.convertData({ option: this.option, data: val });
         this.setOptions(this.chartData);
       }
     }
   },
   mounted() {
-    if (this.graphData) {
-    }
     this.$nextTick(() => {
-      this.convertData({ option: this.option, data: this.graphData });
       this.initChart();
     });
   },
@@ -94,10 +72,10 @@ export default {
       this.setOptions(this.chartData);
     },
     setOptions(chartData = {}) {
-      const { data, title, subTitle, unit } = chartData;
+      const { title, unit } = this;
       const colors = this.$store.getters.colors;
       let series = [];
-      data.forEach((item, i) => {
+      chartData.forEach((item, i) => {
         series.push({
           type: "liquidFill",
           radius: "55%",

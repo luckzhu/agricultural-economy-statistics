@@ -3,22 +3,18 @@
     <el-row :gutter="10">
       <el-col :span="12" class="grid-wrapper">
         <border-box1 class="grid-content">
-          <organ-type />
+          <organ-type :chartData="organType" />
         </border-box1>
         <border-box1 class="grid-content">
-          <indust-dist />
+          <indust-dist :chartData="industryDist" />
         </border-box1>
       </el-col>
       <el-col :span="12" class="grid-wrapper">
         <border-box1 class="grid-content">
-          <benefit-bind />
+          <benefit-bind :chartData="benefitBind" />
         </border-box1>
         <border-box1 class="grid-content">
-          <areal-dist
-            id="ArealDistribution"
-            height="25.625rem"
-            :chartData="arealDistributionData"
-          />
+          <areal-dist id="ArealDist" height="25.625rem" :chartData="arealDistcity" />
         </border-box1>
       </el-col>
     </el-row>
@@ -32,6 +28,8 @@ import BenefitBind from "./components/BenefitBind";
 import IndustDist from "./components/IndustDist";
 import ArealDist from "./components/ArealDist";
 
+import { getGraph } from "@/api/industrySurvey";
+
 export default {
   components: {
     BorderBox1,
@@ -42,31 +40,47 @@ export default {
   },
   data() {
     return {
-      arealDistributionData: {
-        title: "农业产业化组织区域分布",
-        subTitle: "我省山区地区数量最多，3889 家，占 42%；其次是珠三角地区 2695 家，占 29%；东翼地区 1635 家，占 18%；西翼地区 1015 家，占 11%。",
-        unit: "家",
-        dataName: ["汕头", "梅州", "河源", "清远", "元浮", "惠州", "肇庆", "江门", "茂名", "韶关", "湛江", "广州", "佛山", "汕尾", "阳江", "深圳", "揭阳", "潮州", "中山", "珠海", "东莞"],
-        data: [
-          {
-            name: "龙头企业带动型",
-            value: [95, 680, 251, 206, 218, 314, 177, 125, 151, 202, 172, 223, 167, 76, 100, 118, 50, 62, 49, 35, 37]
-          },
-          {
-            name: "合作组织带动型",
-            value: [1068, 343, 638, 271, 500, 326, 210, 406, 252, 227, 138, 75, 57, 141, 118, 0, 67, 47, 25, 17, 11]
-          },
-          {
-            name: "专业场带动型",
-            value: [3, 0, 0, 1, 5, 2, 3, 0, 4, 2, 1, 4, 0, 3, 2, 2, 0, 0, 3, 0, 0]
-          },
-          {
-            name: "其他类型",
-            value: [0, 4, 6, 312, 20, 9, 219, 0, 75, 3, 2, 5, 8, 6, 0, 65, 17, 0, 1, 2, 0]
-          }
-        ]
-      }
+      year: 2018,
+      tabId: 1,
+      graphPage1: null,
+      organType: [],
+      benefitBind: [],
+      industryDist: [],
+      arealDistcity: []
     };
+  },
+  mounted() {
+    this.getGraphPage1().then(() => {
+      this.converData("organType");
+      this.converData("benefitBind");
+      this.converData("industryDist");
+      this.converData("arealDist.city");
+    });
+  },
+  methods: {
+    getGraphPage1() {
+      const { year, tabId } = this;
+      return getGraph({ year, tabId }).then(res => {
+        this.graphPage1 = res.data.info;
+      });
+    },
+    converData(field) {
+      const data = _.get(this.graphPage1, field, []);
+      this[field] = Object.values(data).filter(data => data.value !== 9233); //TO DO 后台删掉总数这个字段为佳
+      this[field].sort(this.compare("value"));
+
+      //判断是不是数组
+      if (Object.prototype.toString.call(data).slice(8, -1) === "Array") {
+        this[field.replace(".", "")] = data;
+      }
+    },
+    compare(property) {
+      return function(a, b) {
+        var value1 = a[property];
+        var value2 = b[property];
+        return value2 - value1;
+      };
+    }
   }
 };
 </script>
