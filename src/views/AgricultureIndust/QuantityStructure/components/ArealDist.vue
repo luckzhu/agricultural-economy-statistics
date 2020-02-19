@@ -59,7 +59,6 @@ export default {
     },
     setOptions(chartData = {}) {
       const { title, unit } = this;
-      console.log(chartData);
       // const colors = this.$store.getters.colors;
       let series = [];
       let dataName = [];

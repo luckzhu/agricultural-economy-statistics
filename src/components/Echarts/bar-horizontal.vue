@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(document.getElementById(this.id));
+      this.chart = echarts.init(document.getElementById(this.id), "infographic");
       this.setOptions(this.chartData);
     },
     setOptions({ expectedData, actualData } = {}) {
@@ -83,11 +83,20 @@ export default {
           x: "20px",
           y: "20px",
           textStyle: {
-            color: "#00F6FB"
+            // color: "#00F6FB"
           },
           subtextStyle: {
             fontSize: 16,
-      
+            lineHeight: 18
+          }
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            saveAsImage: {
+              type: "png",
+              pixelRatio: "5"
+            }
           }
         },
         tooltip: {
@@ -98,15 +107,15 @@ export default {
           }
         },
         grid: {
-          top: "15%",
+          top: "14%",
           bottom: "0%",
           left: "-36px",
           right: "12%",
           containLabel: true
         },
         xAxis: {
-          show: false,
-          color: "#fff"
+          show: false
+          // color: "#fff"
         },
         yAxis: {
           type: "category",
@@ -118,7 +127,7 @@ export default {
             interval: 0,
             margin: 75,
             textStyle: {
-              color: "#fff",
+              // color: "#fff",
               align: "left",
               fontSize: 16
             },
@@ -137,9 +146,7 @@ export default {
               var paramsArr = params.split(",");
               var index = paramsArr[0];
               var name = paramsArr[1];
-              return ["{a|" + (parseInt(index) + 1) + "}" + "  " + name].join(
-                "\n"
-              );
+              return ["{a|" + (parseInt(index) + 1) + "}" + "  " + name].join("\n");
             }
           },
           data: yData
@@ -166,7 +173,7 @@ export default {
               normal: {
                 show: true,
                 textStyle: {
-                  color: "#fff",
+                  // color: "#fff",
                   fontSize: 18
                 },
                 position: "right",

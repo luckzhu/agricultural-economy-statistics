@@ -39,7 +39,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #fff;
+  color: $primary-font-color;
 
   .value {
     font-size: 80px;
