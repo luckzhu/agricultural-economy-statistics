@@ -1,6 +1,12 @@
 <template>
   <div class="benefit-wrapper">
-    <div class="benefit" v-for="(item,index) in chartData" :key="index">
+    <el-row :gutter="10">
+      <el-col :span="12">
+        
+      </el-col>
+      <el-col :span="12"></el-col>
+    </el-row>
+    <!-- <div class="benefit" v-for="(item,index) in chartData" :key="index">
       <div class="benefit-word">
         <p class="benefit-title">{{item.title}}</p>
         <p class="benefit-value">
@@ -14,7 +20,7 @@
       <p>订单合作关系中:</p>
       <p>实现年订单总额610亿元</p>
       <p>年履约订单成交额579亿元</p>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -67,10 +73,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.benefit-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-}
+// .benefit-wrapper {
+//   display: flex;
+//   flex-wrap: wrap;
+// }
 .benefit {
   display: flex;
   justify-content: center;
@@ -84,7 +90,7 @@ export default {
       font-size: 20px;
       margin-bottom: 10px;
       line-height: 24px;
-      color: #fff;
+      color: $primary-font-color;
     }
     .benefit-value {
       font-size: 20px;
@@ -95,16 +101,16 @@ export default {
   }
 }
 .benefit-order {
-  width: 440px;
+  width: 420px;
   height: 100%;
   text-align: left;
-  border: 1px solid #41e3ff3f;
   margin-bottom: 10px;
   padding: 20px;
-  font-size: 28px;
+  font-size: 26px;
   align-items: flex-start;
   background: $light-background-color;
   border-radius: 20px;
   line-height: 50px;
+  color: $light-font-color;
 }
 </style>

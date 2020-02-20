@@ -1,11 +1,11 @@
 <template>
-  <div class="chart-information" :class="{'double':chartInformation.length >=2}">
-    <div class="chart-info-part" v-for="(info,index) in chartInformation" :key="index">
+  <div class="chart-information" :class="{'double':chartInfo.length >=2}">
+    <div class="chart-info-part" v-for="(info,index) in chartInfo" :key="index">
       <p class="value">
         {{info.value}}
         <span class="unit">{{info.unit}}</span>
       </p>
-      <span class="describe">{{info.describe}}</span>
+      <span class="describe">{{info.name}}</span>
     </div>
   </div>
 </template>
@@ -13,14 +13,14 @@
 <script>
 export default {
   props: {
-    chartInformation: {
+    chartInfo: {
       type: Array,
       default() {
         return [
           {
             value: 1367,
             unit: "亿元",
-            describe: "固定资产净值"
+            name: "固定资产净值"
           }
         ];
       }
@@ -39,7 +39,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #fff;
+  color: $primary-font-color;
 
   .value {
     font-size: 50px;
@@ -52,7 +52,7 @@ export default {
   }
   .describe {
     color: $light-font-color;
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 600;
     white-space: nowrap;
   }

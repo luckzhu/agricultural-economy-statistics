@@ -23,12 +23,18 @@ export default {
     height: {
       type: String,
       default: "350px"
+    },
+    unit: {
+      type: String,
+      default: "亿元"
+    },
+    title: {
+      type: String,
+      default: "农业产业化组织固定资产"
     }
   },
   data() {
     return {
-      title: "农业产业化组织固定资产",
-      unit: "亿元",
       chart: null
     };
   },
@@ -60,16 +66,11 @@ export default {
     setOptions(chartData = {}) {
       const { title, unit } = this;
       const colors = this.$store.getters.colors;
-      
-      // chartData = chartData.sort(function(a, b) {
-      //   return b.value - a.value;
-      // });
-      console.log(chartData)
       var yData = [];
       var barData = [];
       for (var i = 0; i < chartData.length; i++) {
         barData.push(chartData[i]);
-        yData.push(i + "," + (chartData[i].cityName).replace(/市.*/, ""));
+        yData.push(i + "," + chartData[i].cityName.replace(/市.*/, ""));
       }
 
       this.chart.setOption({
@@ -96,7 +97,7 @@ export default {
           }
         },
         tooltip: {
-          show: true,
+          show: false,
           formatter: function(params) {
             var value = parseFloat(params.data["value"]);
             return params.name + "：" + value + unit;

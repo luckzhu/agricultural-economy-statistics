@@ -1,5 +1,5 @@
 <template>
-  <div :id="id" :class="className" :style="{height:height,width:width}" />
+  <div :id="id" :style="{height:height,width:width}" />
 </template>
 
 <script>
@@ -10,40 +10,7 @@ export default {
   mixins: [resize],
   props: {
     chartData: {
-      type: Object,
-      default() {
-        return {
-          info: [
-            {
-              value: 1345,
-              unit: "万亩",
-              describe: "种植面积与去年持平"
-            }
-          ],
-          title: "农业产业化组织基地分布",
-          subTitle: "种植面积1345万亩，以清远、韶关、云浮等地种植面积最多。",
-          unit: "万亩",
-          symbol: require("@/assets/symbol/rice.svg"),
-          data: [
-            {
-              name: "清远",
-              value: "297"
-            },
-            {
-              name: "韶关",
-              value: "136"
-            },
-            {
-              name: "云浮",
-              value: "131"
-            }
-          ]
-        };
-      }
-    },
-    className: {
-      type: String,
-      default: "chart"
+      type: Object
     },
     id: {
       type: String,
@@ -85,49 +52,55 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(document.getElementById(this.id));
+      this.chart = echarts.init(document.getElementById(this.id), "infographic");
       this.setOptions(this.chartData);
     },
-    setOptions({ expectedData, actualData } = {}) {
-      const tempChartData = JSON.parse(JSON.stringify(this.chartData));
-      const { symbol, title, subTitle, unit } = tempChartData;
+    setOptions(chartData) {
+      const { option, sort } = chartData;
+      const { title, symbol, unit } = option;
       let dataName = [];
       let dataValue = [];
-      tempChartData.data.forEach(element => {
-        dataName.push(element.name);
+      sort.forEach(element => {
+        dataName.push(element.cityName);
         dataValue.push(element.value);
       });
       this.chart.setOption({
-        // title: {
-        //   text: `· ${title}`,
-        //   // subtext: subTitle,
-        //   x: "20px",
-        //   y: "20px",
-        //   textStyle: {
-        //     color: "#00F6FB"
-        //   },
-        //   subtextStyle: {
-        //     fontSize: 16
-        //   }
+        title: {
+          text: `· ${title}`,
+          // subtext: subTitle,
+          x: "20px",
+          y: "20px",
+          textStyle: {
+            // color: "#00F6FB"
+          }
+        },
+        // tooltip: {
+        //   // trigger: "axis",
+        //   // axisPointer: {
+        //   //   type: "shadow"
+        //   // }
         // },
-        tooltip: {
-          // trigger: "axis",
-          // axisPointer: {
-          //   type: "shadow"
-          // }
+        toolbox: {
+          show: true,
+          feature: {
+            saveAsImage: {
+              type: "png",
+              pixelRatio: "5"
+            }
+          }
         },
         grid: {
           containLabel: true,
           left: "28%",
           top: "10%",
-          right: "16%",
-          bottom: "10%"
+          right: "14%",
+          bottom: "0%"
         },
         nameTextStyle: {
-          color: "#fff"
+          // color: "#fff"
         },
         axisLabel: {
-          color: "#fff"
+          // color: "#fff"
         },
         yAxis: {
           data: dataName,
@@ -155,7 +128,7 @@ export default {
         },
         series: [
           {
-            name: "种植面积",
+            // name: "种植面积",
             type: "pictorialBar",
             symbol: `image://${symbol}`,
             symbolRepeat: true,
@@ -163,13 +136,13 @@ export default {
             barCategoryGap: "40%",
             barWidth: 80,
             data: dataValue,
-            color: "#FFF",
+            // color: "#FFF",
             symbolClip: true,
             label: {
               normal: {
                 show: true,
                 textStyle: {
-                  color: "#fff",
+                  // color: "#fff",
                   fontSize: 20
                 },
                 position: "right",

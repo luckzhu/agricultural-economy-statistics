@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(document.getElementById(this.id));
+      this.chart = echarts.init(document.getElementById(this.id),'infographic');
       this.setOptions(this.chartData);
     },
     setOptions({ expectedData, actualData } = {}) {
@@ -103,7 +103,7 @@ export default {
           containLabel: true
         },
         nameTextStyle: {
-          color: "#fff"
+          // color: "#fff"
         },
 
         xAxis: {
@@ -125,7 +125,7 @@ export default {
           axisLabel: {
             show: true,
             textStyle: {
-              color: "#fff",
+              // color: "#fff",
               fontSize: 16
             }
           }
@@ -152,7 +152,7 @@ export default {
               normal: {
                 show: true,
                 textStyle: {
-                  color: "#fff",
+                  // color: "#fff",
                   fontSize: 16
                 },
 

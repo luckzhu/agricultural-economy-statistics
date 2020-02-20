@@ -1,7 +1,7 @@
 <template>
   <div class="base-distribut">
     <chart-info :chartInfo="chartData.info" />
-    <bar-pictorial :id="id" height="12.5rem" :chartData="chartData" />
+    <bar-pictorial :id="id" height="12.9rem" :chartData="chartData" />
   </div>
 </template>
 
@@ -33,10 +33,10 @@ export default {
 .base-distribut {
   position: relative;
   .chart-information {
-    width: 220px;
+    width: 230px;
     position: absolute;
     left: 20px;
-    top: 50%;
+    top: 60%;
     transform: translateY(-50%);
   }
 }
