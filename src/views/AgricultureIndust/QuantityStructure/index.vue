@@ -14,7 +14,12 @@
           <benefit-bind :chartData="benefitBind" />
         </border-box1>
         <border-box1 class="grid-content">
-          <areal-dist id="ArealDist" height="25.625rem" :chartData="arealDistcity" />
+          <areal-dist
+            id="ArealDist"
+            height="25.625rem"
+            :chartData="arealDistcity"
+            v-if="arealDistcity.length >0"
+          />
         </border-box1>
       </el-col>
     </el-row>

@@ -1,7 +1,7 @@
 <template>
-  <div class="base-distribut">
-    <chart-info :chartInfo="chartData.info" />
-    <bar-pictorial :id="id" height="12.9rem" :chartData="chartData" />
+  <div class="base-distribut" >
+    <chart-info :chartInfo="chartData.info" v-if="chartData.info"/>
+    <bar-pictorial :id="id" height="12.9rem" :chartData="chartData" v-if="chartData.sort" />
   </div>
 </template>
 

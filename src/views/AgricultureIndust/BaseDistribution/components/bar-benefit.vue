@@ -1,5 +1,13 @@
 <template>
-  <div :id="id" :class="className" :style="{height:height,width:width}" />
+  <div class="benefit">
+    <div class="word" v-for="info in chartData.info" :key="info.value">
+      <p class="value">
+        {{info.value}}
+        <span class="unit">{{info.unit}}</span>
+      </p>
+    </div>
+    <div class="chart" :id="id" :style="{height:height,width:width}" />
+  </div>
 </template>
 
 <script>
@@ -10,24 +18,7 @@ export default {
   mixins: [resize],
   props: {
     chartData: {
-      type: Object,
-      default() {
-        return {
-          title: "700",
-          unit: "万户",
-          data: [
-            { name: "珠三角", value: 345 },
-            { name: "山区", value: 175 },
-            { name: "西翼", value: 116 },
-            { name: "东翼", value: 64 }
-          ],
-          color: ["#91ABDB"]
-        };
-      }
-    },
-    className: {
-      type: String,
-      default: "chart"
+      type: Object
     },
     id: {
       type: String,
@@ -69,25 +60,55 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(document.getElementById(this.id),'infographic');
+      this.chart = echarts.init(document.getElementById(this.id), "infographic");
       this.setOptions(this.chartData);
     },
-    setOptions({ expectedData, actualData } = {}) {
-      let tempChartData = JSON.parse(JSON.stringify(this.chartData));
-      let data = tempChartData.data;
-      let colors = this.$store.getters.colors;
+    compare(property) {
+      return function(a, b) {
+        var value1 = a[property];
+        var value2 = b[property];
+        return value2 - value1;
+      };
+    },
+    setOptions(chartData) {
+      const { sort, info } = chartData;
+      const { unit, name } = info[0];
+      const colors = this.$store.getters.colors;
       let dataName = [];
       let dataValue = [];
-      tempChartData.data.forEach(element => {
-        dataName.push(element.name);
+
+      // 防止重新排序后，watch  的 infinite loop
+      const copySort = JSON.parse(JSON.stringify(sort));
+      copySort.sort(this.compare("value"));
+
+      copySort.forEach(element => {
+        dataName.push(element.region);
         dataValue.push(element.value);
       });
 
       this.chart.setOption({
+        title: {
+          text: `· ${name}`,
+          // subtext: subTitle,
+          x: "20px",
+          y: "20px",
+          textStyle: {
+            // color: "#00F6FB"
+          }
+        },
         tooltip: {
           trigger: "axis",
           axisPointer: {
             type: "shadow"
+          }
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            saveAsImage: {
+              type: "png",
+              pixelRatio: "5"
+            }
           }
         },
         itemStyle: {
@@ -96,10 +117,10 @@ export default {
           }
         },
         grid: {
-          top: "8%",
-          left: "3%",
-          right: "28%",
-          bottom: "8%",
+          top: "28%",
+          left: "8%",
+          right: "20%",
+          bottom: "0%",
           containLabel: true
         },
         nameTextStyle: {
@@ -131,18 +152,6 @@ export default {
           }
         },
         series: [
-          // {
-          //   // For shadow
-          //   type: "bar",
-          //   itemStyle: {
-          //     normal: { color: "rgba(0,0,0,0.05)" }
-          //   },
-          //   barGap: "-100%",
-          //   barCategoryGap: "40%",
-          //   barWidth: 45,
-          //   // data: dataValue,
-          //   animation: false
-          // },
           {
             type: "bar",
             data: dataValue,
@@ -159,7 +168,7 @@ export default {
                 position: "right",
                 offset: [10, 0],
                 formatter: function(params) {
-                  return `${params.value} ${tempChartData.unit}`;
+                  return `${params.value} ${unit}`;
                 }
               }
             }
@@ -170,3 +179,24 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.benefit {
+  position: relative;
+
+  .word {
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    color: $primary-font-color;
+    .value {
+      font-size: 50px;
+      font-weight: 700;
+    }
+    .unit {
+      font-size: 20px;
+      font-weight: 600;
+    }
+  }
+}
+</style>

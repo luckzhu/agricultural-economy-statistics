@@ -10,7 +10,12 @@
       <div class="menu">
         <div class="top-menu xy-center button-group">
           <router-link v-for="(button,index) in topButtons" :to="`${button.path}`" :key="index">
-            <el-button type="primary" plain @click="onTopMenu(button.name)">{{button.name}}</el-button>
+            <el-button
+              type="primary"
+              plain
+              :class="{'active':currentRoute.indexOf(button.path) !== -1}"
+              @click="onTopMenu(button.name)"
+            >{{button.name}}</el-button>
           </router-link>
         </div>
       </div>
@@ -63,6 +68,12 @@ export default {
       }
     };
   },
+  computed: {
+    currentRoute() {
+      console.log(this.$route);
+      return this.$route.path;
+    }
+  },
   methods: {
     onTopMenu(name) {
       this.title = this.menuList[name];
@@ -109,6 +120,11 @@ export default {
       background: #ddd;
       border-color: #fff;
       padding: 10px 28px;
+    }
+    .el-button--primary.is-plain.active {
+      color: #fff;
+      background: #27727b;
+      border-color: #27727b;
     }
     .el-button--primary.is-plain:focus,
     .el-button--primary.is-plain:hover {

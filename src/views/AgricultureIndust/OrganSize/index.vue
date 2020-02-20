@@ -19,7 +19,7 @@
           </div>
         </border-box1>
         <border-box1 class="grid-content">
-          <chart-info :chartInfo="marketTurnover.info" />
+          <chart-info :chartInfo="marketTurnover.info"  />
           <bar-horizontal id="marketTurnover" height="25.625rem" :chartData="marketTurnover.sort" title="农业产业化专业市场交易额" />
         </border-box1>
       </el-col>
@@ -44,7 +44,7 @@ export default {
     return {
       year: 2018,
       tabId: 2,
-      graphPage2: null,
+      graphPage: null,
       fixAssets: {},
       leadingSales: {},
       organSales: {},
@@ -52,7 +52,7 @@ export default {
     };
   },
   mounted() {
-    this.getGraphPage2().then(() => {
+    this.getGraphPage().then(() => {
       this.converData("fixAssets");
       this.converData("leadingSales");
       this.converData("organSales");
@@ -60,14 +60,14 @@ export default {
     });
   },
   methods: {
-    getGraphPage2() {
+    getGraphPage() {
       const { year, tabId } = this;
       return getGraph({ year, tabId }).then(res => {
-        this.graphPage2 = res.data.info;
+        this.graphPage = res.data.info;
       });
     },
     converData(field) {
-      this[field] = this.graphPage2[field];
+      this[field] = this.graphPage[field];
     },
     compare(property) {
       return function(a, b) {

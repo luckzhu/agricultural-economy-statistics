@@ -19,7 +19,14 @@
     border-color: #fff;
     padding: 12px 34px;
   }
-
+  .el-button--primary.is-plain.active {
+    // color       : #00fbff;
+    // background  : #13345e;
+    // border-color: #00fbff;
+    color: #fff;
+    background: #27727b;
+    border-color: #27727b;
+  }
   .el-button--primary.is-plain:focus,
   .el-button--primary.is-plain:hover {
     // color: #ffffff;

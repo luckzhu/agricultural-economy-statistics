@@ -3,7 +3,7 @@
     <el-row :gutter="10">
       <el-col :span="12" class="grid-wrapper">
         <border-box1 class="grid-content">
-          <drive-benefits />
+          <drive-benefits :chartData="driveBenefits" v-if="driveBenefits" />
         </border-box1>
         <border-box1 class="grid-content">
           <div class="grid-content">
@@ -80,7 +80,8 @@ export default {
           symbol: require("@/assets/symbol/rice.svg")
         }
       },
-      employee: {}
+      employee: {},
+      driveBenefits: null
     };
   },
   mounted() {
@@ -90,6 +91,7 @@ export default {
       this.converData("baseDist.poultryNum");
       this.converData("baseDist.plantArea");
       this.converData("baseDist.livestockNum");
+      this.converData("driveBenefits");
     });
   },
   methods: {
@@ -105,7 +107,6 @@ export default {
         field = field.split(".")[1];
       }
       this[field] = { ...this[field], ...sortAndInfo };
-      console.log(this[field]);
     },
     compare(property) {
       return function(a, b) {

@@ -6,7 +6,7 @@
         v-for="(button,index) in topButtons"
         :key="index"
       >
-        <el-button type="primary" plain>· {{button.name}} ·</el-button>
+        <el-button type="primary" plain  :class="{'active':currentRoute.indexOf(button.path) !== -1}" >· {{button.name}} ·</el-button>
       </router-link>
     </div>
     <div class="main-body">
@@ -20,10 +20,11 @@ export default {
   name: "AgricultureIndust",
   data() {
     return {
+      //TO DO 应写到the header里，和一级菜单在一起
       topButtons: [
         {
           name: "数量结构",
-          path: "/quantityStructure",
+          path: "/quantityStructure"
         },
         {
           name: "组织规模",
@@ -35,6 +36,11 @@ export default {
         }
       ]
     };
+  },
+  computed: {
+    currentRoute() {
+      return this.$route.path;
+    }
   }
 };
 </script>

@@ -6,7 +6,11 @@
         v-for="(button,index) in topButtons"
         :key="index"
       >
-        <el-button type="primary" plain>· {{button.name}} ·</el-button>
+        <el-button
+          type="primary"
+          plain
+          :class="{'active':currentRoute.indexOf(button.path) !== -1}"
+        >· {{button.name}} ·</el-button>
       </router-link>
     </div>
     <div class="main-body">
@@ -51,6 +55,11 @@ export default {
         }
       ]
     };
+  },
+  computed: {
+    currentRoute() {
+      return this.$route.path;
+    }
   }
 };
 </script>

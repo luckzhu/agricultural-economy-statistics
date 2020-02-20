@@ -1,5 +1,5 @@
 <template>
-  <div class="chart-information" :class="{'double':chartInfo.length >=2}">
+  <div class="chart-information" :class="{'double':chartInfo.length >=2}" v-if="chartInfo">
     <div class="chart-info-part" v-for="(info,index) in chartInfo" :key="index">
       <p class="value">
         {{info.value}}
@@ -14,16 +14,7 @@
 export default {
   props: {
     chartInfo: {
-      type: Array,
-      default() {
-        return [
-          {
-            value: 1367,
-            unit: "亿元",
-            describe: "固定资产净值"
-          }
-        ];
-      }
+      type: Array
     }
   },
   components: {},
