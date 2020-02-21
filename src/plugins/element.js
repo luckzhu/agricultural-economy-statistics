@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { Button, Row, Col, Container, Header, Main, Menu, Submenu, MenuItem, MenuItemGroup, Form, FormItem, Input, Radio, RadioGroup, RadioButton } from "element-ui";
+import { Button, Row, Col, Container, Header, Main, Menu, Submenu, MenuItem, MenuItemGroup, Form, FormItem, Input, Radio, RadioGroup, RadioButton, Switch } from "element-ui";
 
 Vue.use(Button);
 Vue.use(Row);
@@ -17,3 +17,4 @@ Vue.use(Input);
 Vue.use(Radio);
 Vue.use(RadioGroup);
 Vue.use(RadioButton);
+Vue.use(Switch);

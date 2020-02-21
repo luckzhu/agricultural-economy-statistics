@@ -21,7 +21,7 @@
       </div>
     </el-col>
     <el-col :span="5" class="xy-center">
-      <svg-icon icon-name="exit"></svg-icon>
+      <svg-icon icon-name="exit" @click.native="onLogout"></svg-icon>
     </el-col>
   </div>
 </template>
@@ -76,6 +76,9 @@ export default {
   methods: {
     onTopMenu(name) {
       this.title = this.menuList[name];
+    },
+    onLogout() {
+      this.$router.push("/login");
     }
   }
 };

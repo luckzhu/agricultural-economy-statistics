@@ -11,69 +11,25 @@
   </div>
 </template>
 <script>
-import echarts from "echarts";
 import resize from "@/components/Echarts/mixins/resize";
+import common from "@/components/Echarts/mixins/common";
+
 import "echarts-liquidfill";
 
 export default {
   name: "BenefitBind",
-  mixins: [resize],
-  props: {
-    chartData: {
-      type: Array,
-      default: () => {
-        return [
-          {
-            category: "订单合同方式",
-            value: 3555,
-            percent: 40,
-            describe: "通过合同等契约方式向农户收购农副产品，并及时按约定结算，农户按合同要求进行生产"
-          }
-        ];
-      }
-    }
-  },
+  mixins: [resize, common],
+
   data() {
     return {
-      chart: null,
       title: "农业产业化组织利益联结方式",
       unit: "亿元",
       id: "benefitBind"
     };
   },
-  computed: {
-    graphData() {
-      return this.$store.getters.graphData;
-    }
-  },
-  watch: {
-    chartData: {
-      deep: true,
-      handler(val) {
-        this.setOptions(this.chartData);
-      }
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.initChart();
-    });
-  },
-  beforeDestroy() {
-    if (!this.chart) {
-      return;
-    }
-    this.chart.dispose();
-    this.chart = null;
-  },
   methods: {
-    initChart() {
-      this.chart = echarts.init(document.getElementById(this.id), "infographic");
-      this.setOptions(this.chartData);
-    },
     setOptions(chartData = {}) {
-      const { title, unit } = this;
-      const colors = this.$store.getters.colors;
+      const { title, unit, colors } = this;
       let series = [];
       chartData.forEach((item, i) => {
         series.push({
@@ -157,5 +113,4 @@ export default {
   height: 280px;
   width: 100%;
 }
-
 </style>

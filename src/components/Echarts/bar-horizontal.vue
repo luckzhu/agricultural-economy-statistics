@@ -3,15 +3,12 @@
 </template>
 
 <script>
-import echarts from "echarts";
 import resize from "@/components/Echarts/mixins/resize";
+import common from "@/components/Echarts/mixins/common";
 
 export default {
-  mixins: [resize],
+  mixins: [resize, common],
   props: {
-    chartData: {
-      type: Array
-    },
     id: {
       type: String,
       default: "chart"
@@ -33,39 +30,9 @@ export default {
       default: "农业产业化组织固定资产"
     }
   },
-  data() {
-    return {
-      chart: null
-    };
-  },
-  watch: {
-    chartData: {
-      deep: true,
-      handler(val) {
-        this.setOptions(val);
-      }
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.initChart();
-    });
-  },
-  beforeDestroy() {
-    if (!this.chart) {
-      return;
-    }
-    this.chart.dispose();
-    this.chart = null;
-  },
   methods: {
-    initChart() {
-      this.chart = echarts.init(document.getElementById(this.id), "infographic");
-      this.setOptions(this.chartData);
-    },
     setOptions(chartData = {}) {
-      const { title, unit } = this;
-      const colors = this.$store.getters.colors;
+      const { title, unit,colors } = this;
       var yData = [];
       var barData = [];
       for (var i = 0; i < chartData.length; i++) {

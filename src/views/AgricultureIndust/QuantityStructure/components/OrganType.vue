@@ -12,64 +12,24 @@
 </template>
 
 <script>
-import echarts from "echarts";
 import resize from "@/components/Echarts/mixins/resize";
+import common from "@/components/Echarts/mixins/common";
 export default {
   name: "OrganType",
-  mixins: [resize],
-  props: {
-    chartData: {
-      type: Array,
-      default: () => {
-        return [
-          {
-            category: "龙头企业带动型",
-            value: 3555,
-            percent: 40,
-            describe: "县以上农业产业化主管部门认定的龙头企业"
-          }
-        ];
-      }
-    }
-  },
+  mixins: [resize, common],
   data() {
     return {
-      chart: null,
       unit: "亿元",
       title: "农业产业化组织类型",
       id: "organType"
     };
   },
-  watch: {
-    chartData: {
-      deep: true,
-      handler(val) {
-        this.setOptions(val);
-      }
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.initChart();
-    });
-  },
-  beforeDestroy() {
-    if (!this.chart) {
-      return;
-    }
-    this.chart.dispose();
-    this.chart = null;
-  },
+
   methods: {
-    initChart() {
-      this.chart = echarts.init(document.getElementById(this.id), "infographic");
-      this.setOptions(this.chartData);
-    },
     setOptions(chartData = {}) {
-      const { title, unit } = this;
-      const colors = this.$store.getters.colors;
+      const { title, unit, colors } = this;
       let series = [];
-      
+
       chartData.forEach((item, i) => {
         series.push({
           type: "pie",
@@ -149,7 +109,7 @@ export default {
         },
         series: series
       });
-    },
+    }
   }
 };
 </script>

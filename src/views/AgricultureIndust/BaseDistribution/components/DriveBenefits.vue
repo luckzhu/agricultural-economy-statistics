@@ -41,6 +41,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/_handle.scss";
+
 .order {
   // padding: 20px;
   height: 12.5rem;
@@ -53,10 +55,10 @@ export default {
     text-align: left;
     padding: 20px 40px;
     font-size: 24px;
-    background: $light-background-color;
+    @include background_color("background_color_light");
     border-radius: 20px;
     line-height: 40px;
-    color: $light-font-color;
+    @include font_color("font_color_light");
   }
 }
 </style>

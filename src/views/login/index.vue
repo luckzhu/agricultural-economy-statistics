@@ -46,11 +46,20 @@
           <svg-icon :icon-name="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
-      <el-form-item label="页面风格:" class="styleCheck">
-        <el-radio-group v-model="loginForm.style">
-          <el-radio label="浅底"></el-radio>
-          <el-radio label="深底"></el-radio>
-        </el-radio-group>
+      <el-form-item label="选择页面风格：" class="styleCheck">
+        <div class="switch-container">
+          <el-switch
+            style="display: block"
+            v-model="style"
+            active-color="#aaa"
+            inactive-color="#00fbff"
+            active-text="白天"
+            inactive-text="黑夜"
+            active-value="light"
+            inactive-value="dark"
+            @change="switchStyle"
+          ></el-switch>
+        </div>
       </el-form-item>
       <el-button
         :loading="loading"
@@ -64,7 +73,6 @@
 
 <script>
 import qs from "qs";
-import { getCalIndustrySurveyTable1, getGraph, addOrUpdateIndustrySurvey } from "@/api/industrySurvey";
 
 export default {
   name: "Login",
@@ -72,8 +80,7 @@ export default {
     return {
       loginForm: {
         username: "zxn",
-        password: "123",
-        style: "深底"
+        password: "123"
       },
       loginRules: {
         username: [{ required: true, trigger: "blur", message: "请输入用户名" }],
@@ -81,7 +88,18 @@ export default {
       },
       loading: false,
       passwordType: "password",
-      redirect: undefined
+      redirect: undefined,
+      style: "light",
+      borderBoxColorLight: {
+        start: "#333",
+        end: "#444"
+      },
+      borderBoxColorDark: {
+        start: "#11eefd",
+        end: "#0078d2"
+      },
+      colorsLight: ["#c1232b", "#27727b", "#fcce10", "#e87c25", "#b5c334", "#fe8463", "#9bca63", "#fad860", "#f3a43b", "#60c0dd", "#d7504b"],
+      colorsDark: ["#dd6b66", "#759aa0", "#e69d87", "#8dc1a9", "#ea7e53", "#eedd78", "#73a373", "#73b9bc", "#7289ab", "#91ca8c", "#f49f42"]
     };
   },
   watch: {
@@ -122,10 +140,11 @@ export default {
         }
       });
     },
-    getChartsData() {
-      return getGraph({ year: 2018 }).then(res => {
-        this.$store.dispatch("charts/setChartsData", res.data.info);
-      });
+    switchStyle(val) {
+      window.document.documentElement.setAttribute("data-theme", val === "dark" ? "dark" : "light");
+      this.$store.commit("charts/SET_ECHARTS_STYLE", val === "dark" ? "dark" : "light");
+      this.$store.commit("charts/SET_BORDERBOX_COLOR", val === "dark" ? this.borderBoxColorDark : this.borderBoxColorLight);
+      this.$store.commit("charts/SET_COLORS", val === "dark" ? this.colorsDark : this.colorsLight);
     }
   }
 };
@@ -182,10 +201,23 @@ $cursor: #fff;
     border: 0px;
     background: transparent;
     border-radius: 0;
-    
     .el-form-item__label {
       color: #fff;
       width: 120px;
+    }
+  }
+
+  .switch-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+
+    .el-switch__label {
+      color: #fff;
+      &.is-active {
+        color: #409eff;
+      }
     }
   }
 }

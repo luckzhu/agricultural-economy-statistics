@@ -13,13 +13,11 @@
 <script>
 import echarts from "echarts";
 import resize from "@/components/Echarts/mixins/resize";
+import common from "@/components/Echarts/mixins/common";
 
 export default {
-  mixins: [resize],
+  mixins: [resize, common],
   props: {
-    chartData: {
-      type: Object
-    },
     id: {
       type: String,
       default: "chart"
@@ -33,36 +31,7 @@ export default {
       default: "350px"
     }
   },
-  data() {
-    return {
-      chart: null
-    };
-  },
-  watch: {
-    chartData: {
-      deep: true,
-      handler(val) {
-        this.setOptions(val);
-      }
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.initChart();
-    });
-  },
-  beforeDestroy() {
-    if (!this.chart) {
-      return;
-    }
-    this.chart.dispose();
-    this.chart = null;
-  },
   methods: {
-    initChart() {
-      this.chart = echarts.init(document.getElementById(this.id), "infographic");
-      this.setOptions(this.chartData);
-    },
     compare(property) {
       return function(a, b) {
         var value1 = a[property];
@@ -73,10 +42,9 @@ export default {
     setOptions(chartData) {
       const { sort, info } = chartData;
       const { unit, name } = info[0];
-      const colors = this.$store.getters.colors;
+      const { colors } = this;
       let dataName = [];
       let dataValue = [];
-
       // 防止重新排序后，watch  的 infinite loop
       const copySort = JSON.parse(JSON.stringify(sort));
       copySort.sort(this.compare("value"));
@@ -181,6 +149,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/_handle.scss";
+
 .benefit {
   position: relative;
 
@@ -188,7 +158,7 @@ export default {
     position: absolute;
     right: 30px;
     bottom: 30px;
-    color: $primary-font-color;
+    @include font_color("font_color_primary");
     .value {
       font-size: 50px;
       font-weight: 700;

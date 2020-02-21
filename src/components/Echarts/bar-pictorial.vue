@@ -3,15 +3,12 @@
 </template>
 
 <script>
-import echarts from "echarts";
 import resize from "@/components/Echarts/mixins/resize";
+import common from "@/components/Echarts/mixins/common";
 
 export default {
-  mixins: [resize],
+  mixins: [resize, common],
   props: {
-    chartData: {
-      type: Object
-    },
     id: {
       type: String,
       default: "chart"
@@ -25,36 +22,7 @@ export default {
       default: "200px"
     }
   },
-  data() {
-    return {
-      chart: null
-    };
-  },
-  watch: {
-    chartData: {
-      deep: true,
-      handler(val) {
-        this.setOptions(val);
-      }
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.initChart();
-    });
-  },
-  beforeDestroy() {
-    if (!this.chart) {
-      return;
-    }
-    this.chart.dispose();
-    this.chart = null;
-  },
   methods: {
-    initChart() {
-      this.chart = echarts.init(document.getElementById(this.id), "infographic");
-      this.setOptions(this.chartData);
-    },
     setOptions(chartData) {
       const { option, sort } = chartData;
       const { title, symbol, unit } = option;
@@ -67,19 +35,9 @@ export default {
       this.chart.setOption({
         title: {
           text: `· ${title}`,
-          // subtext: subTitle,
           x: "20px",
-          y: "20px",
-          textStyle: {
-            // color: "#00F6FB"
-          }
+          y: "20px"
         },
-        // tooltip: {
-        //   // trigger: "axis",
-        //   // axisPointer: {
-        //   //   type: "shadow"
-        //   // }
-        // },
         toolbox: {
           show: true,
           feature: {
@@ -95,12 +53,6 @@ export default {
           top: "10%",
           right: "14%",
           bottom: "0%"
-        },
-        nameTextStyle: {
-          // color: "#fff"
-        },
-        axisLabel: {
-          // color: "#fff"
         },
         yAxis: {
           data: dataName,
@@ -128,7 +80,6 @@ export default {
         },
         series: [
           {
-            // name: "种植面积",
             type: "pictorialBar",
             symbol: `image://${symbol}`,
             symbolRepeat: true,
@@ -136,13 +87,11 @@ export default {
             barCategoryGap: "40%",
             barWidth: 80,
             data: dataValue,
-            // color: "#FFF",
             symbolClip: true,
             label: {
               normal: {
                 show: true,
                 textStyle: {
-                  // color: "#fff",
                   fontSize: 20
                 },
                 position: "right",

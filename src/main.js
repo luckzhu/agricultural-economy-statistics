@@ -19,7 +19,8 @@ import "./utils/rem"; // rem 自适应
 import _ from "lodash";
 Vue.prototype._ = _;
 
-import "./utils/EchartsStyle/infographic" //echart主题
+import "./utils/EchartsStyle/light" //echart主题
+import "./utils/EchartsStyle/dark" //echart主题
 
 Vue.config.productionTip = false;
 

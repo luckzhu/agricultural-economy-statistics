@@ -3,15 +3,12 @@
 </template>
 
 <script>
-import echarts from "echarts";
 import resize from "@/components/Echarts/mixins/resize";
+import common from "@/components/Echarts/mixins/common";
 
 export default {
-  mixins: [resize],
+  mixins: [resize, common],
   props: {
-    chartData: {
-      type: Array
-    },
     id: {
       type: String,
       default: "chart"
@@ -27,39 +24,14 @@ export default {
   },
   data() {
     return {
-      chart: null,
       title: "农业产业化组织区域分布",
       unit: "家"
     };
   },
-  watch: {
-    chartData: {
-      deep: true,
-      handler(val) {
-        this.setOptions(val);
-      }
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.initChart();
-    });
-  },
-  beforeDestroy() {
-    if (!this.chart) {
-      return;
-    }
-    this.chart.dispose();
-    this.chart = null;
-  },
+
   methods: {
-    initChart() {
-      this.chart = echarts.init(document.getElementById(this.id), "infographic");
-      this.setOptions(this.chartData);
-    },
     setOptions(chartData = {}) {
-      const { title, unit } = this;
-      // const colors = this.$store.getters.colors;
+      const { title, unit, colors } = this;
       let series = [];
       let dataName = [];
       let sum = [];
@@ -133,7 +105,7 @@ export default {
         legend: {
           orient: "vertical",
           top: "70",
-          left: "200",
+          right: "200",
           textStyle: {
             // color: "#fff",
             fontSize: 14
@@ -149,15 +121,9 @@ export default {
         grid: {
           left: "2%",
           right: "2%",
-          top: "15%",
+          top: "18%",
           bottom: "9%"
         },
-        // nameTextStyle: {
-        //   color: "#fff"
-        // },
-        // axisLabel: {
-        //   color: "#fff"
-        // },
         label: {
           show: true,
           position: "top",
@@ -172,7 +138,8 @@ export default {
         xAxis: [
           {
             type: "category",
-            data: dataName
+            data: dataName,
+            splitLine: { show: false },
           }
         ],
         yAxis: [
