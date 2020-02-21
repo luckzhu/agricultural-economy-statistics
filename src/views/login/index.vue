@@ -89,7 +89,7 @@ export default {
       loading: false,
       passwordType: "password",
       redirect: undefined,
-      style: "light",
+      style: localStorage.getItem("style") || "light",
       borderBoxColorLight: {
         start: "#333",
         end: "#444"
@@ -129,6 +129,7 @@ export default {
             .dispatch("user/login", this.loginForm)
             .then(res => {
               // this.getChartsData();
+              localStorage.setItem("style", this.style);
               this.$router.push({ path: "/" });
             })
             .catch(() => {
