@@ -1,0 +1,44 @@
+//定义全局主题&颜色的map数组，鉴于V5只有白天和晚上的主题，此处仅定义这两种
+//切记 所有颜色一式两份儿，务必保证key值统一，key值可以自定义，注意避免$%_之类的，
+//与sass自有符号冲突，见文知意即可
+//另外如果基于其他UI框架，如本项目基于element-ui，则只需设置一套dark主题，
+//data-theme为dark时，样式引用dark
+//data-theme为其他值时，自然就采用了elementui的默认样式
+$themes: (
+  light: (
+    // button
+      button_font_color: #27727b,
+    button_background_color: #ddd,
+    button_border_color: #fff,
+    button_active_font_color: #fff,
+    button_active_background_color: #27727b,
+    button_active_border_color: #27727b,
+    // title
+      font_color_title: #000,
+    // text
+      font_color_primary: #000,
+      font_color_light: #333,
+    font_color1: #000,
+    background_color: #fff,
+    background_color_light: #ddd,
+    border_color1: #ddd
+  ),
+  dark: (
+    // button
+      button_font_color: #00fbff,
+    button_background_color: #13345e,
+    button_border_color: #00fbff,
+    button_active_font_color: #ffffff,
+    button_active_background_color: #0090b3,
+    button_active_border_color: #00fbff,
+    // title
+      font_color_title: #00fbff,
+    // text
+      font_color_primary: #fff,
+      font_color_light: #1bced4,
+    font_color1: #fff,
+    background_color: #181d3d,
+    background_color_light: #14335f,
+    border_color1: rgb(9, 255, 0)
+  )
+);

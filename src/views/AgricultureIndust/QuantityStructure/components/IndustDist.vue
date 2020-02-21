@@ -37,6 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/_handle.scss";
 .industDist {
   width: 100%;
 }
@@ -54,7 +55,7 @@ export default {
 .item-bar {
   height: 30px;
   width: 100%;
-  background: $light-background-color;
+  @include background_color("background_color_light");
   position: relative;
   border-radius: 4px;
 }
@@ -63,7 +64,7 @@ export default {
   width: 80px;
   font-size: 20px; /*px*/
   font-weight: 700;
-  color: $primary-title-color;
+  @include font_color("font_color_primary");
   text-align: left;
   letter-spacing: 0;
   white-space: nowrap;
@@ -80,7 +81,7 @@ export default {
   margin-left: 20px;
   font-size: 16px; /*px*/
   font-weight: 500;
-  color: #fff;
+  @include font_color("font_color_light");
   line-height: 30px;
 }
 .item-info {
@@ -88,7 +89,7 @@ export default {
   line-height: 16px;
   letter-spacing: 1px;
   text-align: left;
-  color: $light-font-color;
+  @include font_color("font_color_light");
   position: absolute;
   left: 0;
   top: 100%;

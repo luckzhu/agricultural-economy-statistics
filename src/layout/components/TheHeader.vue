@@ -83,14 +83,16 @@ export default {
 
 <style lang="scss" >
 // @import "@/styles/variable.scss";
+@import "@/styles/_handle.scss";
+
 .the-header {
   height: 100%;
 
   .svg-icon,
   .current-year,
   .title {
-    font-size: $primary-font-size;
-    color: $primary-font-color;
+    font-size: 48px;
+    @include font_color("font_color_title");
     font-weight: 600;
     white-space: nowrap;
   }
@@ -113,23 +115,6 @@ export default {
       margin: 15px 20px 0 20px;
       font-size: 22px;
       font-weight: 500;
-    }
-    .el-button--primary.is-plain {
-      color: #27727b;
-      background: #ddd;
-      border-color: #fff;
-      padding: 10px 28px;
-    }
-    .el-button--primary.is-plain.active {
-      color: #fff;
-      background: #27727b;
-      border-color: #27727b;
-    }
-    .el-button--primary.is-plain:focus,
-    .el-button--primary.is-plain:hover {
-      color: #fff;
-      background: #27727b;
-      border-color: #27727b;
     }
   }
   .menu {

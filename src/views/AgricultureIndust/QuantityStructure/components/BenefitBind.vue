@@ -157,34 +157,5 @@ export default {
   height: 280px;
   width: 100%;
 }
-.chart-info-wrapper {
-  display: flex;
-  justify-content: space-between;
-  height: 130px;
-  padding: 0 10px;
-  .chart-info {
-    flex: 1;
-  }
-  .info-width {
-    padding: 0 10px;
-    padding-bottom: 10px;
-    text-align: center;
-  }
-  .font-info1 {
-    font-size: 24px;
-    font-weight: 700;
-    color: $primary-font-color;
-  }
-  .font-info2 {
-    font-size: 20px;
-    font-weight: 500;
-    color: $primary-font-color;
-  }
 
-  .font-info3 {
-    font-size: 14px;
-    font-weight: 500;
-    color: $light-font-color;
-  }
-}
 </style>

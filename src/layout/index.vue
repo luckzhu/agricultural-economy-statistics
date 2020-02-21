@@ -22,12 +22,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/_handle.scss";
+
 .layout {
   // font-family: MicrosoftYaHei, "Avenir", Helvetica, Arial, sans-serif;
   height: 100%;
   text-align: center;
   color: #fff;
-  background-color: $primary-background-color;
+  @include background_color("background_color");
   line-height: 100%;
   .el-header {
     height: 140px !important;

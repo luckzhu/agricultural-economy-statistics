@@ -25,12 +25,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/_handle.scss";
+
 .chart-information {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: $primary-font-color;
+  @include font_color("font_color_primary");
 
   .value {
     font-size: 80px;
@@ -42,7 +44,7 @@ export default {
     }
   }
   .describe {
-    color: $light-font-color;
+    @include font_color("font_color_light");
     font-size: 40px;
     font-weight: 600;
   }
@@ -62,7 +64,7 @@ export default {
     }
   }
   .describe {
-    color: $light-font-color;
+    @include font_color("font_color_light");
     font-size: 30px;
     font-weight: 600;
   }
