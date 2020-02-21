@@ -1,16 +1,19 @@
+const style = localStorage.getItem("style") || "light";
+
+const borderBoxColorLight = {
+  start: "#333",
+  end: "#444"
+};
+const borderBoxColorDark = {
+  start: "#11eefd",
+  end: "#0078d2"
+};
+const colorsLight = ["#c1232b", "#27727b", "#fcce10", "#e87c25", "#b5c334", "#fe8463", "#9bca63", "#fad860", "#f3a43b", "#60c0dd", "#d7504b"];
+const colorsDark = ["#dd6b66", "#759aa0", "#e69d87", "#8dc1a9", "#ea7e53", "#eedd78", "#73a373", "#73b9bc", "#7289ab", "#91ca8c", "#f49f42"];
 const state = {
-  // colors: ["#c12e34", "#e6b600", "#0098d9", "#2b821d", "#005eaa", "#339ca8", "#cda819", "#32a487"],
-  colors: ["#c1232b", "#27727b", "#fcce10", "#e87c25", "#b5c334", "#fe8463", "#9bca63", "#fad860", "#f3a43b", "#60c0dd", "#d7504b", "#c6e579", "#f4e001", "#f0805a", "#26c0c0"],
-  // darkColors: ["#dd6b66", "#759aa0", "#e69d87", "#8dc1a9", "#ea7e53", "#eedd78", "#73a373", "#73b9bc", "#7289ab", "#91ca8c", "#f49f42"],
-  // borderBoxColor: {
-  //   start: "#11eefd",
-  //   end: "#0078d2"
-  // },
-  borderBoxColor: {
-    start: "#333",
-    end: "#444"
-  },
-  echartsStyle: "light"
+  colors: style === "light" ? colorsLight : colorsDark,
+  borderBoxColor: style === "light" ? borderBoxColorLight : borderBoxColorDark,
+  echartsStyle: localStorage.getItem("style") || "light"
 };
 
 const mutations = {

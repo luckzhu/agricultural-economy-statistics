@@ -13,6 +13,9 @@ export default {
   name: "App",
   components: {
     FullScreenContainer
+  },
+  mounted() {
+    window.document.documentElement.setAttribute("data-theme", window.localStorage.getItem("style"));
   }
 };
 </script>
