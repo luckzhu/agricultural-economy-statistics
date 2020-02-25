@@ -1,34 +1,14 @@
 <template>
-  <div :id="id" :class="className" :style="{height:height,width:width}" />
+  <div :id="id" :style="{height:height,width:width}" />
 </template>
 
 <script>
-import echarts from "echarts";
 import resize from "./mixins/resize";
+import common from "@/components/Echarts/mixins/common";
 
 export default {
-  mixins: [resize],
+  mixins: [resize, common],
   props: {
-    chartData: {
-      type: Object,
-      default() {
-        return {
-          title: "700",
-          unit: "万户",
-          data: [
-            { name: "珠三角", value: 345 },
-            { name: "山区", value: 175 },
-            { name: "西翼", value: 116 },
-            { name: "东翼", value: 64 }
-          ],
-          colors: ["#91ABDB"]
-        };
-      }
-    },
-    className: {
-      type: String,
-      default: "chart"
-    },
     id: {
       type: String,
       default: "chart"
@@ -40,41 +20,23 @@ export default {
     height: {
       type: String,
       default: "350px"
+    },
+    unit: {
+      type: String,
+      default: "亿元"
+    },
+    title: {
+      type: String,
+      default: "数据图表"
     }
   },
   data() {
-    return {
-      chart: null
-    };
-  },
-  watch: {
-    chartData: {
-      deep: true,
-      handler(val) {
-        this.setOptions(val);
-      }
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.initChart();
-    });
-  },
-  beforeDestroy() {
-    if (!this.chart) {
-      return;
-    }
-    this.chart.dispose();
-    this.chart = null;
+    return {};
   },
   methods: {
-    initChart() {
-      this.chart = echarts.init(document.getElementById(this.id));
-      this.setOptions(this.chartData);
-    },
-    setOptions({ expectedData, actualData } = {}) {
-      let tempChartData = JSON.parse(JSON.stringify(this.chartData));
-      const colors = this.$store.getters.colors
+    setOptions(chartData) {
+      if (!chartData) return;
+      const { colors, unit, title } = this;
       const compare = function(property) {
         return function(a, b) {
           var value1 = a[property];
@@ -82,25 +44,25 @@ export default {
           return value2 - value1;
         };
       };
-      let data = tempChartData.data.sort(compare("value"));
+      // 防止重新排序后，watch  的 infinite loop
+      const copyData = JSON.parse(JSON.stringify(chartData));
+      let data = copyData.sort(compare("value"));
+
       let dataName = [];
       let dataValue = [];
       data.forEach(element => {
-        dataName.push(element.name);
+        dataName.push(element.name.replace(/市.*/, ""));
         dataValue.push(element.value);
       });
       this.chart.setOption({
         title: {
-          text: `· ${tempChartData.title}`,
+          text: `· ${title}`,
           x: "20px",
-          y: "20px",
-          textStyle: {
-            color: "#00F6FB"
-          }
+          y: "20px"
         },
         tooltip: {
           trigger: "item",
-          formatter: `{b}: {c}${tempChartData.unit}`
+          formatter: `{b}: {c}${unit}`
         },
         // dataRange: {
         //   show: false,
@@ -121,24 +83,18 @@ export default {
           {
             type: "category",
             show: true,
-            data: dataName,
-            axisLabel: {
-              color: "#fff"
-            }
+            data: dataName
           }
         ],
         yAxis: [
           {
             type: "value",
-            show: false,
-            axisLabel: {
-              color: "#fff"
-            }
+            show: false
           }
         ],
         series: [
           {
-            name: tempChartData.title,
+            name: title,
             type: "bar",
             barGap: 0.1,
             barWidth: 30,
@@ -153,7 +109,7 @@ export default {
                 label: {
                   show: true,
                   position: "top",
-                  color:"#fff",
+                  color: "#fff",
                   formatter: "{c}"
                 },
                 shadowBlur: 80,
