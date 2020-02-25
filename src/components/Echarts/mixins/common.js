@@ -1,4 +1,5 @@
 import echarts from "echarts";
+import guangdong from "@/assets/map/guangdong.json";
 export default {
   props: {
     chartData: {}
@@ -40,6 +41,7 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(document.getElementById(this.id), this.style);
+      echarts.registerMap("广东", guangdong);
       this.setOptions(this.chartData);
     }
   }

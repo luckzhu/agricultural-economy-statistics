@@ -2,33 +2,41 @@
   <div>
     <el-row :gutter="10">
       <el-col :span="5" class="grid-wrapper">
-        <border-box1 class="grid-content"></border-box1>
+        <border-box1 class="grid-content">
+          <unit-nums id="UnitNums" height="25.625rem" :chartData="unitNums" />
+          <div class="unit-word">
+            <div v-for="item in unitNums" :key="item.value">
+              <p class="title">{{item.name}}</p>
+              <p class="value">
+                {{item.value}}
+                <span class="unit">家</span>
+              </p>
+            </div>
+          </div>
+        </border-box1>
       </el-col>
-      <el-col :span="14" class="grid-wrapper">
-        <border-box1 class="grid-content middle">
-          <map-leader height="51.875rem" />
+      <el-col :span="14" class="grid-wrapper middle">
+        <border-box1 class="grid-content">
+          <map-leader :chartData="cityDistNational" height="51.875rem" />
           <pie-normal
-            id="pie-leading-country"
-            class="pie-leading-country"
+            id="cityDistProvincialRegion"
+            class="pie-leading-city"
             height="26rem"
             width="26rem"
-            :chartData="distributionOfPie"
+            unit="家"
+            :chartData="cityDistProvincialRegion"
           />
-          <div class="leading-country-table">
-            <div class="country-item" v-for="(country,index) in leadingCountries" :key="index">
-              <p class="name">{{country.name}}</p>
-              <p class="value">{{country.value}}家</p>
+          <div class="leading-city-table">
+            <div class="city-item" v-for="(city,index) in cityDistProvincialCity" :key="index">
+              <p class="name">{{city.name | canonicalName}}</p>
+              <p class="value">{{city.value}}家</p>
             </div>
           </div>
         </border-box1>
       </el-col>
       <el-col :span="5" class="grid-wrapper">
         <border-box1 class="grid-content">
-          <county-distribution
-            id="countyDistribution"
-            height="51.875rem"
-            :chartData="countyDistributionData"
-          />
+          <county-dist id="countyDist" height="51.875rem" :chartData="countyDist" />
         </border-box1>
       </el-col>
     </el-row>
@@ -39,17 +47,24 @@
 import BorderBox1 from "@/components/BorderBox/borderBox1";
 import MapLeader from "./components/MapLeader";
 import PieNormal from "@/components/Echarts/pie-normal";
-import CountyDistribution from "./components/CountyDistribution";
+import CountyDist from "./components/CountyDist";
+import UnitNums from "./components/UnitNums";
+
+import { getGraph } from "@/api/industrySurvey";
 
 export default {
   components: {
     BorderBox1,
     MapLeader,
     PieNormal,
-    CountyDistribution
+    CountyDist,
+    UnitNums
   },
   data() {
     return {
+      year: 2018,
+      tabId: 4,
+      graphPage: null,
       distributionOfPie: {
         unit: "家",
         data: [
@@ -83,60 +98,63 @@ export default {
         { name: "珠海", value: 16 },
         { name: "中山", value: 13 }
       ],
-      countyDistributionData: {
-        title: "省重点农业龙头企业县区分布",
-        unit: "家",
-        data: [
-          { name: "梅州市大埔县", value: 31 },
-          { name: "梅州市兴宁县", value: 23 },
-          { name: "梅州市梅县区", value: 22 },
-          { name: "梅州市五华县", value: 20 },
-          { name: "梅州市高州市", value: 20 },
-          { name: "河源市东源县", value: 20 },
-          { name: "惠州市惠东县", value: 18 },
-          { name: "佛山市顺德区", value: 17 },
-          { name: "茂名市电白区", value: 16 },
-          { name: "汕尾市海丰区", value: 15 },
-          { name: "广东省天河区", value: 14 },
-          { name: "茂名市茂南区", value: 14 },
-          { name: "佛山市南海区", value: 14 },
-          { name: "湛江市麻章区", value: 13 },
-          { name: "惠州市惠城区", value: 13 },
-          { name: "深圳市罗湖区", value: 12 },
-          { name: "深证市龙岗区", value: 12 },
-          { name: "深圳市福田区", value: 12 },
-          { name: "清远市英德市", value: 12 },
-          { name: "潮州市饶平县", value: 12 },
-          { name: "湛江市吴川市", value: 11 },
-          { name: "云浮市新兴县", value: 11 },
-          { name: "云浮市罗定市", value: 11 },
-          { name: "清远市连州市", value: 11 },
-          { name: "梅州市梅江区", value: 11 },
-          { name: "揭阳市揭东区", value: 11 },
-          { name: "惠州市博罗县", value: 11 },
-          { name: "湛江市遂溪县", value: 10 },
-          { name: "湛江市雷州市", value: 10 },
-          { name: "深圳市南山区", value: 10 },
-          { name: "韶关市始兴县", value: 10 },
-          { name: "汕头市金平区", value: 10 },
-          { name: "梅州市丰顺县", value: 10 },
-          { name: "佛山市三水区", value: 10 }
-        ]
-      }
+      countyDist: [],
+      cityDistNational: [],
+      cityDistProvincialRegion: [],
+      cityDistProvincialCity: [],
+      unitNums: []
     };
+  },
+  mounted() {
+    this.getGraphPage().then(() => {
+      this.converData("countyDist");
+      this.converData("cityDist.provincial.region");
+      this.converData("cityDist.provincial.city");
+      this.converData("cityDist.national");
+      this.converData("unitNums");
+    });
+  },
+  filters: {
+    canonicalName(value) {
+      return value.replace(/市.*/, "");
+    }
+  },
+  methods: {
+    getGraphPage() {
+      const { year, tabId } = this;
+      return getGraph({ year, tabId }).then(res => {
+        this.graphPage = res.data.info;
+        console.log(this.graphPage);
+      });
+    },
+    converData(field) {
+      const data = _.get(this.graphPage, field);
+      if (field.indexOf(".") !== -1) {
+        field = this.dotToCamelCase(field);
+      }
+      this[field] = data;
+    },
+    //转成驼峰命名
+    dotToCamelCase(sName) {
+      return sName.replace(/\.[a-z]/g, function(a, b) {
+        return b == 0 ? a.replace(".", "") : a.replace(".", "").toUpperCase();
+      });
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/_handle.scss";
+
 .middle {
   position: relative;
-  .pie-leading-country {
+  .pie-leading-city {
     position: absolute;
     right: 0px;
     top: 50px;
   }
-  .leading-country-table {
+  .leading-city-table {
     width: 540px;
     position: absolute;
     right: 60px;
@@ -144,7 +162,7 @@ export default {
     display: flex;
     flex-flow: row wrap;
     background: rgb(0, 59, 81);
-    .country-item {
+    .city-item {
       flex: 16%;
       outline: 1px solid #00fbff;
       .name,
@@ -161,6 +179,29 @@ export default {
         font-size: 18px;
         font-weight: 400;
       }
+    }
+  }
+}
+.unit-word {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  .title {
+    @include font_color("font_color_primary");
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 40px;
+  }
+  .value {
+    font-size: 80px;
+    font-weight: 700;
+    margin-bottom: 22px;
+    @include font_color("font_color_light");
+    .unit {
+      font-size: 30px;
+      font-weight: 600;
     }
   }
 }

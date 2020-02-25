@@ -20,6 +20,7 @@
 </template>
 
 <script>
+
 export default {
   name: "ProvincialLeader",
   data() {
@@ -60,7 +61,7 @@ export default {
     currentRoute() {
       return this.$route.path;
     }
-  }
+  },
 };
 </script>
 
