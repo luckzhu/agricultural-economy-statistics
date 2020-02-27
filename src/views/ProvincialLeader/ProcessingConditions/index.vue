@@ -3,20 +3,16 @@
     <el-row :gutter="10">
       <el-col :span="12" class="grid-wrapper">
         <border-box1 class="grid-content">
-          <process-output :chartData="processOutput" height="51.875rem" />
+          <process-output :chartData="output.city" height="51.875rem" />
         </border-box1>
       </el-col>
       <el-col :span="12" class="grid-wrapper">
         <border-box1 class="grid-content">
-          <processing-county
-            id="processingCounty"
-            height="25.6rem"
-            :chartData="processingCountyData"
-          />
+          <processing-county id="largeCounty" height="25.6rem" :chartData="largeCounty" />
         </border-box1>
         <border-box1 class="grid-content">
           <ul class="category-wrapper">
-            <li class="category" v-for="(cate,index) in categoryData" :key="index">
+            <li class="category" v-for="(cate,index) in total" :key="index">
               <div class="category-title">
                 <p class="name">{{ cate.name }}</p>
                 <p class="value">
@@ -38,6 +34,8 @@ import BorderBox1 from "@/components/BorderBox/borderBox1";
 import ProcessingCounty from "./components/ProcessingCounty";
 import ProcessOutput from "./components/ProcessOutput";
 
+import { getGraph } from "@/api/industrySurvey";
+
 export default {
   components: {
     BorderBox1,
@@ -45,7 +43,17 @@ export default {
     ProcessOutput
   },
   data() {
+    return {};
+  },
+  data() {
     return {
+      year: 2018,
+      tabId: 7,
+      graphPage: null,
+      fields: ["largeCounty", "output", "total"],
+      largeCounty: [],
+      total: [],
+      output: {},
       processingCountyData: {
         title: "加工大县",
         unit: "亿元",
@@ -197,36 +205,42 @@ export default {
           unit: "万吨",
           iconName: "mianhua"
         }
-      ],
-      processOutput: [
-        { name: "广州市", value: 5 },
-        { name: "东莞市", value: 3 },
-        { name: "深圳市", value: 7 },
-        { name: "韶关市", value: 1 },
-        { name: "清远市", value: 1 },
-        { name: "云浮市", value: 1 },
-        { name: "肇庆市", value: 0 },
-        { name: "茂名市", value: 1 },
-        { name: "湛江市", value: 6 },
-        { name: "阳江市", value: 2 },
-        { name: "江门市", value: 1 },
-        { name: "佛山市", value: 2 },
-        { name: "河源市", value: 3 },
-        { name: "惠州市", value: 3 },
-        { name: "中山市", value: 2 },
-        { name: "珠海市", value: 2 },
-        { name: "梅州市", value: 2 },
-        { name: "潮州市", value: 3 },
-        { name: "汕头市", value: 4 },
-        { name: "揭阳市", value: 1 },
-        { name: "汕尾市", value: 1 }
       ]
     };
+  },
+  mounted() {
+    this.getGraphPage().then(() => {
+      this.fields.forEach(field => this.converData(field));
+    });
+  },
+  methods: {
+    getGraphPage() {
+      const { year, tabId } = this;
+      return getGraph({ year, tabId }).then(res => {
+        this.graphPage = res.data.info;
+        console.log(this.graphPage);
+      });
+    },
+    converData(field) {
+      const data = _.get(this.graphPage, field);
+      if (field.indexOf(".") !== -1) {
+        field = this.dotToCamelCase(field);
+      }
+      this[field] = data;
+    },
+    //转成驼峰命名
+    dotToCamelCase(sName) {
+      return sName.replace(/\.[a-z]/g, function(a, b) {
+        return b == 0 ? a.replace(".", "") : a.replace(".", "").toUpperCase();
+      });
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/_handle.scss";
+
 .category-wrapper {
   display: flex;
   justify-content: center;
@@ -250,11 +264,12 @@ export default {
       font-size: 28px;
       font-weight: 600;
       padding-bottom: 20px;
-      color: $primary-font-color;
+      @include font_color("font_color_primary");
     }
     .value {
       font-size: 24px;
       font-weight: 500;
+      @include font_color("font_color_primary");
     }
     .unit {
       margin-left: 2px;
@@ -266,9 +281,10 @@ export default {
     width: 70px;
     height: 70px;
     padding: 4px;
-    border: 2px dashed $primary-font-color;
+    border: 2px dashed;
+    @include border_color("font_color_primary");
     border-radius: 50%;
-    fill: $menu-font-color;
+    @include font_color("font_color_light");
   }
 }
 </style>

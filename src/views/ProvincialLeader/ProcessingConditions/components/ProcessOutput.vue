@@ -27,29 +27,7 @@ export default {
   },
   methods: {
     setOptions(chartData) {
-      // let chartData = [
-      //   { name: "广州市", value: 5 },
-      //   { name: "东莞市", value: 3 },
-      //   { name: "深圳市", value: 7 },
-      //   { name: "韶关市", value: 1 },
-      //   { name: "清远市", value: 1 },
-      //   { name: "云浮市", value: 1 },
-      //   { name: "肇庆市", value: 0 },
-      //   { name: "茂名市", value: 1 },
-      //   { name: "湛江市", value: 6 },
-      //   { name: "阳江市", value: 2 },
-      //   { name: "江门市", value: 1 },
-      //   { name: "佛山市", value: 2 },
-      //   { name: "河源市", value: 3 },
-      //   { name: "惠州市", value: 3 },
-      //   { name: "中山市", value: 2 },
-      //   { name: "珠海市", value: 2 },
-      //   { name: "梅州市", value: 2 },
-      //   { name: "潮州市", value: 3 },
-      //   { name: "汕头市", value: 4 },
-      //   { name: "揭阳市", value: 1 },
-      //   { name: "汕尾市", value: 1 }
-      // ];
+      if (!chartData) return;
       const geoCoordMap = {
         广州市: [113.500637, 23.425178],
         东莞市: [113.946262, 22.946237],
@@ -338,7 +316,7 @@ export default {
             symbol: "circle",
             symbolOffset: ["10%", "50%"],
             symbolSize: function(val) {
-              return Math.sqrt(val[2]) * 20;
+              return Math.sqrt(Math.sqrt(val[2])) * 14;
             },
 
             hoverAnimation: true,

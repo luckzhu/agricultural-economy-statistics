@@ -3,16 +3,12 @@
 </template>
 
 <script>
-import echarts from "echarts";
 import resize from "@/components/Echarts/mixins/resize";
+import common from "@/components/Echarts/mixins/common";
 
 export default {
-  mixins: [resize],
+  mixins: [resize, common],
   props: {
-    chartData: {
-      type: Object,
-      default: () => {}
-    },
     id: {
       type: String,
       default: "chart"
@@ -28,40 +24,16 @@ export default {
   },
   data() {
     return {
-      chart: null
+      title: "加工大县",
+      unit: "个"
     };
   },
-  watch: {
-    chartData: {
-      deep: true,
-      handler(val) {
-        this.setOptions(val);
-      }
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.initChart();
-    });
-  },
-  beforeDestroy() {
-    if (!this.chart) {
-      return;
-    }
-    this.chart.dispose();
-    this.chart = null;
-  },
   methods: {
-    initChart() {
-      this.chart = echarts.init(document.getElementById(this.id));
-      this.setOptions(this.chartData);
-    },
-    setOptions({ expectedData, actualData } = {}) {
-      const { data, title, unit } = this.chartData;
-      const colors = this.$store.getters.colors;
+    setOptions(chartData) {
+      const { title, unit, colors } = this;
       let dataName = [];
       let dataValue = [];
-      data.forEach(element => {
+      chartData.forEach(element => {
         dataName.push(element.name);
         dataValue.push(element.value);
       });
@@ -73,6 +45,16 @@ export default {
           y: "20px",
           textStyle: {
             color: "#00F6FB"
+          }
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            saveAsImage: {
+              type: "png",
+              pixelRatio: "5",
+              excludeComponents: ["toolbox", "title"]
+            }
           }
         },
         tooltip: {
@@ -97,9 +79,6 @@ export default {
           right: "4%",
           containLabel: true
         },
-        nameTextStyle: {
-          color: "#fff"
-        },
 
         xAxis: {
           type: "value",
@@ -120,7 +99,6 @@ export default {
           axisLabel: {
             show: true,
             textStyle: {
-              color: "#fff",
               fontSize: 12
             }
           }
@@ -136,14 +114,13 @@ export default {
               normal: {
                 show: true,
                 textStyle: {
-                  color: "#fff",
                   fontSize: 12
                 },
 
                 position: "right",
                 offset: [10, 0],
                 formatter: function(params) {
-                  return `${params.value}${unit}`;
+                  return `${params.value} ${unit}`;
                 }
               }
             }
