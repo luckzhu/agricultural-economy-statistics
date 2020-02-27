@@ -2,7 +2,9 @@
   <div>
     <el-row :gutter="10">
       <el-col :span="12" class="grid-wrapper">
-        <border-box1 class="grid-content"></border-box1>
+        <border-box1 class="grid-content">
+          <process-output :chartData="processOutput" height="51.875rem" />
+        </border-box1>
       </el-col>
       <el-col :span="12" class="grid-wrapper">
         <border-box1 class="grid-content">
@@ -34,11 +36,13 @@
 <script>
 import BorderBox1 from "@/components/BorderBox/borderBox1";
 import ProcessingCounty from "./components/ProcessingCounty";
+import ProcessOutput from "./components/ProcessOutput";
 
 export default {
   components: {
     BorderBox1,
-    ProcessingCounty
+    ProcessingCounty,
+    ProcessOutput
   },
   data() {
     return {
@@ -193,6 +197,29 @@ export default {
           unit: "万吨",
           iconName: "mianhua"
         }
+      ],
+      processOutput: [
+        { name: "广州市", value: 5 },
+        { name: "东莞市", value: 3 },
+        { name: "深圳市", value: 7 },
+        { name: "韶关市", value: 1 },
+        { name: "清远市", value: 1 },
+        { name: "云浮市", value: 1 },
+        { name: "肇庆市", value: 0 },
+        { name: "茂名市", value: 1 },
+        { name: "湛江市", value: 6 },
+        { name: "阳江市", value: 2 },
+        { name: "江门市", value: 1 },
+        { name: "佛山市", value: 2 },
+        { name: "河源市", value: 3 },
+        { name: "惠州市", value: 3 },
+        { name: "中山市", value: 2 },
+        { name: "珠海市", value: 2 },
+        { name: "梅州市", value: 2 },
+        { name: "潮州市", value: 3 },
+        { name: "汕头市", value: 4 },
+        { name: "揭阳市", value: 1 },
+        { name: "汕尾市", value: 1 }
       ]
     };
   }

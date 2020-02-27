@@ -95,7 +95,8 @@ export default {
           feature: {
             saveAsImage: {
               type: "png",
-              pixelRatio: "5"
+              pixelRatio: "5",
+              excludeComponents: ["toolbox", "title"]
             }
           }
         },
@@ -139,7 +140,7 @@ export default {
           {
             type: "category",
             data: dataName,
-            splitLine: { show: false },
+            splitLine: { show: false }
           }
         ],
         yAxis: [

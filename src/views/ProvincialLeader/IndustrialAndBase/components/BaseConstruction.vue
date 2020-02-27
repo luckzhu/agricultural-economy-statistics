@@ -15,16 +15,12 @@
 </template>
 
 <script>
-import echarts from "echarts";
 import resize from "@/components/Echarts/mixins/resize";
+import common from "@/components/Echarts/mixins/common";
 
 export default {
-  mixins: [resize],
+  mixins: [resize, common],
   props: {
-    chartData: {
-      type: Object,
-      default:()=> {}
-    },
     id: {
       type: String,
       default: "chart"
@@ -40,49 +36,18 @@ export default {
   },
   data() {
     return {
-      chart: null
+      title: "基地建设",
+      unit: "亿元"
     };
   },
-  watch: {
-    chartData: {
-      deep: true,
-      handler(val) {
-        this.setOptions(val);
-      }
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.initChart();
-    });
-  },
-  beforeDestroy() {
-    if (!this.chart) {
-      return;
-    }
-    this.chart.dispose();
-    this.chart = null;
-  },
   methods: {
-    initChart() {
-      this.chart = echarts.init(document.getElementById(this.id));
-      this.setOptions(this.chartData);
-    },
-    setOptions({ expectedData, actualData } = {}) {
-      const { data, title, subTitle, unit } = this.chartData;
-      const colors = this.$store.getters.colors;
+    setOptions(chartData) {
+      const { title, unit ,colors} = this;
       this.chart.setOption({
         title: {
           text: `· ${title}`,
-          // subtext: subTitle,
           x: "20px",
           y: "20px",
-          textStyle: {
-            color: "#00F6FB"
-          },
-          subtextStyle: {
-            fontSize: 16
-          }
         },
         color: colors,
         tooltip: {
@@ -96,7 +61,6 @@ export default {
           // left:"35%",
           bottom: "10%",
           textStyle: {
-            color: "#fff",
             fontSize: 14,
             fontWeight: 500
           }
@@ -109,13 +73,12 @@ export default {
             //roseType:'radius',
             radius: "50%",
             center: ["50%", "50%"],
-            data: data,
+            data: chartData,
             label: {
               position: "outside",
               formatter: `{b} : {c} ${unit} ，{d}%`,
               // formatter: `{d}%`,
               textStyle: {
-                color: "#fff",
                 fontSize: 14,
                 fontWeight: 500
               }

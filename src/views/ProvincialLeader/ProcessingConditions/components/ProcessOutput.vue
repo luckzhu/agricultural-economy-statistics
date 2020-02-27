@@ -93,7 +93,7 @@ export default {
       };
       this.chart.setOption({
         title: {
-          text: "· 省重点农业龙头企业地市分布",
+          text: "· 加工产值",
           x: "20px",
           y: "20px"
         },
@@ -107,22 +107,22 @@ export default {
             }
           }
         },
-        tooltip: {
-          trigger: "item",
-          formatter: function(params) {
-            if (typeof params.value[2] == "undefined") {
-              return params.name + " : " + params.value;
-            } else {
-              return params.name + " : " + params.value[2];
-            }
-          }
-        },
+        // tooltip: {
+        //   trigger: "item",
+        //   formatter: function(params) {
+        //     if (typeof params.value[2] == "undefined") {
+        //       return params.name + " : " + params.value;
+        //     } else {
+        //       return params.name + " : " + params.value[2];
+        //     }
+        //   }
+        // },
         legend: {
           orient: "vertical",
           selectedMode: false,
-          bottom: "10%",
-          left: "20%",
-          data: ["国家农业产业化龙头企业数量"],
+          bottom: "15%",
+          left: "30%",
+          data: ["省重点农业龙头企业"],
           textStyle: {
             fontSize: 16
           }
@@ -135,61 +135,172 @@ export default {
           top: "bottom",
           // text: ["高", "低"], // 文本，默认为数值文本
           calculable: true,
-          seriesIndex: [1]
+          seriesIndex: [1],
+          inRange: {
+            // color: ['#3B5077', '#031525'] // 蓝黑
+            // color: ['#ffc0cb', '#800080'] // 红紫
+            // color: ['#3C3B3F', '#605C3C'] // 黑绿
+            // color: ['#0f0c29', '#302b63', '#24243e'] // 黑紫黑
+            // color: ['#23074d', '#cc5333'] // 紫红
+            // color: ['#1488CC', '#2B32B2'] // 浅蓝
+            // color: ["#00467F", "#A5CC82", "#ffc0cb"] // 蓝绿红
+            // color: ['#00467F', '#A5CC82'] // 蓝绿
+          }
         },
         geo: {
           show: true,
           map: "广东",
+          silent: true, //不触发鼠标事件
+          aspectScale: 1, //长宽比
           label: {
             normal: {
               show: true,
-              fontSize: 16
-              // color: "#fff"
+              fontSize: 14,
+              color: "#333"
             },
             emphasis: {
               show: false
             }
           },
-
-          left: 20,
-          top: 100,
-          zoom: 0.95,
-          roam: false,
-          itemStyle: {
-            normal: {
-              // areaColor: "#ddd",
-              // borderColor: "#00fbff",
-              // color: "#333"
+          //固定每个区域的颜色
+          regions: [
+            {
+              name: "梅州市",
+              itemStyle: {
+                areaColor: "#F3F8E9"
+              }
             },
-            emphasis: {
-              show: false
-              // areaColor: "#01fea8"
+            {
+              name: "潮州市",
+              itemStyle: {
+                areaColor: "#FFF1B5"
+              }
+            },
+            {
+              name: "揭阳市",
+              itemStyle: {
+                areaColor: "#FFFAB5"
+              }
+            },
+            {
+              name: "汕头市",
+              itemStyle: {
+                areaColor: "#B1D9B3"
+              }
+            },
+            {
+              name: "汕尾市",
+              itemStyle: {
+                areaColor: "#F9D7E6"
+              }
+            },
+            {
+              name: "河源市",
+              itemStyle: {
+                areaColor: "#FFF1B5"
+              }
+            },
+            {
+              name: "惠州市",
+              itemStyle: {
+                areaColor: "#F3F8E9"
+              }
+            },
+            {
+              name: "韶关市",
+              itemStyle: {
+                areaColor: "#B1D9B3"
+              }
+            },
+            {
+              name: "清远市",
+              itemStyle: {
+                areaColor: "#D6E7F7"
+              }
+            },
+            {
+              name: "广州市",
+              itemStyle: {
+                areaColor: "#F9D7E6"
+              }
+            },
+            {
+              name: "东莞市",
+              itemStyle: {
+                areaColor: "#FFF9B5"
+              }
+            },
+            {
+              name: "深圳市",
+              itemStyle: {
+                areaColor: "#F9D7E6"
+              }
+            },
+            {
+              name: "肇庆市",
+              itemStyle: {
+                areaColor: "#FFF1B5"
+              }
+            },
+            {
+              name: "佛山市",
+              itemStyle: {
+                areaColor: "#F3F8E9"
+              }
+            },
+            {
+              name: "中山市",
+              itemStyle: {
+                areaColor: "#D6E7F7"
+              }
+            },
+            {
+              name: "珠海市",
+              itemStyle: {
+                areaColor: "#F3F8E9"
+              }
+            },
+            {
+              name: "云浮市",
+              itemStyle: {
+                areaColor: "#B1D9B3"
+              }
+            },
+            {
+              name: "江门市",
+              itemStyle: {
+                areaColor: "#F9D7E6"
+              }
+            },
+            {
+              name: "阳江市",
+              itemStyle: {
+                areaColor: "#FFF1B5"
+              }
+            },
+            {
+              name: "茂名市",
+              itemStyle: {
+                areaColor: "#F8BA63"
+              }
+            },
+            {
+              name: "湛江市",
+              itemStyle: {
+                areaColor: "#F9D7E6"
+              }
             }
-          }
+          ],
+          itemStyle: {
+            borderColor: "#409EFF",
+            borderWidth: 0.2
+          },
+          left: "10%",
+          top: "15%",
+          zoom: 1.1,
+          roam: false
         },
         series: [
-          {
-            name: "国家农业产业化龙头企业数量",
-            type: "scatter",
-            coordinateSystem: "geo",
-            data: convertData(chartData),
-            symbolSize: 4,
-            label: {
-              normal: {
-                formatter: "{b}",
-                position: "right",
-                show: false
-              },
-              emphasis: {
-                show: true
-              }
-            },
-            itemStyle: {
-              normal: {
-                // color: "#fff"
-              }
-            }
-          },
           {
             type: "map",
             map: "广东",
@@ -198,13 +309,22 @@ export default {
             showLegendSymbol: false, // 存在legend时显示
             label: {
               normal: {
-                show: false
+                show: true
               },
               emphasis: {
                 show: false,
                 textStyle: {
-                  // color: "#fff"
+                  color: "#fff"
                 }
+              }
+            },
+            itemStyle: {
+              normal: {
+                areaColor: "#031525",
+                borderColor: "#3B5077"
+              },
+              emphasis: {
+                areaColor: "#2B91B7"
               }
             },
             roam: true,
@@ -212,11 +332,16 @@ export default {
             data: chartData
           },
           {
-            name: "点",
+            name: "省重点农业龙头企业",
             type: "scatter",
             coordinateSystem: "geo",
-            symbol: "pin",
-            symbolSize: [50, 50],
+            symbol: "circle",
+            symbolOffset: ["10%", "50%"],
+            symbolSize: function(val) {
+              return Math.sqrt(val[2]) * 20;
+            },
+
+            hoverAnimation: true,
             label: {
               normal: {
                 show: true,
@@ -226,7 +351,7 @@ export default {
                 },
                 formatter(value) {
                   if (value.data.value[2] === 0) {
-                    return "";
+                    // return "";
                   }
                   return value.data.value[2];
                 }
@@ -234,7 +359,7 @@ export default {
             },
             itemStyle: {
               normal: {
-                // color: "#13345e" //标志颜色
+                color: "rgba(248,169,118,.8)" //标志颜色
               }
             },
             zlevel: 6,

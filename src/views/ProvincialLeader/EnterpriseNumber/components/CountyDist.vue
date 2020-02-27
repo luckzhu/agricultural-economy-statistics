@@ -51,7 +51,8 @@ export default {
           feature: {
             saveAsImage: {
               type: "png",
-              pixelRatio: "5"
+              pixelRatio: "5",
+              excludeComponents: ["toolbox", "title"]
             }
           }
         },

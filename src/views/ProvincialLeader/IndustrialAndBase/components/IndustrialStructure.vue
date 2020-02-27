@@ -3,16 +3,12 @@
 </template>
 
 <script>
-import echarts from "echarts";
 import resize from "@/components/Echarts/mixins/resize";
+import common from "@/components/Echarts/mixins/common";
 
 export default {
-  mixins: [resize],
+  mixins: [resize, common],
   props: {
-    chartData: {
-      type: Object,
-      default: () => {}
-    },
     id: {
       type: String,
       default: "chart"
@@ -28,96 +24,119 @@ export default {
   },
   data() {
     return {
-      chart: null
+      title: "企业类型"
     };
   },
-  watch: {
-    chartData: {
-      deep: true,
-      handler(val) {
-        this.setOptions(val);
-      }
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.initChart();
-    });
-  },
-  beforeDestroy() {
-    if (!this.chart) {
-      return;
-    }
-    this.chart.dispose();
-    this.chart = null;
-  },
+
   methods: {
-    initChart() {
-      this.chart = echarts.init(document.getElementById(this.id));
-      this.setOptions(this.chartData);
-    },
-    setOptions({ expectedData, actualData } = {}) {
-      const colors = this.$store.getters.colors;
-      const data = this.chartData;
+    setOptions(chartData) {
+      let xAxis = [];
+      const { output, average, quantity } = chartData;
+      if (average) {
+        chartData.average.map(item => xAxis.push(item.name));
+      }
+
+      const { colors, title } = this;
       this.chart.setOption({
-        title: {
-          text: `· ${data.title}`,
-          // subtext: "从产值来看，农业加工型最高（1652亿元），其次是农产品生产型（1307亿元）",
-          x: "20px",
-          y: "20px",
-          textStyle: {
-            color: "#00F6FB"
+        title: [
+          {
+            text: `· ${title}`,
+            x: "20px",
+            y: "20px"
+          },
+          {
+            text: `产值结构`,
+            x: "17%",
+            y: "36%",
+            textStyle: {
+              color: "#222"
+            }
+          },
+          {
+            text: `数量结构`,
+            x: "75%",
+            y: "36%",
+            textStyle: {
+              color: "#222"
+            }
+          },
+          {
+            text: `企业平均产值`,
+            x: "45%",
+            y: "60%",
+            textStyle: {
+              // color: "#777"
+            }
           }
-        },
-        legend: {
-          left: "center",
-          top: "20%",
-          orient: "vertical",
-          textStyle: {
-            color: "#fff",
-            fontSize: 12
+        ],
+        toolbox: {
+          show: true,
+          feature: {
+            saveAsImage: {
+              type: "png",
+              pixelRatio: "5",
+              excludeComponents: ["toolbox", "title"]
+            }
           }
         },
         color: colors,
-        tooltip: {},
-        dataset: {
-          source: data.source
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} {b} :{d}%",
+          textStyle: {
+            fontSize: 14
+          }
         },
-        xAxis: {
-          type: "category",
-          show: true,
-          axisLabel: {
-            color: "#fff",
-            fontSize: 10
-          },
-          data: data.xAxis
+        legend: {
+          orient: "vertical",
+          top: "20%",
+          data: xAxis,
+          textStyle: {
+            fontSize: 12
+          }
+        },
+
+        grid: {
+          top: "65%",
+          left: "14%",
+          right: "10%",
+          bottom: "4%",
+          containLabel: true
         },
         yAxis: {
           type: "value",
-          show: false
+          splitLine: { show: false },
+          axisLabel: { show: false },
+          axisTick: { show: false },
+          axisLine: { show: false }
         },
-        grid: {
-          top: "68%",
-          left: "10%",
-          right: "10%",
-          bottom: "5%",
-          containLabel: true
+        xAxis: {
+          type: "category",
+          inverse: true,
+          data: xAxis,
+          axisLine: { show: true },
+          axisTick: { show: true },
+          nameGap: 30,
+          offset: 4,
+          axisLabel: {
+            show: true,
+            textStyle: {
+              fontSize: 12
+            }
+          }
         },
         series: [
           {
+            name: "产值结构",
             type: "pie",
             radius: "40%",
-            center: ["21%", "40%"],
-            encode: {
-              itemName: "type",
-              value: "数量结构"
-            },
+            center: ["21%", "38%"],
+            data: output,
             label: {
               normal: {
                 position: "outside",
                 formatter: "{d}%",
                 textStyle: {
-                  color: "#fff",
                   fontSize: 14,
                   fontWeight: 600
                 }
@@ -132,21 +151,26 @@ export default {
                 shadowColor: "rgba(0, 0, 0, 0.5)"
               }
             }
+            // markPoint: {
+            //   symbol: "circle",
+            //   symbolSize: 50,
+            //   label: {
+            //     show: true
+            //   }
+            // }
           },
           {
+            name: "数量结构",
             type: "pie",
+            //roseType:'radius',
             radius: "40%",
             center: ["79%", "40%"],
-            encode: {
-              itemName: "type",
-              value: "产值结构"
-            },
+            data: quantity,
             label: {
               normal: {
                 position: "outside",
                 formatter: "{d}%",
                 textStyle: {
-                  color: "#fff",
                   fontSize: 14,
                   fontWeight: 600
                 }
@@ -163,8 +187,10 @@ export default {
             }
           },
           {
+            name: "企业平均产值",
+
             type: "bar",
-            // name:"平均产值（亿元/家）",
+            //roseType:'radius',
             barWidth: 40,
             label: {
               normal: {
@@ -189,7 +215,7 @@ export default {
                 shadowColor: "rgba(0, 0, 0, 0.5)"
               }
             },
-            data: data.average
+            data: average
           }
         ]
       });
