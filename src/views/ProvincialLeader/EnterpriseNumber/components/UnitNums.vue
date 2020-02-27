@@ -30,6 +30,7 @@ export default {
   },
   methods: {
     setOptions(chartData) {
+      if (chartData.length === 0) return;
       const { title, unit, colors } = this;
       let series = [];
       let sum = chartData[0].value;

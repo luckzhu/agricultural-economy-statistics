@@ -27,29 +27,8 @@ export default {
   },
   methods: {
     setOptions(chartData) {
-      // let chartData = [
-      //   { name: "广州市", value: 5 },
-      //   { name: "东莞市", value: 3 },
-      //   { name: "深圳市", value: 7 },
-      //   { name: "韶关市", value: 1 },
-      //   { name: "清远市", value: 1 },
-      //   { name: "云浮市", value: 1 },
-      //   { name: "肇庆市", value: 0 },
-      //   { name: "茂名市", value: 1 },
-      //   { name: "湛江市", value: 6 },
-      //   { name: "阳江市", value: 2 },
-      //   { name: "江门市", value: 1 },
-      //   { name: "佛山市", value: 2 },
-      //   { name: "河源市", value: 3 },
-      //   { name: "惠州市", value: 3 },
-      //   { name: "中山市", value: 2 },
-      //   { name: "珠海市", value: 2 },
-      //   { name: "梅州市", value: 2 },
-      //   { name: "潮州市", value: 3 },
-      //   { name: "汕头市", value: 4 },
-      //   { name: "揭阳市", value: 1 },
-      //   { name: "汕尾市", value: 1 }
-      // ];
+      if (!chartData) return;
+      
       const geoCoordMap = {
         广州市: [113.500637, 23.425178],
         东莞市: [113.946262, 22.946237],
@@ -120,26 +99,150 @@ export default {
         legend: {
           orient: "vertical",
           selectedMode: false,
-          bottom: "10%",
-          left: "20%",
+          bottom: "20%",
+          left: "15%",
           data: ["国家农业产业化龙头企业数量"],
           textStyle: {
             fontSize: 16
           }
         },
-        visualMap: {
-          show: false,
-          min: 0,
-          max: 10,
-          left: "left",
-          top: "bottom",
-          // text: ["高", "低"], // 文本，默认为数值文本
-          calculable: true,
-          seriesIndex: [1]
-        },
         geo: {
           show: true,
           map: "广东",
+          silent: true, //不触发鼠标事件
+          aspectScale: 1, //长宽比
+          regions: [
+            {
+              name: "梅州市",
+              itemStyle: {
+                areaColor: "#F3F8E9"
+              }
+            },
+            {
+              name: "潮州市",
+              itemStyle: {
+                areaColor: "#FFF1B5"
+              }
+            },
+            {
+              name: "揭阳市",
+              itemStyle: {
+                areaColor: "#FFFAB5"
+              }
+            },
+            {
+              name: "汕头市",
+              itemStyle: {
+                areaColor: "#B1D9B3"
+              }
+            },
+            {
+              name: "汕尾市",
+              itemStyle: {
+                areaColor: "#F9D7E6"
+              }
+            },
+            {
+              name: "河源市",
+              itemStyle: {
+                areaColor: "#FFF1B5"
+              }
+            },
+            {
+              name: "惠州市",
+              itemStyle: {
+                areaColor: "#F3F8E9"
+              }
+            },
+            {
+              name: "韶关市",
+              itemStyle: {
+                areaColor: "#B1D9B3"
+              }
+            },
+            {
+              name: "清远市",
+              itemStyle: {
+                areaColor: "#D6E7F7"
+              }
+            },
+            {
+              name: "广州市",
+              itemStyle: {
+                areaColor: "#F9D7E6"
+              }
+            },
+            {
+              name: "东莞市",
+              itemStyle: {
+                areaColor: "#FFF9B5"
+              }
+            },
+            {
+              name: "深圳市",
+              itemStyle: {
+                areaColor: "#F9D7E6"
+              }
+            },
+            {
+              name: "肇庆市",
+              itemStyle: {
+                areaColor: "#FFF1B5"
+              }
+            },
+            {
+              name: "佛山市",
+              itemStyle: {
+                areaColor: "#F3F8E9"
+              }
+            },
+            {
+              name: "中山市",
+              itemStyle: {
+                areaColor: "#D6E7F7"
+              }
+            },
+            {
+              name: "珠海市",
+              itemStyle: {
+                areaColor: "#F3F8E9"
+              }
+            },
+            {
+              name: "云浮市",
+              itemStyle: {
+                areaColor: "#B1D9B3"
+              }
+            },
+            {
+              name: "江门市",
+              itemStyle: {
+                areaColor: "#F9D7E6"
+              }
+            },
+            {
+              name: "阳江市",
+              itemStyle: {
+                areaColor: "#FFF1B5"
+              }
+            },
+            {
+              name: "茂名市",
+              itemStyle: {
+                areaColor: "#F8BA63"
+              }
+            },
+            {
+              name: "湛江市",
+              itemStyle: {
+                areaColor: "#F9D7E6"
+              }
+            }
+          ],
+          itemStyle: {
+            borderColor: "#409EFF",
+            borderWidth: 0.2
+          },
           label: {
             normal: {
               show: true,
@@ -151,51 +254,16 @@ export default {
             }
           },
 
-          left: 20,
+          left: -50,
           top: 100,
-          zoom: 0.95,
-          roam: false,
-          itemStyle: {
-            normal: {
-              // areaColor: "#ddd",
-              // borderColor: "#00fbff",
-              // color: "#333"
-            },
-            emphasis: {
-              show: false
-              // areaColor: "#01fea8"
-            }
-          }
+          zoom: 0.8,
+          roam: false
         },
         series: [
-          {
-            name: "国家农业产业化龙头企业数量",
-            type: "scatter",
-            coordinateSystem: "geo",
-            data: convertData(chartData),
-            symbolSize: 4,
-            label: {
-              normal: {
-                formatter: "{b}",
-                position: "right",
-                show: false
-              },
-              emphasis: {
-                show: true
-              }
-            },
-            itemStyle: {
-              normal: {
-                // color: "#fff"
-              }
-            }
-          },
           {
             type: "map",
             map: "广东",
             geoIndex: 0,
-            aspectScale: 0.75, //长宽比
-            showLegendSymbol: false, // 存在legend时显示
             label: {
               normal: {
                 show: false
@@ -212,11 +280,16 @@ export default {
             data: chartData
           },
           {
-            name: "点",
+            name: "国家农业产业化龙头企业数量",
             type: "scatter",
             coordinateSystem: "geo",
-            symbol: "pin",
-            symbolSize: [50, 50],
+            symbol: "circle",
+            symbolOffset: ["10%", "50%"],
+            symbolSize: function(val) {
+              return Math.sqrt(val[2]) * 20;
+            },
+
+            hoverAnimation: true,
             label: {
               normal: {
                 show: true,
@@ -226,7 +299,7 @@ export default {
                 },
                 formatter(value) {
                   if (value.data.value[2] === 0) {
-                    return "";
+                    // return "";
                   }
                   return value.data.value[2];
                 }
@@ -234,7 +307,7 @@ export default {
             },
             itemStyle: {
               normal: {
-                // color: "#13345e" //标志颜色
+                color: "rgba(248,169,118,.8)" //标志颜色
               }
             },
             zlevel: 6,
