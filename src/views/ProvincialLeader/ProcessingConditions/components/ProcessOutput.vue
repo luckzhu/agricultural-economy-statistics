@@ -99,7 +99,7 @@ export default {
           orient: "vertical",
           selectedMode: false,
           bottom: "15%",
-          left: "30%",
+          left: "20%",
           data: ["省重点农业龙头企业"],
           textStyle: {
             fontSize: 16
