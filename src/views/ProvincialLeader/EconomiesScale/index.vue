@@ -2,7 +2,9 @@
   <div>
     <el-row :gutter="10">
       <el-col :span="10" class="grid-wrapper">
-        <border-box1 class="grid-content"></border-box1>
+        <border-box1 class="grid-content">
+          <overall-scale id="overallScale" height="51.875rem" :chartData="overallScale" />
+        </border-box1>
       </el-col>
       <el-col :span="14" class="grid-wrapper">
         <border-box1 class="grid-content mix-chart-wrapper">
@@ -38,6 +40,7 @@
 import BorderBox1 from "@/components/BorderBox/borderBox1";
 import BarNormal from "@/components/Echarts/bar-normal";
 import PieNormal from "@/components/Echarts/pie-normal";
+import OverallScale from "./components/OverallScale.vue";
 
 import { getGraph } from "@/api/industrySurvey";
 
@@ -45,7 +48,8 @@ export default {
   components: {
     BorderBox1,
     BarNormal,
-    PieNormal
+    PieNormal,
+    OverallScale
   },
   data() {
     return {
@@ -54,12 +58,14 @@ export default {
       graphPage: null,
       sectionSize: {},
       averageRevenue: {},
+      overallScale:{}
     };
   },
   mounted() {
     this.getGraphPage().then(() => {
       this.converData("sectionSize");
       this.converData("averageRevenue");
+      this.converData("overallScale");
     });
   },
   methods: {

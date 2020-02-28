@@ -43,9 +43,6 @@ export default {
           text: `· ${title}`,
           x: "20px",
           y: "20px",
-          textStyle: {
-            color: "#00F6FB"
-          }
         },
         toolbox: {
           show: true,
