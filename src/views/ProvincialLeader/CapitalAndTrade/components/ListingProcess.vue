@@ -28,51 +28,52 @@ export default {
   methods: {
     setOptions(chartData) {
       if (!chartData) return;
-      const geoCoordMap = {
-        广州市: [113.500637, 23.425178],
-        东莞市: [113.946262, 22.946237],
-        深圳市: [114.185947, 22.547],
-        韶关市: [113.591544, 24.801322],
-        清远市: [113.051227, 24.2],
-        云浮市: [111.744439, 22.929801],
-        肇庆市: [112.272529, 23.551546],
-        茂名市: [110.919229, 22.059751],
-        湛江市: [110.124977, 21.174898],
-        阳江市: [111.975107, 21.859222],
-        江门市: [112.594942, 22.190431],
-        佛山市: [112.922717, 23.028762],
-        河源市: [114.807802, 23.946266],
-        惠州市: [114.412599, 23.279404],
-        中山市: [113.382391, 22.521113],
-        珠海市: [113.553986, 22.124979],
-        梅州市: [116.117582, 24.299112],
-        潮州市: [116.732301, 23.761701],
-        汕头市: [116.708463, 23.37102],
-        揭阳市: [116.055733, 23.343778],
-        汕尾市: [115.464238, 22.974485]
-      };
-      // var max = 10,
-      //   min = 0;
-      // var maxSize4Pin = 10,
-      //   minSize4Pin = 1;
+      const { color } = this;
 
+      let geoCoordMap = {};
       const convertData = data => {
         let res = [];
-        for (let i = 0; i < data.length; i++) {
-          let geoCoord = geoCoordMap[data[i].name];
-          if (geoCoord) {
-            res.push({
-              name: data[i].name,
-              value: geoCoord.concat(data[i].value)
-            });
-          }
-        }
+        data.map(item => {
+          geoCoordMap[item.name] = item.coordinate;
+          res.push({
+            name: item.name,
+            value: item.coordinate.concat(1)
+          });
+        });
         return res;
       };
-       console.log(convertData(chartData));
+      let series = [];
+      let listed = ["主板上市", "中小板上市", "创业板上市", "新三板上市", "新四板上市", "母公司上市"];
+      let list = {};
+      listed.map(item => {
+        let arr = [];
+        chartData.map(ele => {
+          if (ele.listed === item) {
+            arr.push(ele);
+          }
+        });
+        list[item] = arr;
+      });
+      for (const key in list) {
+        series.push({
+          name: key,
+          type: "scatter",
+          coordinateSystem: "geo",
+          symbol: "circle",
+          symbolOffset: ["10%", "50%"],
+          symbolSize: 14,
+          hoverAnimation: true,
+          label: {
+            normal: {
+              show: false
+            }
+          },
+          data: convertData(list[key])
+        });
+      }
       this.chart.setOption({
         title: {
-          text: "· 加工产值",
+          text: "· 上市进程",
           x: "20px",
           y: "20px"
         },
@@ -86,46 +87,14 @@ export default {
             }
           }
         },
-        // tooltip: {
-        //   trigger: "item",
-        //   formatter: function(params) {
-        //     if (typeof params.value[2] == "undefined") {
-        //       return params.name + " : " + params.value;
-        //     } else {
-        //       return params.name + " : " + params.value[2];
-        //     }
-        //   }
-        // },
         legend: {
-          orient: "vertical",
-          selectedMode: false,
-          bottom: "15%",
-          left: "20%",
-          data: ["省重点农业龙头企业"],
+          left: "15%",
+          bottom: "10%",
           textStyle: {
             fontSize: 16
           }
         },
-        visualMap: {
-          show: false,
-          min: 0,
-          max: 10,
-          left: "left",
-          top: "bottom",
-          // text: ["高", "低"], // 文本，默认为数值文本
-          calculable: true,
-          seriesIndex: [1],
-          inRange: {
-            // color: ['#3B5077', '#031525'] // 蓝黑
-            // color: ['#ffc0cb', '#800080'] // 红紫
-            // color: ['#3C3B3F', '#605C3C'] // 黑绿
-            // color: ['#0f0c29', '#302b63', '#24243e'] // 黑紫黑
-            // color: ['#23074d', '#cc5333'] // 紫红
-            // color: ['#1488CC', '#2B32B2'] // 浅蓝
-            // color: ["#00467F", "#A5CC82", "#ffc0cb"] // 蓝绿红
-            // color: ['#00467F', '#A5CC82'] // 蓝绿
-          }
-        },
+
         geo: {
           show: true,
           map: "广东",
@@ -135,7 +104,10 @@ export default {
             normal: {
               show: true,
               fontSize: 14,
-              color: "#333"
+              color: "#333",
+              formatter: ({ name }) => {
+                return name.replace(/市.*/, "");
+              }
             },
             emphasis: {
               show: false
@@ -274,77 +246,12 @@ export default {
             borderColor: "#409EFF",
             borderWidth: 0.2
           },
-          left: "10%",
-          top: "15%",
+          left: "5%",
+          top: "10%",
           zoom: 1.1,
           roam: false
         },
-        series: [
-          {
-            type: "map",
-            map: "广东",
-            geoIndex: 0,
-            aspectScale: 0.75, //长宽比
-            showLegendSymbol: false, // 存在legend时显示
-            label: {
-              normal: {
-                show: true
-              },
-              emphasis: {
-                show: false,
-                textStyle: {
-                  color: "#fff"
-                }
-              }
-            },
-            itemStyle: {
-              normal: {
-                areaColor: "#031525",
-                borderColor: "#3B5077"
-              },
-              emphasis: {
-                areaColor: "#2B91B7"
-              }
-            },
-            roam: true,
-            animation: false,
-            data: chartData
-          },
-          {
-            name: "省重点农业龙头企业",
-            type: "scatter",
-            coordinateSystem: "geo",
-            symbol: "circle",
-            symbolOffset: ["10%", "50%"],
-            symbolSize: function(val) {
-              return Math.sqrt(Math.sqrt(val[2])) * 14;
-            },
-
-            hoverAnimation: true,
-            label: {
-              normal: {
-                show: true,
-                textStyle: {
-                  // color: "#fff",
-                  fontSize: 14
-                },
-                formatter(value) {
-                  if (value.data.value[2] === 0) {
-                    // return "";
-                  }
-                  return value.data.value[2];
-                }
-              }
-            },
-            itemStyle: {
-              normal: {
-                color: "rgba(248,169,118,.8)" //标志颜色
-              }
-            },
-            zlevel: 6,
-            data: convertData(chartData)
-          }
-        ]
+        series
       });
     }
   }

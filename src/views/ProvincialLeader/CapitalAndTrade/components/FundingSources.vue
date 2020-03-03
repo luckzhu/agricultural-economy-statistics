@@ -31,39 +31,48 @@
 
 <script>
 export default {
-  components: {},
+  props: {
+    chartData: {
+      type: Array
+    }
+  },
+  computed:{
+    sources(){
+      return this.chartData
+    }
+  },
   data() {
     return {
-      sources: [
-        {
-          id: 1,
-          name: "财政资金",
-          value: 13.1,
-          unit: "亿元",
-          iconName: "finance"
-        },
-        {
-          id: 2,
-          name: "减免税收",
-          value: 142,
-          unit: "亿元",
-          iconName: "tax"
-        },
-        {
-          id: 3,
-          name: "银行贷款",
-          value: 596,
-          unit: "亿元",
-          iconName: "bank"
-        },
-        {
-          id: 4,
-          name: "实际利用外资",
-          value: 8.6,
-          unit: "亿元",
-          iconName: "foreign-capital"
-        }
-      ],
+      // sources: [
+      //   {
+      //     id: 1,
+      //     name: "财政资金",
+      //     value: 13.1,
+      //     unit: "亿元",
+      //     iconName: "finance"
+      //   },
+      //   {
+      //     id: 2,
+      //     name: "减免税收",
+      //     value: 142,
+      //     unit: "亿元",
+      //     iconName: "tax"
+      //   },
+      //   {
+      //     id: 3,
+      //     name: "银行贷款",
+      //     value: 596,
+      //     unit: "亿元",
+      //     iconName: "bank"
+      //   },
+      //   {
+      //     id: 4,
+      //     name: "实际利用外资",
+      //     value: 8.6,
+      //     unit: "亿元",
+      //     iconName: "foreign-capital"
+      //   }
+      // ],
       colors: this.$store.getters.colors
     };
   }
@@ -71,11 +80,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.funding-container{
+.funding-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  .chart-title-wrapper {
+    align-self: flex-start;
+  }
 }
 .source-wrapper {
   display: flex;

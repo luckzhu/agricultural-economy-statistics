@@ -52,9 +52,6 @@ export default {
     ProcessOutput
   },
   data() {
-    return {};
-  },
-  data() {
     return {
       year: 2018,
       tabId: 7,
