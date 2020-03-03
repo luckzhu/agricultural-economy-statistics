@@ -16,7 +16,18 @@
         </border-box1>
       </el-col>
       <el-col :span="12" class="grid-wrapper">
-        <border-box1 class="grid-content"></border-box1>
+        <border-box1 class="grid-content expand-container">
+          <expand id="expand" :chartData="expand.invested" height="50rem" />
+          <div class="info">
+            <div v-for="(item,index) in expand.info" :key="index">
+              <p class="title">
+                {{item.name}}:
+                <span class="value">{{item.value}}</span>
+                <span class="unit">{{item.unit}}</span>
+              </p>
+            </div>
+          </div>
+        </border-box1>
       </el-col>
     </el-row>
   </div>
@@ -26,13 +37,15 @@
 import BorderBox1 from "@/components/BorderBox/borderBox1";
 import FundingSources from "./components/FundingSources";
 import ListingProcess from "./components/ListingProcess";
+import Expand from "./components/Expand";
 import { getGraph } from "@/api/industrySurvey";
 
 export default {
   components: {
     BorderBox1,
     FundingSources,
-    ListingProcess
+    ListingProcess,
+    Expand
   },
   data() {
     return {
@@ -41,7 +54,8 @@ export default {
       graphPage: null,
       fields: ["capitalSource", "listingProcess", "expand"],
       capitalSource: [],
-      listingProcess: []
+      listingProcess: [],
+      expand: {}
     };
   },
   mounted() {
@@ -100,6 +114,38 @@ export default {
       font-size: 16px;
       font-weight: 600;
       margin-bottom: 10px;
+    }
+  }
+}
+.expand-container {
+  position: relative;
+  padding: 10px;
+  .info {
+    position: absolute;
+    left: 90px;
+    bottom: 30px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    .title {
+      @include font_color("font_color_primary");
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+    .value {
+      font-size: 40px;
+      font-weight: 700;
+      margin-bottom: 22px;
+      margin-left: 10px;
+      margin-right: 6px;
+      @include font_color("font_color_light");
+      .unit {
+        font-size: 30px;
+        font-weight: 600;
+      }
     }
   }
 }
