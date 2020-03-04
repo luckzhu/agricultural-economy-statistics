@@ -52,27 +52,50 @@ export default {
         揭阳市: [116.055733, 23.343778],
         汕尾市: [115.464238, 22.974485]
       };
-      // var max = 10,
-      //   min = 0;
-      // var maxSize4Pin = 10,
-      //   minSize4Pin = 1;
-
-      const convertData = data => {
+      let fields = ["xx1", "xx2", "xx3"];
+      const convertData = (data, field) => {
         let res = [];
         for (let i = 0; i < data.length; i++) {
           let geoCoord = geoCoordMap[data[i].name];
           if (geoCoord) {
             res.push({
               name: data[i].name,
-              value: geoCoord.concat(data[i].value)
+              value: geoCoord.concat(data[i][field])
             });
           }
         }
         return res;
       };
+      let series = [];
+      const symbolOffset = {
+        xx1: ["60%", "60%"],
+        xx2: ["-30%", "60%"],
+        xx3: ["20%", "130%"]
+      };
+
+      fields.map(item => {
+        series.push({
+          name: item,
+          type: "scatter",
+          coordinateSystem: "geo",
+          symbol: "circle",
+          symbolOffset: symbolOffset[item],
+          symbolSize: 16,
+          hoverAnimation: true,
+          label: {
+            normal: {
+              show: true,
+              formatter: params => {
+                return params.value[2];
+              }
+            }
+          },
+          data: convertData(chartData, item)
+        });
+      });
       this.chart.setOption({
         title: {
-          text: "· 省重点农业龙头企业地市分布",
+          text: "· 业态创新",
           x: "20px",
           y: "20px"
         },
@@ -86,31 +109,32 @@ export default {
             }
           }
         },
-        tooltip: {
-          trigger: "item",
-          formatter: function(params) {
-            if (typeof params.value[2] == "undefined") {
-              return params.name + " : " + params.value;
-            } else {
-              return params.name + " : " + params.value[2];
-            }
-          }
-        },
         legend: {
-          orient: "vertical",
-          selectedMode: false,
-          bottom: "20%",
-          left: "15%",
-          data: ["国家农业产业化龙头企业数量"],
+          bottom: "10%",
           textStyle: {
             fontSize: 16
           }
         },
+
         geo: {
           show: true,
           map: "广东",
           silent: true, //不触发鼠标事件
-          aspectScale: 1, //长宽比
+          aspectScale: 1.2, //长宽比
+          label: {
+            normal: {
+              show: true,
+              fontSize: 14,
+              color: "#333",
+              formatter: ({ name }) => {
+                return name.replace(/市.*/, "");
+              }
+            },
+            emphasis: {
+              show: false
+            }
+          },
+          //固定每个区域的颜色
           regions: [
             {
               name: "梅州市",
@@ -243,80 +267,12 @@ export default {
             borderColor: "#409EFF",
             borderWidth: 0.2
           },
-          label: {
-            normal: {
-              show: true,
-              fontSize: 16,
-              // color: "#fff"
-              formatter: ({ name }) => {
-                return name.replace(/市.*/, "");
-              }
-            },
-            emphasis: {
-              show: false
-            }
-          },
 
-          left: -50,
-          top: 100,
-          zoom: 0.8,
+          top: "10%",
+          zoom: 1.1,
           roam: false
         },
-        series: [
-          {
-            type: "map",
-            map: "广东",
-            geoIndex: 0,
-            label: {
-              normal: {
-                show: false
-              },
-              emphasis: {
-                show: false,
-                textStyle: {
-                  // color: "#fff"
-                }
-              }
-            },
-            roam: true,
-            animation: false,
-            data: chartData
-          },
-          {
-            name: "国家农业产业化龙头企业数量",
-            type: "scatter",
-            coordinateSystem: "geo",
-            symbol: "circle",
-            symbolOffset: ["10%", "50%"],
-            symbolSize: function(val) {
-              return Math.sqrt(val[2]) * 20;
-            },
-
-            hoverAnimation: true,
-            label: {
-              normal: {
-                show: true,
-                textStyle: {
-                  // color: "#fff",
-                  fontSize: 14
-                },
-                formatter(value) {
-                  if (value.data.value[2] === 0) {
-                    // return "";
-                  }
-                  return value.data.value[2];
-                }
-              }
-            },
-            itemStyle: {
-              normal: {
-                color: "rgba(248,169,118,.8)" //标志颜色
-              }
-            },
-            zlevel: 6,
-            data: convertData(chartData)
-          }
-        ]
+        series
       });
     }
   }

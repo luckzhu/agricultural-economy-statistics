@@ -69,6 +69,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/_handle.scss";
+
 .guarantee {
   height: 410px;
   padding: 20px;
@@ -118,16 +120,17 @@ export default {
       font-size: 22px;
       font-weight: 600;
       margin-bottom: 10px;
-      color: #ddd;
+      @include font_color("font_color_primary");
     }
     .describe {
       font-size: 14px;
-      color: #fff;
+      @include font_color("font_color_primary");
+
       text-align: left;
       .bold {
         font-size: 22px;
         font-weight: 600;
-        color: #00fbff;
+        @include font_color("font_color_light");
       }
     }
   }

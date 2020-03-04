@@ -11,7 +11,9 @@
         <border-box1 class="grid-content">
           <guarantee />
         </border-box1>
-        <border-box1 class="grid-content"></border-box1>
+        <border-box1 class="grid-content">
+          <format-innovation id="formatInnovation" :chartData="formatInnovation" height="25.6rem" />
+        </border-box1>
       </el-col>
     </el-row>
   </div>
@@ -21,6 +23,7 @@
 import BorderBox1 from "@/components/BorderBox/borderBox1";
 import QualitySafety from "./components/QualitySafety";
 import Guarantee from "./components/Guarantee";
+import FormatInnovation from "./components/FormatInnovation";
 
 import { getGraph } from "@/api/industrySurvey";
 
@@ -28,14 +31,23 @@ export default {
   components: {
     BorderBox1,
     QualitySafety,
-    Guarantee
+    Guarantee,
+    FormatInnovation
   },
   data() {
     return {
       year: 2018,
-      tabId: 7,
+      tabId: 9,
       graphPage: null,
-      fields: []
+      fields: [],
+      formatInnovation: [
+        {
+          name: "广州市",
+          xx1: 1,
+          xx2: 2,
+          xx3: 3
+        }
+      ]
     };
   },
   mounted() {
