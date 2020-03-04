@@ -58,13 +58,13 @@ export default {
         },
         { name: "省龙专题", path: "/provincialLeader" },
         { name: "地市风采", path: "/localPresence" },
-        { name: "标杆企业", path: "/benchmarking" }
+        // { name: "标杆企业", path: "/benchmarking" }
       ],
       menuList: {
         农业产业化: "广东省农业产业化基本情况",
         省龙专题: "省重点农业龙头企业发展特点",
         地市风采: "广东省农业产业化地市风采",
-        标杆企业: "广东省农业标杆企业"
+        // 标杆企业: "广东省农业标杆企业"
       }
     };
   },
