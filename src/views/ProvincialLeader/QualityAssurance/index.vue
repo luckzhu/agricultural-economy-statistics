@@ -5,7 +5,9 @@
         <border-box1 class="grid-content">
           <quality-safety />
         </border-box1>
-        <border-box1 class="grid-content"></border-box1>
+        <border-box1 class="grid-content">
+          <tech-innovation />
+        </border-box1>
       </el-col>
       <el-col :span="12" class="grid-wrapper">
         <border-box1 class="grid-content">
@@ -24,6 +26,7 @@ import BorderBox1 from "@/components/BorderBox/borderBox1";
 import QualitySafety from "./components/QualitySafety";
 import Guarantee from "./components/Guarantee";
 import FormatInnovation from "./components/FormatInnovation";
+import TechInnovation from "./components/TechInnovation";
 
 import { getGraph } from "@/api/industrySurvey";
 
@@ -32,7 +35,8 @@ export default {
     BorderBox1,
     QualitySafety,
     Guarantee,
-    FormatInnovation
+    FormatInnovation,
+    TechInnovation
   },
   data() {
     return {
