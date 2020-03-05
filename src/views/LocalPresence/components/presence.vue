@@ -1,5 +1,5 @@
 <template>
-  <div class="presence">
+  <div class="presence" v-if="chartData.name">
     <county-map :id="`${chartData.name}`+'map'" :city="chartData.name" height="25.6rem" />
     <county-pie
       :id="chartData.name"
@@ -9,10 +9,7 @@
       width="20rem"
     />
     <div class="info">
-      通过贷款貼息政策对农业经营主体贷款进行利息补助，通过以“以奖代
-      补”方式对设施建设和设备购置进行扶持；为农业企业提供贷款担保，
-      推动白云区试点开展“政保银”项目，为符合现代条件的农业经营主体
-      提供快捷、便利、低成本的融资渠道。
+      {{chartData.info}}
     </div>
   </div>
 </template>

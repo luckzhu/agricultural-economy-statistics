@@ -31,6 +31,7 @@ export default {
   },
   methods: {
     setOptions(chartData) {
+      if (!chartData) return;
       const { colors, unit } = this;
       this.chart.setOption({
         title: {
@@ -71,7 +72,7 @@ export default {
             fontWeight: 500
           }
         },
- 
+
         series: [
           {
             type: "pie",

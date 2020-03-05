@@ -46,7 +46,7 @@ export default {
           path: "/county5"
         },
         {
-          name: "地市风采",
+          name: "地市风采6",
           path: "/county6"
         }
       ]
