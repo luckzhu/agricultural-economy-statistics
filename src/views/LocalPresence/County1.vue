@@ -3,18 +3,18 @@
     <el-row :gutter="10">
       <el-col :span="12" class="grid-wrapper">
         <border-box1 class="grid-content">
-          <presence :chartData="cityData['广州市']" id="guangzhou" />
+          <presence :chartData="cityData['深圳市']" id="shenzhen" />
         </border-box1>
         <border-box1 class="grid-content">
-          <presence :chartData="cityData['深圳市']" id="shenzhen" />
+          <presence :chartData="cityData['佛山市']" id="foshan" />
         </border-box1>
       </el-col>
       <el-col :span="12" class="grid-wrapper">
         <border-box1 class="grid-content">
-          <presence :chartData="cityData['佛山市']" id="foshan" />
+          <presence :chartData="cityData['珠海市']" id="zhuhai" />
         </border-box1>
         <border-box1 class="grid-content">
-          <presence :chartData="cityData['珠海市']" id="zhuhai" />
+          <presence :chartData="cityData['云浮市']" id="guangzhou" />
         </border-box1>
       </el-col>
     </el-row>
@@ -40,7 +40,7 @@ export default {
       fields: ["countyDetail"],
       countyDetail: [],
       cityData: {
-        广州市: {},
+        云浮市: {},
         深圳市: {},
         佛山市: {},
         珠海市: {}

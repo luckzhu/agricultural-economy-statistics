@@ -3,7 +3,13 @@
     <el-row :gutter="10">
       <el-col :span="24" class="grid-wrapper">
         <border-box1 class="grid-content presence">
-          <presence  :chartData="cityData['云浮市']" id="guangzhou" />
+          <presence
+            :chartData="cityData['广州市']"
+            id="yunfu"
+            height="51.625rem"
+            pieHeight="40rem"
+            pieWidth="40rem"
+          />
         </border-box1>
       </el-col>
     </el-row>
@@ -29,7 +35,7 @@ export default {
       fields: ["countyDetail"],
       countyDetail: [],
       cityData: {
-        云浮市: {}
+        广州市: {}
       }
     };
   },
@@ -87,5 +93,6 @@ export default {
 <style lang="scss" scoped>
 .presence {
   height: 830px;
+ 
 }
 </style>

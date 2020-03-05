@@ -1,16 +1,14 @@
 <template>
   <div class="presence" v-if="chartData.name">
-    <county-map :id="`${chartData.name}`+'map'" :city="chartData.name" height="25.6rem" />
+    <county-map :id="`${chartData.name}`+'map'" :city="chartData.name" :height="height" />
     <county-pie
       :id="chartData.name"
       :chartData="chartData.industry"
       class="county-pie"
-      height="20rem"
-      width="20rem"
+      :height="pieHeight"
+      :width="pieWidth"
     />
-    <div class="info">
-      {{chartData.info}}
-    </div>
+    <div class="info">{{chartData.info}}</div>
   </div>
 </template>
 
@@ -23,7 +21,19 @@ export default {
     CountyPie
   },
   props: {
-    chartData: {}
+    chartData: {},
+    height: {
+      type: String,
+      default: "25.6rem"
+    },
+    pieHeight: {
+      type: String,
+      default: "20rem"
+    },
+    pieWidth: {
+      type: String,
+      default: "20rem"
+    }
   }
 };
 </script>
@@ -44,6 +54,17 @@ export default {
     text-align: left;
     font-size: 16px;
     line-height: 24px;
+  }
+}
+#yunfu {
+  .info {
+    position: absolute;
+    right: 270px;
+    bottom: 100px;
+    width: 800px;
+    text-align: left;
+    font-size: 24px;
+    line-height: 34px;
   }
 }
 </style>

@@ -31,7 +31,36 @@ export default {
   },
   methods: {
     setOptions(chartData) {
-      const { color, city } = this;
+      let { color, city } = this;
+      city = city.replace(/农业.*/, "");
+      const geoCoordMap = {
+        广州市: [113.500637, 23.425178],
+        东莞市: [113.946262, 22.946237],
+        深圳市: [114.185947, 22.547],
+        韶关市: [113.591544, 24.801322],
+        清远市: [113.051227, 24.2],
+        云浮市: [111.744439, 22.929801],
+        肇庆市: [112.272529, 23.551546],
+        茂名市: [110.919229, 22.059751],
+        湛江市: [110.124977, 21.174898],
+        阳江市: [111.975107, 21.859222],
+        江门市: [112.594942, 22.190431],
+        佛山市: [112.922717, 23.028762],
+        河源市: [114.807802, 23.946266],
+        惠州市: [114.412599, 23.279404],
+        中山市: [113.382391, 22.521113],
+        珠海市: [113.553986, 22.124979],
+        梅州市: [116.117582, 24.299112],
+        潮州市: [116.732301, 23.761701],
+        汕头市: [116.708463, 23.37102],
+        揭阳市: [116.055733, 23.343778],
+        汕尾市: [115.464238, 22.974485]
+      };
+      let data = [];
+      data.push({
+        name: city,
+        value: geoCoordMap[city].concat(1)
+      });
       this.chart.setOption({
         title: {
           text: `· ${city}`,
@@ -211,7 +240,31 @@ export default {
           top: "10%",
           zoom: 1.1,
           roam: false
-        }
+        },
+        series: [
+          {
+            type: "effectScatter",
+            coordinateSystem: "geo",
+            // symbol: 'diamond',
+            showEffectOn: "render",
+            rippleEffect: {
+              period: 15,
+              scale: 6,
+              brushType: "fill"
+            },
+            hoverAnimation: true,
+            label: {
+              show: true,
+              formatter: ({ name }) => {
+                return name;
+              },
+              position: "top",
+              offset: [0, -10],
+              fontSize: 16
+            },
+            data
+          }
+        ]
       });
     }
   }
