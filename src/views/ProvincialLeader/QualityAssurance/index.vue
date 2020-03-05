@@ -3,15 +3,15 @@
     <el-row :gutter="10">
       <el-col :span="12" class="grid-wrapper">
         <border-box1 class="grid-content">
-          <quality-safety />
+          <quality-safety :chartData="qualitySafety" v-if="qualitySafety" />
         </border-box1>
         <border-box1 class="grid-content">
-          <tech-innovation />
+          <tech-innovation :chartData="techInnovation" v-if="techInnovation" />
         </border-box1>
       </el-col>
       <el-col :span="12" class="grid-wrapper">
         <border-box1 class="grid-content">
-          <guarantee />
+          <guarantee :chartData="guarantee" v-if="guarantee.length > 0" />
         </border-box1>
         <border-box1 class="grid-content">
           <format-innovation id="formatInnovation" :chartData="formatInnovation" height="25.6rem" />
@@ -43,15 +43,11 @@ export default {
       year: 2018,
       tabId: 9,
       graphPage: null,
-      fields: [],
-      formatInnovation: [
-        {
-          name: "广州市",
-          xx1: 1,
-          xx2: 2,
-          xx3: 3
-        }
-      ]
+      fields: ["formatInnovation", "guarantee", "qualitySafety", "techInnovation"],
+      formatInnovation: [],
+      guarantee: [],
+      qualitySafety: null,
+      techInnovation: null
     };
   },
   mounted() {

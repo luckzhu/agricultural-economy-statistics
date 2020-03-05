@@ -52,7 +52,11 @@ export default {
         揭阳市: [116.055733, 23.343778],
         汕尾市: [115.464238, 22.974485]
       };
-      let fields = ["xx1", "xx2", "xx3"];
+      let fields = [
+        { name: "开启农产品互联网销售的省龙数", filed: "internetNum" },
+        { name: "建有农业物联网的省龙数", filed: "IOT" },
+        { name: "发展休闲农业的省龙数", filed: "leisure" }
+      ];
       const convertData = (data, field) => {
         let res = [];
         for (let i = 0; i < data.length; i++) {
@@ -68,18 +72,18 @@ export default {
       };
       let series = [];
       const symbolOffset = {
-        xx1: ["60%", "60%"],
-        xx2: ["-30%", "60%"],
-        xx3: ["20%", "130%"]
+        internetNum: ["60%", "60%"],
+        IOT: ["-30%", "60%"],
+        leisure: ["20%", "130%"]
       };
 
       fields.map(item => {
         series.push({
-          name: item,
+          name: item.name,
           type: "scatter",
           coordinateSystem: "geo",
           symbol: "circle",
-          symbolOffset: symbolOffset[item],
+          symbolOffset: symbolOffset[item.filed],
           symbolSize: 16,
           hoverAnimation: true,
           label: {
@@ -90,7 +94,7 @@ export default {
               }
             }
           },
-          data: convertData(chartData, item)
+          data: convertData(chartData, item.filed)
         });
       });
       this.chart.setOption({
@@ -110,6 +114,7 @@ export default {
           }
         },
         legend: {
+          right: "2%",
           bottom: "10%",
           textStyle: {
             fontSize: 16

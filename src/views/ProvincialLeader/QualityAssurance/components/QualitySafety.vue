@@ -3,10 +3,10 @@
     <el-row :gutter="40">
       <div class="top">
         <el-col :span="7">
-          <div class="authentication left">
-            <p class="title">体系认证</p>
-            <p class="value">478家</p>
-            <p class="value">1189项</p>
+          <div class="authentication left" :style="{color:colors[0]}">
+            <p class="title">{{data1.name}}</p>
+            <p class="value">{{data1.value}}家</p>
+            <p class="value">{{data1.num}}项</p>
             <svg-icon icon-name="down-arrow" class="down-arrow" />
           </div>
         </el-col>
@@ -17,11 +17,11 @@
           </div>
         </el-col>
         <el-col :span="7">
-          <div class="authentication right">
-            <p class="title">产品认证</p>
-            <p class="value">463家</p>
-            <p class="value">1539个</p>
-            <p class="value">2741项</p>
+          <div class="authentication right" :style="{color:colors[1]}">
+            <p class="title">{{data2.name}}</p>
+            <p class="value">{{data2.value}}家</p>
+            <p class="value">{{data2.unitsNum}}个</p>
+            <p class="value">{{data2.num}}项</p>
             <svg-icon icon-name="down-arrow" class="down-arrow" />
           </div>
         </el-col>
@@ -30,10 +30,16 @@
     <el-row :gutter="160">
       <div class="bottom">
         <el-col :span="12">
-          <p class="mian-text left">其中：GMP认证77家、GAP认证32家、HACCP认证228家、ISO系列认证646家、FDA认证52家。</p>
+          <p
+            class="mian-text left"
+            :style="{borderColor:colors[0]}"
+          >其中：GMP认证{{data1.GMP}}家、GAP认证{{data1.GAP}}家、HACCP认证{{data1.HACCP}}家、ISO系列认证{{data1.ISO}}家、FDA认证{{data1.FDA}}家。</p>
         </el-col>
         <el-col :span="12">
-          <p class="mian-text right">其中：无公害农产品804项、有机农产品436项、绿色食品346项、农产品地理标志74项、广东省名牌农产品1081项。</p>
+          <p
+            class="mian-text right"
+            :style="{borderColor:colors[1]}"
+          >其中：无公害农产品{{data2.nuisanceLess}}项、有机农产品{{data2.organic}}项、绿色食品{{data2.green}}项、农产品地理标志{{data2.geography}}项、广东省名牌农产品{{data2.famousBrand}}项。</p>
         </el-col>
       </div>
     </el-row>
@@ -41,7 +47,22 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    chartData: {}
+  },
+  computed: {
+    colors() {
+      return this.$store.getters.colors;
+    },
+    data1() {
+      return this.chartData.systemCertification[0];
+    },
+    data2() {
+      return this.chartData.certifiedProduct[0];
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -67,12 +88,6 @@ export default {};
   height: 210px;
   padding: 20px;
   margin: 20px 30px;
-  &.left {
-    color: #92d050;
-  }
-  &.right {
-    color: #a18cba;
-  }
   .title {
     font-size: 30px;
     margin-top: 20px;
@@ -118,11 +133,9 @@ export default {};
   line-height: 20px;
   @include font_color("font_color_primary");
   &.left {
-    border-color: #92d050;
     margin-left: 20px;
   }
   &.right {
-    border-color: #a18cba;
     margin-right: 20px;
   }
 }

@@ -5,24 +5,24 @@
         <svg-icon icon-name="zhijianjiancha" />
       </div>
       <div class="overview">
-        <p class="title">质检机构</p>
+        <p class="title">{{data1.name}}</p>
         <p class="describe">
-          <span class="bold">591家</span>
+          <span class="bold">{{data1.unitsNum}}家</span>
           建有专门质检机构
-          <span class="bold">832个</span>
+          <span class="bold">{{data1.num}}个</span>
           其中
-          <span class="bold">76家</span>
+          <span class="bold">{{data1.amongUnitsNum}}家</span>
           通过计量认证机构
-          <span class="bold">106个</span>
+          <span class="bold">{{data1.amongNum}}个</span>
         </p>
       </div>
     </div>
     <div class="rule" :style="{color:colors[1]}">
       <div class="overview right">
-        <p class="title">安全投入</p>
+        <p class="title">{{data2.name}}</p>
         <p class="describe">
           企业在质检、认证、检疫等保障产品质量安全方面的投入
-          <span class="bold">6亿元</span>
+          <span class="bold">{{data2.value}}亿元</span>
         </p>
       </div>
       <div class="icon-wrapper">
@@ -34,21 +34,23 @@
         <svg-icon icon-name="sifa" />
       </div>
       <div class="overview">
-        <p class="title">商标保护</p>
+        <p class="title">{{data3.name}}</p>
         <p class="describe">
-          持有商标注册证723家（8861个）持有省著名商标证
-          <span class="bold">177个</span>
+          持有商标注册证{{data3.unitsNum}}家（{{data3.tradeNums}}个）持有省著名商标证
+          <span
+            class="bold"
+          >{{data3.provinceNums}}个</span>
           持有国家驰名商标证
-          <span class="bold">25个</span>
+          <span class="bold">{{data3.countryNums}}个</span>
         </p>
       </div>
     </div>
     <div class="rule" :style="{color:colors[3]}">
       <div class="overview right">
-        <p class="title">管理制度</p>
+        <p class="title">{{data4.name}}</p>
         <p class="describe">
           建立企业质量管理制度和财务制度
-          <span class="bold">716家（9988项）</span>
+          <span class="bold">{{data4.unitsNum}}家（{{data4.Num}}项）</span>
         </p>
       </div>
       <div class="icon-wrapper">
@@ -60,9 +62,26 @@
 
 <script>
 export default {
+  props: {
+    chartData: {
+      type: Array
+    }
+  },
   computed: {
     colors() {
       return this.$store.getters.colors;
+    },
+    data1() {
+      return this.chartData[0];
+    },
+    data2() {
+      return this.chartData[1];
+    },
+    data3() {
+      return this.chartData[2];
+    },
+    data4() {
+      return this.chartData[3];
     }
   }
 };
