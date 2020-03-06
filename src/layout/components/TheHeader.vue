@@ -20,7 +20,8 @@
         </div>
       </div>
     </el-col>
-    <el-col :span="5" class="xy-center">
+    <el-col :span="5" class="xy-center right-icon">
+      <screenfull id="screenfull" class="screenfull" />
       <svg-icon icon-name="exit" @click.native="onLogout"></svg-icon>
     </el-col>
   </div>
@@ -28,10 +29,12 @@
 
 <script>
 import SvgIcon from "@/components/SvgIcon";
+import Screenfull from "@/components/Screenfull";
 
 export default {
   components: {
-    SvgIcon
+    SvgIcon,
+    Screenfull
   },
   data() {
     return {
@@ -57,13 +60,13 @@ export default {
           ]
         },
         { name: "省龙专题", path: "/provincialLeader" },
-        { name: "地市风采", path: "/localPresence" },
+        { name: "地市风采", path: "/localPresence" }
         // { name: "标杆企业", path: "/benchmarking" }
       ],
       menuList: {
         农业产业化: "广东省农业产业化基本情况",
         省龙专题: "省重点农业龙头企业发展特点",
-        地市风采: "广东省农业产业化地市风采",
+        地市风采: "广东省农业产业化地市风采"
         // 标杆企业: "广东省农业标杆企业"
       }
     };
@@ -128,5 +131,11 @@ export default {
 .el-col {
   height: 100%;
   // border: 1px solid yellow;
+}
+.right-icon {
+  justify-content: space-around;
+  .screenfull {
+    margin-right: -160px;
+  }
 }
 </style>

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { MessageBox, Message } from "element-ui";
+import router from "../router";
 
 // create an axios instance
 const service = axios.create({
@@ -61,11 +62,11 @@ service.interceptors.response.use(
       return Promise.reject(new Error(res.message || "Error"));
     } else if (res.code === 403) {
       Message({
-        message: "访问限制",
+        message: "访问限制,您没有权限",
         type: "error",
         duration: 5 * 1000
       });
-
+      router.push('/login')
       return Promise.reject(new Error(res.message || "Error"));
     } else {
       return res;

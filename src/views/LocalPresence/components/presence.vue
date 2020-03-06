@@ -39,6 +39,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/_handle.scss";
+
 .presence {
   position: relative;
   .county-pie {
@@ -47,6 +49,7 @@ export default {
     top: 0px;
   }
   .info {
+    @include font_color("font_color_primary");
     position: absolute;
     right: 70px;
     bottom: 30px;
