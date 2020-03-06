@@ -14,7 +14,7 @@ function resolve(dir) {
 }
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === "production" ? "/agricultural-economy-statistics/" : "/",
+  publicPath: process.env.NODE_ENV === "production" ? "/nyjyChart/" : "/",
   devServer: {
     proxy: {
       "/": {
