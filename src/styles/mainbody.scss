@@ -43,6 +43,13 @@
   flex-direction: column;
   justify-content: space-between;
 
+  .grid-content {
+    height: 25.6rem;
+  }
+  .grid-content.double {
+    height: 51.825rem;
+  }
+
   .grid-content:not(:last-child) {
     margin-bottom: 10px;
   }

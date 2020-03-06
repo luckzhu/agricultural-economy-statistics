@@ -16,7 +16,7 @@
         </border-box1>
       </el-col>
       <el-col :span="12" class="grid-wrapper">
-        <border-box1 class="grid-content expand-container">
+        <border-box1 class="grid-content expand-container double">
           <expand id="expand" :chartData="expand.invested" height="50rem" />
           <div class="info">
             <div v-for="(item,index) in expand.info" :key="index">

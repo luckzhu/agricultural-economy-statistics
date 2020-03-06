@@ -2,8 +2,8 @@
   <div>
     <el-row :gutter="10">
       <el-col :span="5" class="grid-wrapper">
-        <border-box1 class="grid-content">
-          <unit-nums id="UnitNums" height="25.625rem" :chartData="unitNums" />
+        <border-box1 class="grid-content double">
+          <unit-nums id="UnitNums" height="25.6rem" :chartData="unitNums" />
           <div class="unit-word">
             <div v-for="item in unitNums" :key="item.value">
               <p class="title">{{item.name}}</p>
@@ -16,7 +16,7 @@
         </border-box1>
       </el-col>
       <el-col :span="14" class="grid-wrapper middle">
-        <border-box1 class="grid-content">
+        <border-box1 class="grid-content double">
           <map-leader :chartData="cityDistNational" height="51.875rem" />
           <pie-normal
             id="cityDistProvincialRegion"
@@ -35,7 +35,7 @@
         </border-box1>
       </el-col>
       <el-col :span="5" class="grid-wrapper">
-        <border-box1 class="grid-content">
+        <border-box1 class="grid-content double">
           <county-dist id="countyDist" height="51.875rem" :chartData="countyDist" />
         </border-box1>
       </el-col>

@@ -10,7 +10,7 @@
             <chart-info :chartInfo="employee.info" />
             <bar-horizontal
               id="employee"
-              height="25.625rem"
+              height="25.6rem"
               :chartData="employee.sort"
               title="农业产业化组织从业人员"
               unit="万人"
@@ -19,7 +19,7 @@
         </border-box1>
       </el-col>
       <el-col :span="12" class="grid-wrapper">
-        <border-box1 class="grid-content">
+        <border-box1 class="grid-content double">
           <base-distribut id="cultivatedArea" :chartData="plantArea" />
           <base-distribut id="animalHusbandry" :chartData="livestockNum" />
           <base-distribut id="poultry" :chartData="poultryNum" />

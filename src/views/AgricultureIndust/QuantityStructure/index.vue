@@ -16,7 +16,7 @@
         <border-box1 class="grid-content">
           <areal-dist
             id="ArealDist"
-            height="25.625rem"
+            height="25.6rem"
             :chartData="arealDistcity"
             v-if="arealDistcity.length >0"
           />

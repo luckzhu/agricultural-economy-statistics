@@ -2,11 +2,11 @@
   <div>
     <el-row :gutter="10">
       <el-col :span="24" class="grid-wrapper">
-        <border-box1 class="grid-content presence">
+        <border-box1 class="grid-content presence double">
           <presence
             :chartData="cityData['广州市']"
             id="yunfu"
-            height="51.625rem"
+            height="51.2rem"
             pieHeight="40rem"
             pieWidth="40rem"
           />

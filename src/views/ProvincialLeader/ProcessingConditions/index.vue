@@ -2,8 +2,8 @@
   <div>
     <el-row :gutter="10">
       <el-col :span="12" class="grid-wrapper">
-        <border-box1 class="grid-content output">
-          <process-output :chartData="output.city" height="51.875rem" />
+        <border-box1 class="grid-content output double">
+          <process-output :chartData="output.city" height="51.2rem" />
           <div class="rank">
             <div v-for="(item,index) in output.rank" :key="item.coordinate[0]">
               <p class="title">
