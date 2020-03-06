@@ -35,9 +35,9 @@ export default {
   @include font_color("font_color_primary");
 
   .value {
-    font-size: 80px;
+    font-size: 70px;
     font-weight: 700;
-    margin-bottom: 22px;
+    margin-bottom: 30px;
     .unit {
       font-size: 30px;
       font-weight: 600;

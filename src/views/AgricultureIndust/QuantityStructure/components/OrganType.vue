@@ -29,7 +29,6 @@ export default {
     setOptions(chartData = {}) {
       const { title, unit, colors } = this;
       let series = [];
-
       chartData.forEach((item, i) => {
         series.push({
           type: "pie",
