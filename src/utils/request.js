@@ -18,7 +18,7 @@ service.interceptors.request.use(
       _t: Date.parse(new Date()) / 1000,
       ...config.params
     };
-   
+
     return config;
   },
   error => {
@@ -55,10 +55,11 @@ service.interceptors.response.use(
         store.commit("user/SET_LoginDialog", true);
       }
       Message({
-        message: "登录超时",
+        message: "登录超时,请重新登录",
         type: "error",
         duration: 5 * 1000
       });
+      router.push("/login");
       return Promise.reject(new Error(res.message || "Error"));
     } else if (res.code === 403) {
       Message({
@@ -66,7 +67,7 @@ service.interceptors.response.use(
         type: "error",
         duration: 5 * 1000
       });
-      router.push('/login')
+      router.push("/login");
       return Promise.reject(new Error(res.message || "Error"));
     } else {
       return res;
