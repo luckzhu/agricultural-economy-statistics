@@ -62,7 +62,7 @@ export default {
           },
           {
             text: `企业平均产值`,
-            x: "17%",
+            x: "15%",
             y: "77%",
             textStyle: {
               // color: "#777"

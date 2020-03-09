@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: "企业类型"
+      title: "产业结构"
     };
   },
 
@@ -198,7 +198,7 @@ export default {
                 position: "top",
                 formatter: "{c}",
                 textStyle: {
-                  color: "#fff",
+                  // color: "#fff",
                   fontSize: 12
                 }
               }
