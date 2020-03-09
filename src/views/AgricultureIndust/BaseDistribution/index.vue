@@ -56,28 +56,32 @@ export default {
         option: {
           unit: "万亩",
           title: "养殖水面面积",
-          symbol: require("../../../assets/symbol/fish.svg")
+          symbol: "fish",
+          index: 3
         }
       },
       livestockNum: {
         option: {
           title: "牲畜饲养量",
-          symbol: require("../../../assets/symbol/pork.svg"),
-          unit: "万头"
+          symbol: "pork",
+          unit: "万头",
+          index: 1
         }
       },
       poultryNum: {
         option: {
           title: "禽类饲养量",
           unit: "亿只",
-          symbol: require("../../../assets/symbol/chicken.svg")
+          symbol: "chicken",
+          index: 2
         }
       },
       plantArea: {
         option: {
           title: "种植面积",
           unit: "万亩",
-          symbol: require("../../../assets/symbol/rice.svg")
+          symbol: "rice",
+          index: 0
         }
       },
       employee: {},
