@@ -124,7 +124,6 @@ export default {
       const { year, tabId } = this;
       return getGraph({ year, tabId }).then(res => {
         this.graphPage = res.data.info;
-        console.log(this.graphPage);
       });
     },
     converData(field) {

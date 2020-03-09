@@ -69,7 +69,6 @@ export default {
         }
         return res;
       };
-       console.log(convertData(chartData));
       this.chart.setOption({
         title: {
           text: "· 加工产值",
