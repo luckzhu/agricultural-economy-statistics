@@ -204,7 +204,7 @@ $cursor: #fff;
     border-radius: 0;
     .el-form-item__label {
       color: #fff;
-      width: 120px;
+      width: 120PX; 
     }
   }
 
