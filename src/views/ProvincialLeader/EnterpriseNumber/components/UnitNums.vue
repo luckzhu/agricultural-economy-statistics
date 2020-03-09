@@ -46,7 +46,7 @@ export default {
           data: [
             {
               value: item.value,
-              name: "全省龙头企业4260家",
+              name: item.name,
               label: {
                 show: true,
                 position: "inside",
@@ -98,8 +98,8 @@ export default {
           }
         },
         tooltip: {
-          show: true,
-          formatter: "{b}：{d}%"
+          show: false,
+          formatter: "{b}：{c}家"
         },
         series: series
       });
