@@ -53,10 +53,10 @@ export default {
         },
         legend: {
           // left:"35%",
-          bottom: "8%",
+          bottom: "6%",
           textStyle: {
             // color: "#fff",
-            fontSize: 16,
+            fontSize: 14,
             fontWeight: 500
           }
         },
