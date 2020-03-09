@@ -117,7 +117,7 @@ export default {
           right: "2%",
           bottom: "10%",
           textStyle: {
-            fontSize: 16
+            fontSize: 14
           }
         },
 
@@ -272,7 +272,7 @@ export default {
             borderColor: "#409EFF",
             borderWidth: 0.2
           },
-
+          left:"14%",
           top: "10%",
           zoom: 1.1,
           roam: false
