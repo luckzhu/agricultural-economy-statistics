@@ -124,12 +124,12 @@ export default {
     position: relative;
     border-radius: 50%;
     @include font_color("font_color_light");
-    // padding: 10px;
+    padding: 10px;
     &:nth-child(1) {
-      border: 30px solid rgba(146, 208, 80, 0.8);
+      border: 20px solid rgba(146, 208, 80, 0.8);
     }
     &:nth-child(2) {
-      border: 30px solid rgba(161, 140, 186, 0.8);
+      border: 20px solid rgba(161, 140, 186, 0.8);
       margin-left: -28px;
     }
   }
