@@ -97,6 +97,12 @@ export default {
   flex-direction: column;
   justify-content: space-around;
 }
+@media screen and (max-width: 1600px) {
+  .guarantee {
+    height: 400px;
+    padding: 16px;
+  }
+}
 .rule {
   display: flex;
   justify-content: space-around;

@@ -3,7 +3,7 @@
     <el-row :gutter="10">
       <el-col :span="10" class="grid-wrapper">
         <border-box1 class="grid-content double">
-          <overall-scale id="overallScale" height="51.875rem" :chartData="overallScale" />
+          <overall-scale id="overallScale" height="51.625rem" :chartData="overallScale" />
         </border-box1>
       </el-col>
       <el-col :span="14" class="grid-wrapper">

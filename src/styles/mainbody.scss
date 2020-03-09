@@ -55,6 +55,14 @@
   }
 }
 
+@media screen and (max-width: 1600px) {
+  .grid-wrapper {
+    .grid-content.double {
+      height: 51.625rem;
+    }
+  }
+}
+
 .chart-title-wrapper {
   padding: 24px 0;
   text-align: left;

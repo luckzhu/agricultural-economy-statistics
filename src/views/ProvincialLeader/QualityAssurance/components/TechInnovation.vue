@@ -84,7 +84,7 @@ export default {
 .tech-innovation {
   padding: 0 20px;
   .el-row {
-    height: 205px;
+    height: 200px;
     .el-col {
       padding: 20px;
     }

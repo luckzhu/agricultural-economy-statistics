@@ -17,7 +17,7 @@
       </el-col>
       <el-col :span="14" class="grid-wrapper middle">
         <border-box1 class="grid-content double">
-          <map-leader :chartData="cityDistNational" height="51.875rem" />
+          <map-leader :chartData="cityDistNational" height="51.625rem" />
           <pie-normal
             id="cityDistProvincialRegion"
             class="pie-leading-city"
@@ -36,7 +36,7 @@
       </el-col>
       <el-col :span="5" class="grid-wrapper">
         <border-box1 class="grid-content double">
-          <county-dist id="countyDist" height="51.875rem" :chartData="countyDist" />
+          <county-dist id="countyDist" height="51.625rem" :chartData="countyDist" />
         </border-box1>
       </el-col>
     </el-row>

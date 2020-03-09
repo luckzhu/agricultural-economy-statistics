@@ -77,6 +77,18 @@ export default {
   }
 }
 
+@media screen and (max-width: 1600px) {
+  .quality-safety {
+    height: 400px;
+    .top {
+      height: 190px;
+    }
+    .bottom {
+      height: 200px;
+    }
+  }
+}
+
 .authentication {
   display: flex;
   flex-direction: column;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="overall-benefit">
     <div class="chart-title-wrapper">
       <p class="chart-title">· 总体效益</p>
     </div>
@@ -12,18 +12,18 @@
         fit
         style="width: 100%"
       >
-        <el-table-column prop="Level1" label="一级指标" align="center" width="80px"></el-table-column>
-        <el-table-column prop="Level2" label="二级指标" align="center" width="160px"></el-table-column>
+        <el-table-column prop="Level1" label="一级指标" align="center" ></el-table-column>
+        <el-table-column prop="Level2" label="二级指标" align="center" min-width="140px"></el-table-column>
         <el-table-column label="省重点农业龙头企业平均值" align="center">
-          <el-table-column prop="2017" label="2017年" align="center" width="100px"></el-table-column>
-          <el-table-column prop="2018" label="2018年" align="center" width="100px"></el-table-column>
+          <el-table-column prop="2017" label="2017年" align="center" min-width="100px"></el-table-column>
+          <el-table-column prop="2018" label="2018年" align="center" min-width="100px"></el-table-column>
         </el-table-column>
         <el-table-column label="2018年全国农林牧渔业企业绩效评价标准值" align="center">
-          <el-table-column prop="excellent" label="优秀" align="center"></el-table-column>
-          <el-table-column prop="well" label="良好" align="center"></el-table-column>
-          <el-table-column prop="average" label="平均" align="center"></el-table-column>
-          <el-table-column prop="lower" label="较低" align="center"></el-table-column>
-          <el-table-column prop="bad" label="较差" align="center"></el-table-column>
+          <el-table-column prop="excellent" label="优秀" align="center" min-width="60px"></el-table-column>
+          <el-table-column prop="well" label="良好" align="center" min-width="60px"></el-table-column>
+          <el-table-column prop="average" label="平均" align="center" min-width="60px"></el-table-column>
+          <el-table-column prop="lower" label="较低" align="center" min-width="60px"></el-table-column>
+          <el-table-column prop="bad" label="较差" align="center" min-width="60px"></el-table-column>
         </el-table-column>
       </el-table>
     </div>
@@ -168,9 +168,18 @@ export default {
 
 <style lang="scss" scoped>
 .benefit-table {
-  padding: 24px;
+  padding: 0 20px;
   padding-top: 0;
 }
+// @media screen and (max-width: 1600px) {
+//   .overall-benefit {
+//     height: 400px;
+//   }
+//   .benefit-table {
+//     width: 940px;
+//     height: 300px;
+//   }
+// }
 </style>
 
 <style lang="scss">
@@ -179,10 +188,11 @@ export default {
   .el-table {
     /* 表格字体颜色 */
     @include font_color("font_color_primary");
-
     /* 表格边框颜色 */
     border: 1px solid;
     @include border_color("font_color_primary");
+    font-size: 10px;
+    white-space: nowrap;
   }
   .el-table,
   .el-table__expanded-cell {
