@@ -42,14 +42,12 @@ export default {
   mounted() {
     this.getGraphPage().then(() => {
       this.fields.forEach(field => this.converData(field));
-      console.log(this.countyDetail);
       this.convert();
     });
   },
   methods: {
     convert() {
       let arr = this.countyDetail.filter(item => Object.keys(this.cityData).includes(item.name));
-      console.log(arr);
       arr.map(item => {
         let obj = {
           name: item.name || "",
@@ -64,13 +62,11 @@ export default {
         };
         this.cityData[item.name] = obj;
       });
-      console.log(this.cityData);
     },
     getGraphPage() {
       const { year, tabId } = this;
       return getGraph({ year, tabId }).then(res => {
         this.graphPage = res.data.info;
-        console.log(this.graphPage);
       });
     },
     converData(field) {
