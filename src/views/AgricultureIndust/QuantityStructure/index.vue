@@ -1,24 +1,30 @@
 <template>
   <div>
     <el-row :gutter="10">
-      <el-col :span="12" class="grid-wrapper">
+      <el-col
+        :span="12"
+        class="grid-wrapper"
+      >
         <border-box1 class="grid-content">
-          <organ-type :chartData="organType" />
+          <organ-type :chart-data="organType" />
         </border-box1>
         <border-box1 class="grid-content">
-          <indust-dist :chartData="industryDist" />
+          <indust-dist :chart-data="industryDist" />
         </border-box1>
       </el-col>
-      <el-col :span="12" class="grid-wrapper">
+      <el-col
+        :span="12"
+        class="grid-wrapper"
+      >
         <border-box1 class="grid-content">
-          <benefit-bind :chartData="benefitBind" />
+          <benefit-bind :chart-data="benefitBind" />
         </border-box1>
         <border-box1 class="grid-content">
           <areal-dist
+            v-if="arealDistcity.length >0"
             id="ArealDist"
             height="25.6rem"
-            :chartData="arealDistcity"
-            v-if="arealDistcity.length >0"
+            :chart-data="arealDistcity"
           />
         </border-box1>
       </el-col>
@@ -27,50 +33,34 @@
 </template>
 
 <script>
-import BorderBox1 from "@/components/BorderBox/borderBox1";
 import OrganType from "./components/OrganType";
 import BenefitBind from "./components/BenefitBind";
 import IndustDist from "./components/IndustDist";
 import ArealDist from "./components/ArealDist";
 
-import { getGraph } from "@/api/industrySurvey";
+import getData from "@/mixin/getData.js";
 
 export default {
   components: {
-    BorderBox1,
     OrganType,
     BenefitBind,
     IndustDist,
     ArealDist
   },
+  mixins: [getData],
   data() {
     return {
-      year: 2018,
       tabId: 1,
-      graphPage1: null,
       organType: [],
       benefitBind: [],
       industryDist: [],
-      arealDistcity: []
+      arealDistcity: [],
+      fields: ["organType", "benefitBind", "industryDist", "arealDist.city"]
     };
   },
-  mounted() {
-    this.getGraphPage1().then(() => {
-      this.converData("organType");
-      this.converData("benefitBind");
-      this.converData("industryDist");
-      this.converData("arealDist.city");
-    });
-  },
   methods: {
-    getGraphPage1() {
-      const { year, tabId } = this;
-      return getGraph({ year, tabId }).then(res => {
-        this.graphPage1 = res.data.info;
-      });
-    },
     converData(field) {
-      const data = _.get(this.graphPage1, field, []);
+      const data = _.get(this.graphPage, field, []);
       this[field] = Object.values(data).filter(data => data.value !== 9233); //TO DO 后台删掉总数这个字段为佳
       this[field].sort(this.compare("value"));
 

@@ -1,28 +1,61 @@
 <template>
   <div class="the-header">
-    <el-col :span="5" class="the-header-left">
-      <svg-icon icon-name="toLeft"></svg-icon>
-      <p class="current-year">{{ currentYear }}年度</p>
-      <svg-icon icon-name="toRight"></svg-icon>
+    <el-col
+      :span="5"
+      class="the-header-left"
+    >
+      <svg-icon
+        icon-class="arrow"
+        icon-name="toLeft"
+        @click.native="toLastYear"
+      />
+      <p class="current-year">
+        {{ currentYear }}年度
+      </p>
+      <svg-icon
+        icon-class="arrow"
+        icon-name="toRight"
+        @click.native="toNextYear"
+      />
     </el-col>
-    <el-col :span="14" class="menu-title">
-      <p class="title">{{ title }}</p>
+    <el-col
+      :span="14"
+      class="menu-title"
+    >
+      <p class="title">
+        {{ title }}
+      </p>
       <div class="menu">
         <div class="top-menu xy-center button-group">
-          <router-link v-for="(button,index) in topButtons" :to="`${button.path}`" :key="index">
+          <router-link
+            v-for="(button,index) in topButtons"
+            :key="index"
+            :to="`${button.path}`"
+          >
             <el-button
               type="primary"
               plain
               :class="{'active':currentRoute.indexOf(button.path) !== -1}"
               @click="onTopMenu(button.name)"
-            >{{button.name}}</el-button>
+            >
+              {{ button.name }}
+            </el-button>
           </router-link>
         </div>
       </div>
     </el-col>
-    <el-col :span="5" class="xy-center right-icon">
-      <screenfull id="screenfull" class="screenfull" />
-      <svg-icon icon-name="exit" @click.native="onLogout"></svg-icon>
+    <el-col
+      :span="5"
+      class="xy-center right-icon"
+    >
+      <screenfull
+        id="screenfull"
+        class="screenfull"
+      />
+      <svg-icon
+        icon-name="exit"
+        @click.native="onLogout"
+      />
     </el-col>
   </div>
 </template>
@@ -38,7 +71,6 @@ export default {
   },
   data() {
     return {
-      currentYear: "2018",
       title: "广东省农业产业化基本情况",
       topButtons: [
         {
@@ -74,6 +106,9 @@ export default {
   computed: {
     currentRoute() {
       return this.$route.path;
+    },
+    currentYear() {
+      return this.$store.getters.year;
     }
   },
   methods: {
@@ -82,6 +117,12 @@ export default {
     },
     onLogout() {
       this.$router.push("/login");
+    },
+    toLastYear() {
+      this.$store.commit("year/SET_YEAR", this.currentYear - 1);
+    },
+    toNextYear() {
+      this.$store.commit("year/SET_YEAR", this.currentYear + 1);
     }
   }
 };
@@ -137,5 +178,9 @@ export default {
   .screenfull {
     margin-right: -160px;
   }
+}
+
+.arrow {
+  cursor: pointer;
 }
 </style>

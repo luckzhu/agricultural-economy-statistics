@@ -1,35 +1,60 @@
 <template>
   <div>
     <el-row :gutter="10">
-      <el-col :span="12" class="grid-wrapper">
+      <el-col
+        :span="12"
+        class="grid-wrapper"
+      >
         <border-box1 class="grid-content output double">
-          <process-output :chartData="output.city" height="51.2rem" />
+          <process-output
+            :chart-data="output.city"
+            height="51.2rem"
+          />
           <div class="rank">
-            <div v-for="(item,index) in output.rank" :key="item.coordinate[0]">
+            <div
+              v-for="(item,index) in output.rank"
+              :key="item.coordinate[0]"
+            >
               <p class="title">
-                NO.{{index+1}} {{item.name}}
-                <span class="value">{{item.value}}</span>
+                NO.{{ index+1 }} {{ item.name }}
+                <span class="value">{{ item.value }}</span>
                 <span class="unit">亿元</span>
               </p>
             </div>
           </div>
         </border-box1>
       </el-col>
-      <el-col :span="12" class="grid-wrapper">
+      <el-col
+        :span="12"
+        class="grid-wrapper"
+      >
         <border-box1 class="grid-content">
-          <processing-county id="largeCounty" height="25.6rem" :chartData="largeCounty" />
+          <processing-county
+            id="largeCounty"
+            height="25.6rem"
+            :chart-data="largeCounty"
+          />
         </border-box1>
         <border-box1 class="grid-content">
           <ul class="category-wrapper">
-            <li class="category" v-for="(cate,index) in total" :key="index">
+            <li
+              v-for="(cate,index) in total"
+              :key="index"
+              class="category"
+            >
               <div class="category-title">
-                <p class="name">{{ cate.name }}</p>
+                <p class="name">
+                  {{ cate.name }}
+                </p>
                 <p class="value">
-                  {{cate.value}}
-                  <span class="unit">{{cate.unit}}</span>
+                  {{ cate.value }}
+                  <span class="unit">{{ cate.unit }}</span>
                 </p>
               </div>
-              <svg-icon icon-class="category-icon" :icon-name="`${cate.iconName}`"></svg-icon>
+              <svg-icon
+                icon-class="category-icon"
+                :icon-name="`${cate.iconName}`"
+              />
             </li>
           </ul>
         </border-box1>
@@ -39,54 +64,25 @@
 </template>
 
 <script>
-import BorderBox1 from "@/components/BorderBox/borderBox1";
 import ProcessingCounty from "./components/ProcessingCounty";
 import ProcessOutput from "./components/ProcessOutput";
 
-import { getGraph } from "@/api/industrySurvey";
+import getData from "@/mixin/getData.js";
 
 export default {
   components: {
-    BorderBox1,
     ProcessingCounty,
     ProcessOutput
   },
+  mixins: [getData],
   data() {
     return {
-      year: 2018,
       tabId: 7,
-      graphPage: null,
       fields: ["largeCounty", "output", "total"],
       largeCounty: [],
       total: [],
       output: {},
     };
-  },
-  mounted() {
-    this.getGraphPage().then(() => {
-      this.fields.forEach(field => this.converData(field));
-    });
-  },
-  methods: {
-    getGraphPage() {
-      const { year, tabId } = this;
-      return getGraph({ year, tabId }).then(res => {
-        this.graphPage = res.data.info;
-      });
-    },
-    converData(field) {
-      const data = _.get(this.graphPage, field);
-      if (field.indexOf(".") !== -1) {
-        field = this.dotToCamelCase(field);
-      }
-      this[field] = data;
-    },
-    //转成驼峰命名
-    dotToCamelCase(sName) {
-      return sName.replace(/\.[a-z]/g, function(a, b) {
-        return b == 0 ? a.replace(".", "") : a.replace(".", "").toUpperCase();
-      });
-    }
   }
 };
 </script>

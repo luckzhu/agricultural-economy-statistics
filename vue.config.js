@@ -19,8 +19,8 @@ module.exports = {
     proxy: {
       "/": {
         // target: "http://192.168.2.2:8054",
-        target: "http://192.168.2.16:8053",
-        //  target: "http://192.168.2.23:8053",
+        // target: "http://192.168.2.16:8053",
+         target: "http://192.168.2.129:8053",
         changeOrigin: true,
         ws: false
       }

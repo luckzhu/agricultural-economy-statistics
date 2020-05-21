@@ -1,42 +1,75 @@
 <template>
   <div>
     <el-row :gutter="10">
-      <el-col :span="5" class="grid-wrapper">
+      <el-col
+        :span="5"
+        class="grid-wrapper"
+      >
         <border-box1 class="grid-content double">
-          <unit-nums id="UnitNums" height="25.6rem" :chartData="unitNums" />
+          <unit-nums
+            id="UnitNums"
+            height="25.6rem"
+            :chart-data="unitNums"
+          />
           <div class="unit-word">
-            <div v-for="item in unitNums" :key="item.value">
-              <p class="title">{{item.name}}</p>
+            <div
+              v-for="item in unitNums"
+              :key="item.value"
+            >
+              <p class="title">
+                {{ item.name }}
+              </p>
               <p class="value">
-                {{item.value}}
+                {{ item.value }}
                 <span class="unit">家</span>
               </p>
             </div>
           </div>
         </border-box1>
       </el-col>
-      <el-col :span="14" class="grid-wrapper middle">
+      <el-col
+        :span="14"
+        class="grid-wrapper middle"
+      >
         <border-box1 class="grid-content double">
-          <map-leader :chartData="cityDistNational" height="51.625rem" />
+          <map-leader
+            :chart-data="cityDistNational"
+            height="51.625rem"
+          />
           <pie-normal
             id="cityDistProvincialRegion"
             class="pie-leading-city"
             height="26rem"
             width="26rem"
             unit="家"
-            :chartData="cityDistProvincialRegion"
+            :chart-data="cityDistProvincialRegion"
           />
           <div class="leading-city-table">
-            <div class="city-item" v-for="(city,index) in cityDistProvincialCity" :key="index">
-              <p class="name">{{city.name | canonicalName}}</p>
-              <p class="value">{{city.value}}家</p>
+            <div
+              v-for="(city,index) in cityDistProvincialCity"
+              :key="index"
+              class="city-item"
+            >
+              <p class="name">
+                {{ city.name | canonicalName }}
+              </p>
+              <p class="value">
+                {{ city.value }}家
+              </p>
             </div>
           </div>
         </border-box1>
       </el-col>
-      <el-col :span="5" class="grid-wrapper">
+      <el-col
+        :span="5"
+        class="grid-wrapper"
+      >
         <border-box1 class="grid-content double">
-          <county-dist id="countyDist" height="51.625rem" :chartData="countyDist" />
+          <county-dist
+            id="countyDist"
+            height="51.625rem"
+            :chart-data="countyDist"
+          />
         </border-box1>
       </el-col>
     </el-row>
@@ -44,27 +77,29 @@
 </template>
 
 <script>
-import BorderBox1 from "@/components/BorderBox/borderBox1";
 import MapLeader from "./components/MapLeader";
 import PieNormal from "@/components/Echarts/pie-normal";
 import CountyDist from "./components/CountyDist";
 import UnitNums from "./components/UnitNums";
 
-import { getGraph } from "@/api/industrySurvey";
+import getData from "@/mixin/getData.js";
 
 export default {
   components: {
-    BorderBox1,
     MapLeader,
     PieNormal,
     CountyDist,
     UnitNums
   },
+  filters: {
+    canonicalName(value) {
+      return value.replace(/市.*/, "");
+    }
+  },
+  mixins: [getData],
   data() {
     return {
-      year: 2018,
       tabId: 4,
-      graphPage: null,
       distributionOfPie: {
         unit: "家",
         data: [
@@ -102,43 +137,9 @@ export default {
       cityDistNational: [],
       cityDistProvincialRegion: [],
       cityDistProvincialCity: [],
-      unitNums: []
+      unitNums: [],
+      fields: ["countyDist", "cityDist.provincial.region", "cityDist.provincial.city", "cityDist.national", "unitNums"]
     };
-  },
-  mounted() {
-    this.getGraphPage().then(() => {
-      this.converData("countyDist");
-      this.converData("cityDist.provincial.region");
-      this.converData("cityDist.provincial.city");
-      this.converData("cityDist.national");
-      this.converData("unitNums");
-    });
-  },
-  filters: {
-    canonicalName(value) {
-      return value.replace(/市.*/, "");
-    }
-  },
-  methods: {
-    getGraphPage() {
-      const { year, tabId } = this;
-      return getGraph({ year, tabId }).then(res => {
-        this.graphPage = res.data.info;
-      });
-    },
-    converData(field) {
-      const data = _.get(this.graphPage, field);
-      if (field.indexOf(".") !== -1) {
-        field = this.dotToCamelCase(field);
-      }
-      this[field] = data;
-    },
-    //转成驼峰命名
-    dotToCamelCase(sName) {
-      return sName.replace(/\.[a-z]/g, function(a, b) {
-        return b == 0 ? a.replace(".", "") : a.replace(".", "").toUpperCase();
-      });
-    }
   }
 };
 </script>

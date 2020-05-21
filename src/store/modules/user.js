@@ -1,5 +1,5 @@
 import { login, getInfo } from "@/api/user";
-import { resetRouter } from "@/router";
+// import { resetRouter } from "@/router";
 import viewCode2roles from "@/utils/viewCode2roles";
 import qs from "qs";
 

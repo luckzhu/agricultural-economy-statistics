@@ -22,6 +22,10 @@ Vue.prototype._ = _;
 import "./utils/EchartsStyle/light" //echart主题
 import "./utils/EchartsStyle/dark" //echart主题
 
+
+import BorderBox1 from "@/components/BorderBox/borderBox1";
+Vue.component('BorderBox1', BorderBox1)
+
 Vue.config.productionTip = false;
 
 new Vue({

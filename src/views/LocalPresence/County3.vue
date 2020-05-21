@@ -1,20 +1,38 @@
 <template>
   <div>
     <el-row :gutter="10">
-      <el-col :span="12" class="grid-wrapper">
+      <el-col
+        :span="12"
+        class="grid-wrapper"
+      >
         <border-box1 class="grid-content">
-          <presence :chartData="cityData['肇庆市']" id="guangzhou" />
+          <presence
+            id="guangzhou"
+            :chart-data="cityData['肇庆市']"
+          />
         </border-box1>
         <border-box1 class="grid-content">
-          <presence :chartData="cityData['揭阳市']" id="shenzhen" />
+          <presence
+            id="shenzhen"
+            :chart-data="cityData['揭阳市']"
+          />
         </border-box1>
       </el-col>
-      <el-col :span="12" class="grid-wrapper">
+      <el-col
+        :span="12"
+        class="grid-wrapper"
+      >
         <border-box1 class="grid-content">
-          <presence :chartData="cityData['潮州市']" id="foshan" />
+          <presence
+            id="foshan"
+            :chart-data="cityData['潮州市']"
+          />
         </border-box1>
         <border-box1 class="grid-content">
-          <presence :chartData="cityData['汕尾市']" id="zhuhai" />
+          <presence
+            id="zhuhai"
+            :chart-data="cityData['汕尾市']"
+          />
         </border-box1>
       </el-col>
     </el-row>
@@ -22,23 +40,13 @@
 </template>
 
 <script>
-import BorderBox1 from "@/components/BorderBox/borderBox1";
-import Presence from "./components/presence";
-
-import { getGraph } from "@/api/industrySurvey";
+import localGetData from "./mixin/localGetData";
 
 export default {
-  components: {
-    BorderBox1,
-    Presence
-  },
+  mixins: [localGetData],
   data() {
     return {
-      year: 2018,
       tabId: 11,
-      graphPage: null,
-      fields: ["countyDetail"],
-      countyDetail: [],
       cityData: {
         肇庆市: {},
         揭阳市: {},
@@ -46,53 +54,6 @@ export default {
         汕尾市: {}
       }
     };
-  },
-  mounted() {
-    this.getGraphPage().then(() => {
-      this.fields.forEach(field => this.converData(field));
-      this.convert();
-    });
-  },
-  methods: {
-    convert() {
-      let arr = this.countyDetail.filter(item => Object.keys(this.cityData).includes(item.name));
-      arr.map(item => {
-        let obj = {
-          name: item.name || "",
-          industry: [
-            { name: "种植业", value: item.zzy },
-            { name: "畜牧业", value: item.xmy },
-            { name: "水产业", value: item.scy },
-            { name: "其它", value: item.qty },
-            { name: "林业", value: item.ly }
-          ],
-          info: item.info || ""
-        };
-        this.cityData[item.name] = obj;
-      });
-    },
-    getGraphPage() {
-      const { year, tabId } = this;
-      return getGraph({ year, tabId }).then(res => {
-        this.graphPage = res.data.info;
-      });
-    },
-    converData(field) {
-      const data = _.get(this.graphPage, field);
-      if (field.indexOf(".") !== -1) {
-        field = this.dotToCamelCase(field);
-      }
-      this[field] = data;
-    },
-    //转成驼峰命名
-    dotToCamelCase(sName) {
-      return sName.replace(/\.[a-z]/g, function(a, b) {
-        return b == 0 ? a.replace(".", "") : a.replace(".", "").toUpperCase();
-      });
-    }
   }
 };
 </script>
-
-<style lang="scss" scoped>
-</style>

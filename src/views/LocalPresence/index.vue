@@ -2,15 +2,17 @@
   <div class="mian-box">
     <div class="button-group">
       <router-link
-        :to="`/LocalPresence${button.path}`"
         v-for="(button,index) in topButtons"
         :key="index"
+        :to="`/LocalPresence${button.path}`"
       >
         <el-button
           type="primary"
           plain
           :class="{'active':currentRoute.indexOf(button.path) !== -1}"
-        >· {{button.name}} ·</el-button>
+        >
+          · {{ button.name }} ·
+        </el-button>
       </router-link>
     </div>
     <div class="main-body">
