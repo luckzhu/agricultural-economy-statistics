@@ -93,7 +93,12 @@ export default {
   },
   filters: {
     canonicalName(value) {
-      return value.replace(/市.*/, "");
+      if(value){
+        return value.replace(/市.*/, "");
+      }else {
+        return ''
+      }
+     
     }
   },
   mixins: [getData],

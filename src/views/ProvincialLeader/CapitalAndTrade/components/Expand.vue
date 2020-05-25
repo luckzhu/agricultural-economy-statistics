@@ -1,5 +1,8 @@
 <template>
-  <div :id="id" :style="{height:height,width:width}" />
+  <div
+    :id="id"
+    :style="{height:height,width:width}"
+  />
 </template>
 
 <script>
@@ -123,7 +126,7 @@ export default {
             data: item[1].map(function(dataItem) {
               return {
                 name: dataItem[0].name,
-                value: geoCoordMap[dataItem[0].name].concat([dataItem[0].value])
+                value: geoCoordMap[dataItem[0].name] ? geoCoordMap[dataItem[0].name].concat([dataItem[0].value]) : ""
               };
             })
           },
@@ -194,8 +197,8 @@ export default {
             }
           },
 
-          roam: false, //是否允许缩放
-          layoutCenter: ["-12%", "30%"], //地图位置
+          roam: true, //是否允许缩放
+          layoutCenter: ["0%", "30%"], //地图位置
           layoutSize: "250%",
           itemStyle: {
             normal: {

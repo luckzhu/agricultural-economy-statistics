@@ -1,28 +1,37 @@
 <template>
   <div class="funding-container">
     <div class="chart-title-wrapper">
-      <p class="chart-title">· 资金来源</p>
+      <p class="chart-title">
+        · 资金来源
+      </p>
     </div>
     <div class="source-wrapper">
       <div
-        class="source"
         v-for="(item,index) in sources"
         :key="item.id"
+        class="source"
         :style="{ color: colors[index] }"
       >
         <div class="figure">
           <div class="border1">
-            <svg-icon :icon-name="item.iconName" />
+            <svg-icon :icon-name="icons[index]" />
           </div>
           <div class="border2">
-            <p class="index" :style="{ backgroundColor: colors[index] }">{{index+1}}</p>
+            <p
+              class="index"
+              :style="{ backgroundColor: colors[index] }"
+            >
+              {{ index+1 }}
+            </p>
           </div>
         </div>
 
-        <p class="name">{{item.name}}</p>
+        <p class="name">
+          {{ item.name }}
+        </p>
         <p class="value">
-          {{item.value}}
-          <span class="unit">{{item.unit}}</span>
+          {{ item.value }}
+          <span class="unit">{{ item.unit }}</span>
         </p>
       </div>
     </div>
@@ -32,17 +41,14 @@
 <script>
 export default {
   props: {
+    // eslint-disable-next-line
     chartData: {
       type: Array
     }
   },
-  computed:{
-    sources(){
-      return this.chartData
-    }
-  },
   data() {
     return {
+      icons: ["finance", "tax", "bank", "foreign-capital"],
       // sources: [
       //   {
       //     id: 1,
@@ -75,6 +81,11 @@ export default {
       // ],
       colors: this.$store.getters.colors
     };
+  },
+  computed: {
+    sources() {
+      return this.chartData;
+    }
   }
 };
 </script>

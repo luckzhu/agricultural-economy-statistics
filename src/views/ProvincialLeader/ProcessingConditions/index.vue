@@ -53,7 +53,7 @@
               </div>
               <svg-icon
                 icon-class="category-icon"
-                :icon-name="`${cate.iconName}`"
+                :icon-name="`${icons[index]}`"
               />
             </li>
           </ul>
@@ -79,9 +79,10 @@ export default {
     return {
       tabId: 7,
       fields: ["largeCounty", "output", "total"],
+      icons: ["daogu", "xiaomai", "yumi", "you", "mianhua", "tangliao", "shucai", "shuiguo", "zhu", "qin", "naizhipin", "shuichan"],
       largeCounty: [],
       total: [],
-      output: {},
+      output: {}
     };
   }
 };

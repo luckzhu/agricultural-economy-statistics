@@ -1,6 +1,10 @@
 <template>
   <div class="base-output">
-    <div :id="id" :style="{height:height,width:width}" :chartData="chartData" />
+    <div
+      :id="id"
+      :style="{height:height,width:width}"
+      :chartData="chartData"
+    />
   </div>
 </template>
 
@@ -73,11 +77,11 @@ export default {
             }
           },
           indicator: [
-            { name: "销售收入", max: 6000 },
-            { name: "固定资产净值", max: 1500 },
-            { name: "净利润", max: 300 },
-            { name: "上缴税金", max: 100 },
-            { name: "从业人员（万人）", max: 150 }
+            { name: "销售收入",  },
+            { name: "固定资产净值",  },
+            { name: "净利润",  },
+            { name: "上缴税金",  },
+            { name: "从业人员（万人）", }
           ]
         },
         series: [
