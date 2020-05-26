@@ -1,5 +1,9 @@
 <template>
-  <div :id="id" :style="{height:height,width:width}" :chartData="chartData" />
+  <div
+    :id="id"
+    :style="{height:height,width:width}"
+    :chartData="chartData"
+  />
 </template>
 
 <script>
@@ -25,7 +29,7 @@ export default {
   data() {
     return {
       title: "加工大县",
-      unit: "个"
+      unit: "亿元"
     };
   },
   methods: {
